@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../PHPandMYSQLdevelOpment/.idea/PHPandMYSQLdevelOpment.iml" filepath="$PROJECT_DIR$/../PHPandMYSQLdevelOpment/.idea/PHPandMYSQLdevelOpment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/element.iml" filepath="$PROJECT_DIR$/.idea/element.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../imoocBootstrap/.idea/imoocBootstrap.iml" filepath="$PROJECT_DIR$/../imoocBootstrap/.idea/imoocBootstrap.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../visitvue/.idea/visitvue.iml" filepath="$PROJECT_DIR$/../visitvue/.idea/visitvue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../vuessrtech/.idea/vuessrtech.iml" filepath="$PROJECT_DIR$/../vuessrtech/.idea/vuessrtech.iml" />
+    </modules>
+  </component>
+</project>
