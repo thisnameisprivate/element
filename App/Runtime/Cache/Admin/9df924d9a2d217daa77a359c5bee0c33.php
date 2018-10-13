@@ -33,7 +33,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;" class="layui-anim layui-anim-up layui-this" id="classification">广元协和医院男科</a>
                 <dl class="layui-nav-child">
-                    <?php if(is_array($hospitals)): foreach($hospitals as $index=>$vo): ?><dd class="layui-anim layui-anim-scaleSpring"><a href="javascript:;" onclick="readyHospital(this);" tableName="<?php echo ($vo['tableName']); ?>"></a></dd><?php endforeach; endif; ?>
+                    <?php if(is_array($hospitals)): foreach($hospitals as $index=>$vo): ?><dd class="layui-anim layui-anim-scaleSpring"><a href="javascript:;" onclick="readyHospital(this);" tableName="<?php echo ($vo['tableName']); ?>"><?php echo ($vo['hospital']); ?></a></dd><?php endforeach; endif; ?>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="">退了</a></li>
@@ -111,7 +111,7 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">人员管理</a></dd>
                         <dd><a href="javascript:;">权限管理</a></dd>
-                        <dd><a href="javascript:;">医院列表</a></dd>
+                        <dd><a href="javascript:;" onclick="hospitalsList();">医院列表</a></dd>
                         <dd><a href="javascript:;">通知列表</a></dd>
                     </dl>
                 </li>
@@ -135,11 +135,14 @@
     <!-- 底部固定区域 -->
     <a href="javascript:;" title="发布日期: 2018/10/1日:)"><span class="layui-icon layui-icon-website layui-anim layui-anim-fadein layui-anim-loop"></span>&nbsp;&nbsp;&nbsp;广元协和医院预约回访管理系统 ©</a>
 </div>
+</body>
 <script src="/element/Public/statics/layui/layui.js"></script>
-<script>
+<script type="text/javascript">
     //JavaScript代码区域
-    layui.use(['element', 'layer', 'form'], function(){
+    layui.use(['element', 'layer', 'form'], () => {
+        const iframe = document.getElementById('iframe');
         var element = layui.element;
+        // 医院列表下拉框渲染
         readyHospital = tableName => {
             var ification = document.getElementById('classification');
             var selects = document.getElementsByClassName('tableName');
@@ -150,7 +153,21 @@
             document.cookie = "tableName=" + tableName.getAttribute('tableNamem');
             console.log(tableName.getAttribute('tableName'));
         }
+        hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
+        iframeSetAttr = (url) => {
+            iframe.setAttribute('src', url);
+        }
+        //  Request function
+        Request = (url) => {
+            var Request = new XMLHttpRequest();
+            Request.open('GET', url);
+            Request.send();
+            Request.onreadystatechange = () => {
+                if (Request.readyState === 4 && Request.status === 200) {
+                    document.getElementById('iframe').setAttribute('src', url);
+                }
+            }
+        }
     });
 </script>
-</body>
 </html>

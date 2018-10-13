@@ -267,7 +267,7 @@
                 form.on('submit(fromedit)', data => {
                     var id = document.getElementById('idValue').innerHTML;
                     var client = new XMLHttpRequest();
-                    client.open('GET', "<?php echo U('Admin/index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"');?>");
+                    client.open('GET', "<?php echo U('Admin/Index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {

@@ -18,6 +18,11 @@ class IndexController extends Controller {
     public function visit () {
         $this->display();
     }
+    /*
+     *  @@ visit Data List.
+     *  @param null
+     *  @return $visitList Type: json.
+     * */
     public function visitCheck () {
         $cookietable = cookie('tableName');
         $hospital = M($cookietable);
@@ -41,6 +46,47 @@ class IndexController extends Controller {
         $interval = ceil($hospitalVisitCount / $totalPage);
         $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
         $this->ajaxReturn($visitList, 'eval');
+    }
+    /*
+     *  @hospitals Data List
+     *  @param null
+     *  @display page.
+     * */
+    public function hospitalsList () {
+        $this->display();
+    }
+    /*
+     *  @hospitals Data Check
+     *  @param null
+     *  @return $hospitals Type: json.
+     * */
+    public function hospitalsCheck () {
+        $hospitals = M('hospital')->select();
+        $hospitalsCount = count($hospitals);
+        if ($hospitals) {
+            $this->arrayRecursive($hospitals, 'urldecode', true);
+        } else {
+            $this->ajaxrReturn(false, 'eval');
+        }
+        $hospitals = urldecode(json_encode($hospitals));
+        $hospitalsList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalsCount, \"data\": $hospitals}";
+        $this->ajaxReturn($hospitalsList, 'eval');
+    }
+    /*
+     *  @@ hospitals Data add
+     *  @param null
+     *  @return boolean
+     * */
+    public function hospitalsAdd () {
+        // 这段代码还没测试... 前端数据老是在提交过后跳转到主页, 数据根本没提交过来, 看了下提交时请求的url不对.22:00结束debug..休息(没改好)
+        if (! $_REQUEST) $this->ajaxReturn(false, 'eval');
+        extract($_REQUEST);
+        $hospitalData['hospital'] = $hospital;
+        $hospitalData['tableName'] = $tableName;
+        $addResult = M('hospital')->add($hospitalData);
+        if ($addResult == 1) {
+            $this->ajaxReturn(true, 'eval');
+        }
     }
     /*
      *  @@ JsonString handle
