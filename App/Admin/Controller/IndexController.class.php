@@ -78,14 +78,26 @@ class IndexController extends Controller {
      *  @return boolean
      * */
     public function hospitalsAdd () {
-        // 这段代码还没测试... 前端数据老是在提交过后跳转到主页, 数据根本没提交过来, 看了下提交时请求的url不对.22:00结束debug..休息(没改好)
-        if (! $_REQUEST) $this->ajaxReturn(false, 'eval');
-        extract($_REQUEST);
-        $hospitalData['hospital'] = $hospital;
-        $hospitalData['tableName'] = $tableName;
-        $addResult = M('hospital')->add($hospitalData);
-        if ($addResult == 1) {
+        $hospitalsData = json_decode($_GET['data'], true);
+        $resolve = M('hospital')->add($hospitalsData);
+        if ($resolve) {
             $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@ hospitals Data del
+     *  @param null
+     *  @return boolean
+     * */
+    public function hospitalsDel () {
+        if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $resolve = M('hospital')->where("id = {$_GET['id']}")->delete();
+        if ($resolve > 0) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
         }
     }
     /*

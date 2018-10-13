@@ -46,7 +46,6 @@
     </div>
 </script>
 <script type="text/html" id="bar">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script type="text/javascript">
@@ -84,7 +83,7 @@
             if (layEvent === 'del') {
                 layer.confirm('【'+ data.hospital +'】你确定删除吗?', index => {
                     var client = new XMLHttpRequest();
-                    client.open('GET', "{:U('Admin/Index/delDepartMent/id/"+ parseInt(data.id) +"')}");
+                    client.open('GET', "{:U('Admin/Index/hospitalsDel/id/"+ parseInt(data.id) +"')}");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
@@ -98,34 +97,11 @@
                         }
                     }
                 })
-            } else if (layEvent === 'edit') {
-                layer.open({
-                    type: 1,
-                    title: '编辑医院科室',
-                    area: ['600px', '300px'],
-                    content: document.getElementById('layerAddHospital').innerHTML,
-                });
-                form.on('submit(formSubmit)', data => {
-                    var client = new XMLHttpRequest();
-                    client.open('GET', "{:U('Admin/Index/hospitalsEdit/id/"+ parseInt(data.id) +"')}");
-                    client.send();
-                    client.onreadystatechange = () => {
-                        if (client.readyState === 4 && client.status === 200) {
-                            if (client.response == 1) {
-                                layer.msg('edit success', {icon: 6});
-                                obj.del();
-                                layer.close(index);
-                            } else {
-                                layer.msg('edit failed', {icon: 5});
-                            }
-                        }
-                    }
-                })
-            };
+            }
         });
         table.on('toolbar(edittable)', obj => {
             var checkStatus = table.checkStatus(obj.config.id);
-            if (obj.event === 'add') {
+            if (obj.event === 'add') { // add data
                 layer.open({
                     type: 1,
                     title: '新增医院科室',
@@ -135,7 +111,7 @@
             };
             form.on('submit(formSubmit)', data => {
                 var client = new XMLHttpRequest();
-                client.open('GET', "{:U('Admin/Index/addDepartMent/hospital/"+ JSON.stringify(data.field) +"')}");
+                client.open('GET', "{:U('Admin/Index/hospitalsAdd/data/"+ JSON.stringify(data.field) +"')}");
                 client.send();
                 client.onreadystatechange = () => {
                     if (client.readyState === 4 && client.status === 200) {

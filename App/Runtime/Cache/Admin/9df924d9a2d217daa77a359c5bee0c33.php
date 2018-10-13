@@ -47,7 +47,7 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;"><span class="layui-icon layui-icon-list">&nbsp;&nbsp;</span>病人预约管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a  href="javascript:;">预约登记列表</a></dd>
+                        <dd><a  href="javascript:;" onclick="visit();">预约登记列表</a></dd>
                         <dd><a  href="javascript:;">预约病人搜索</a></dd>
                         <dd><a  href="javascript:;">重复病人查询</a></dd>
                         <dd><a  href="javascript:;">客服明细报表</a></dd>
@@ -153,6 +153,7 @@
             document.cookie = "tableName=" + tableName.getAttribute('tableNamem');
             console.log(tableName.getAttribute('tableName'));
         }
+        visit = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
         hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
         iframeSetAttr = (url) => {
             iframe.setAttribute('src', url);
