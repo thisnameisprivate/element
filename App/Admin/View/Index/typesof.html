@@ -1,32 +1,26 @@
-<?php if (!defined('THINK_PATH')) exit();?><!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/element/Public/statics/layui/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/statics/layui/css/layui.css">
     <style>
-        .container{position:relative; width:500px; height: 200px; top:0; left:0; bottom:0; right:0; margin:auto; padding-top: 20px;}
+        .container{position:relative; width:500px; height:200px; left:0; right:0; bottom:0; top:0; margin:auto; padding-top:20px;}
         body{overflow:scroll; margin-top:20px;}
     </style>
-    <title>element</title>
+    <title>typesof</title>
 </head>
 <body>
 <table id="container" lay-filter="edittable"></table>
-<div class="layui-container" id="layerAddHospital" style="display:none;">
+<div class="layui-container" id="layerAddTypesof" style="display:none;">
     <div class="container">
         <form class="layui-form">
             <div class="layui-form-item">
-                <label class="layui-form-label">医院科室：</label>
+                <label class="layui-form-label">来源类型：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="hospital" required lay-verify="required" placeholder="请输入新的医院科室" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">数据表名：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="tableName" required lay-verify="tableName" placeholder="请输入对应数据表名" autocomplete="off" class="layui-input">
+                    <input type="text" name="fromaddress" required lay-verify="required" placeholder="请输入新的医院科室" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -39,7 +33,7 @@
     </div>
 </div>
 </body>
-<script src="/element/Public/statics/layui/layui.js"></script>
+<script src="__PUBLIC__/statics/layui/layui.js"></script>
 <script type="text/html" id="toolbaradd">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="add">添加新的信息</button>
@@ -55,24 +49,22 @@
         var form = layui.form;
         var tableIns = table.render({
             text: {
-                none: "暂无相关数据",
+                none: '暂无相关数据'
             },
             initSort: {
                 field: 'id',
-                type: 'asc',
+                type: 'desc'
             },
             elem: '#container',
             toolbar: '#toolbaradd',
-            url: "<?php echo U('Admin/Index/hospitalsCheck');?>",
+            url: "{:U('Admin/Index/typesofCheck')}",
             height: 'full-200',
-            cellMinWidth: 150,
             size: 'sm',
             cols: [[
-                {field: 'id', title: 'No .' , width:80, sort: true},
-                {field: 'hospital', title: '医院科室', width: 200},
-                {field: 'tableName', title: '对应数据表', width: 200},
-                {field: 'addtime', title: '添加时间', width:200},
-                {fixed: 'right', title: '操作',  width:150, align:'center', toolbar: '#bar'}
+                {field: 'id', title: 'N o.', width:80, sort: true},
+                {field: 'fromaddress', title: '来源', width: 120},
+                {field: 'addtime', title: '添加时间', width: 120},
+                {fixed: 'right', title: '操作',  width: 100, align:'center', toolbar: '#bar'}
             ]],
             id: 'edittable',
         });
@@ -81,9 +73,9 @@
             var layEvent = obj.event;
             var tr = obj.tr;
             if (layEvent === 'del') {
-                layer.confirm('【'+ data.hospital +'】你确定删除吗?', index => {
+                layer.confirm('【'+ data.fromaddress +'】 are you soure delete ?', index => {
                     var client = new XMLHttpRequest();
-                    client.open('GET', "<?php echo U('Admin/Index/hospitalsDel/id/"+ parseInt(data.id) +"');?>");
+                    client.open('GET', "{:U('Admin/Index/typesofDel/id/"+ parseInt(data.id) +"')}");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
@@ -92,7 +84,7 @@
                                 obj.del();
                                 layer.close(index);
                             } else {
-                                layer.msg('delete failed', {icon: 5});
+                                layer.msg('delete faield', {icon: 5});
                             }
                         }
                     }
@@ -100,49 +92,32 @@
             }
         });
         table.on('toolbar(edittable)', obj => {
-            var checkStatus = table.checkStatus(obj.config.id);
-            if (obj.event === 'add') { // add data
+            if (obj.event === 'add') {
                 layer.open({
                     type: 1,
-                    title: '新增医院科室',
+                    title: '新增来源类型',
                     area: ['600px', '300px'],
-                    content: document.getElementById('layerAddHospital').innerHTML,
+                    content: document.getElementById('layerAddTypesof').innerHTML,
                 });
-            };
+            }
             form.on('submit(formSubmit)', data => {
                 var client = new XMLHttpRequest();
-                client.open('GET', "<?php echo U('Admin/Index/hospitalsAdd/data/"+ JSON.stringify(data.field) +"');?>");
+                client.open("GET", "{:U('Admin/Index/typesofAdd/data/"+ JSON.stringify(data.field) +"')}");
                 client.send();
                 client.onreadystatechange = () => {
                     if (client.readyState === 4 && client.status === 200) {
                         if (client.response == 1) {
-                            layer.msg('add success', {icon: 6});
-                            layer.closeAll('page');
+                            layer.msg('add success', {icon:6});
+                            layer.closeAll();
                             tableIns.reload();
                         } else {
-                            layer.msg('add failed', {icon: 5});
+                            layer.msg('add failed', {icon:5});
                         }
                     }
                 }
                 return false;
             });
-            form.verify({
-                tableName: (value, item) => {
-                    if(! /^[a-zA-Z]{5,12}$/.test(value)) {
-                        return '字符串必须为5-12位';
-                    }
-                    if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
-                        return '数据表名不能有特殊字符';
-                    }
-                    if(/^\d+\d+\d$/.test(value)){
-                        return '数据表名不能全为数字';
-                    }
-                    if(/(^\_)|(\__)|(\_+$)/.test(value)){
-                        return '数据表名首尾不能出现下划线\'_\'';
-                    }
-                }
-            })
-        });
-    });
+        })
+    })
 </script>
 </html>

@@ -48,7 +48,6 @@ class IndexController extends Controller {
         $this->ajaxReturn($visitList, 'eval');
     }
     /*
-<<<<<<< HEAD
      *  @@ visit data delte
      *  @param null
      *  @return boolean Type: json
@@ -64,8 +63,6 @@ class IndexController extends Controller {
         }
     }
     /*
-=======
->>>>>>> 2d586dea4b8112e0d3b60eb3d5a2cbd591297483
      *  @hospitals Data List
      *  @param null
      *  @display page.
@@ -80,14 +77,13 @@ class IndexController extends Controller {
      * */
     public function hospitalsCheck () {
         $hospitals = M('hospital')->select();
-        $hospitalsCount = count($hospitals);
         if ($hospitals) {
             $this->arrayRecursive($hospitals, 'urldecode', true);
         } else {
             $this->ajaxrReturn(false, 'eval');
         }
         $hospitals = urldecode(json_encode($hospitals));
-        $hospitalsList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalsCount, \"data\": $hospitals}";
+        $hospitalsList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $hospitals}";
         $this->ajaxReturn($hospitalsList, 'eval');
     }
     /*
@@ -119,11 +115,116 @@ class IndexController extends Controller {
         }
     }
     /*
+     *  @@ disease data
+     *  @param null
+     *  @display disease
+     * */
+    public function disease () {
+        $this->display();
+    }
+    /*
+     *  @@disease data check
+     *  @param null
+     *  @return $diseasesList Type: json
+     * */
+    public function diseaseCheck () {
+        $tableName = cookie('tableName');
+        $diseases = M('alldiseases')->where("tableName = '{$tableName}'")->field(array('id', 'diseases', 'addtime'))->select();
+        if ($diseases) {
+            $this->arrayRecursive($diseases, 'urldecode', true);
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+        $diseases = urldecode(json_encode($diseases));
+        $diseasesList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $diseases}";
+        $this->ajaxReturn($diseasesList, 'eval');
+    }
+    /*
+     *  @@ diseases data add
+     *  @param null
+     *  @return boolean
+     * */
+    public function diseaseAdd () {
+        $diseasesData = json_decode($_GET['data'], true);
+        $diseasesData['tableName'] = cookie('tableName');
+        $resolve = M('alldiseases')->add($diseasesData);
+        if ($resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@ disease data delete
+     *  @param null
+     *  @return boolean
+     * */
+    public function diseaseDel () {
+        if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $resolve = M('alldiseases')->where("id = {$_GET['id']}")->delete();
+        if ($resolve > 0) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@ visitTypesof data list
+     *  @param null
+     * */
+    public function typesof () {
+        $this->display();
+    }
+    /*
+     *  @@ typesofCheck data
+     *  @@param null
+     *  @return boolean
+     * */
+    public function typesofCheck () { // bug .返回的数据格式不对, 中文字符乱码....
+        $typesof = M('fromaddress')->field(array('id', 'fromaddress', 'addtime'))->select();
+        if ($typesof) {
+            $this->arrayRecursive($typesof, 'urldecode', true);
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+        $typesof = urldecode(json_encode($typesof));
+        $typesofList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $typesof}";
+        $this->ajaxReturn($diseasesList, 'eval');
+    }
+    /*
+     *  @@ visitTypesof data delete
+     *  @param null
+     *  @return boolean
+     * */
+    public function typesofDel () {
+        if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $resolve = M('fromaddress')->where("id = {$_GET['id']}")->delete();
+        if ($resolve > 0) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@ typesof data add
+     *  @param null
+     *  @return boolean
+     * */
+    public function typesofAdd () {
+        $typesofData = json_decode($_GET['data'], true);
+        $resolve = M('fromaddress')->add($typesofData);
+        if ($resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
      *  @@ JsonString handle
      *  @param $array Type: array
      *  @param $function Type: string
      *  @param $apply_to_keys_also Type: boolean
-     *  return jsonString
+     *  @return jsonString
      * */
     public function arrayRecursive(&$array, $function, $apply_to_keys_also = false) {
         static $recursive_counter = 0;
