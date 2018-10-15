@@ -47,6 +47,11 @@
                     <a class="" href="javascript:;"><span class="layui-icon layui-icon-list">&nbsp;&nbsp;</span>病人预约管理</a>
                     <dl class="layui-nav-child">
                         <dd><a  href="javascript:;" onclick="visit();">预约登记列表</a></dd>
+<<<<<<< HEAD
+=======
+                        <dd><a  href="javascript:;">预约病人搜索</a></dd>
+                        <dd><a  href="javascript:;">重复病人查询</a></dd>
+>>>>>>> 2d586dea4b8112e0d3b60eb3d5a2cbd591297483
                         <dd><a  href="javascript:;">客服明细报表</a></dd>
                         <dd><a  href="javascript:;">月趋势报表</a></dd>
                         <dd><a  href="javascript:;">自定义图像报表</a></dd>

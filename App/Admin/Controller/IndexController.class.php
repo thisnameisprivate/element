@@ -48,6 +48,7 @@ class IndexController extends Controller {
         $this->ajaxReturn($visitList, 'eval');
     }
     /*
+<<<<<<< HEAD
      *  @@ visit data delte
      *  @param null
      *  @return boolean Type: json
@@ -63,6 +64,8 @@ class IndexController extends Controller {
         }
     }
     /*
+=======
+>>>>>>> 2d586dea4b8112e0d3b60eb3d5a2cbd591297483
      *  @hospitals Data List
      *  @param null
      *  @display page.
