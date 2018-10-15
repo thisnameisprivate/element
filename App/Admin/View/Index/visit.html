@@ -20,87 +20,96 @@
 </div>
 <button id="searchbtn" class="layui-btn" data-type="reload">搜索</button>
 <table id="container" lay-filter="edittable"></table>
-<div class="layui-container" id="layerpopCheck" style="display:none;">
-    <p>查看信息弹出窗口</p>
-</div>
 <div class="layui-container" id="layerpopEdit" style="display:none;">
-    <p style="display:none" id="idValue"></p>
-    <form class="layui-form" lay-filter="formedit">
-        <div class="layui-form-item">
-            <label class="layui-form-label">回访目标</label>
-            <div class="layui-input-inline">
-                <input type="text" name="username" lay-verify="required" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">回访电话</label>
-            <div class="layui-input-inline">
-                <input type="text" name="clientPhone" lay-verify="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">客服电话</label>
-            <div class="layui-input-inline">
-                <input type="text" name="phone" lay-verify="phone" placeholder="请输入客服小姐姐电话~" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">客服姓名</label>
-            <div class="layui-input-inline">
-                <select name="name" lay-verify="required">
-                    <foreach name="custservices" item="vo" key="index">
-                        <option value="{$index}">{$vo['custservice']}</option>
-                    </foreach>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">回访状态</label>
-            <div class="layui-input-inline">
+    <div class="container">
+        <p style="display:none" id="idValue"></p>
+        <form class="layui-form" lay-filter="formedit">
+            <div class="layui-form-item">
+                <label class="layui-form-label">回访目标</label>
                 <div class="layui-input-inline">
-                    <select name="visitStatus" lay-verify="required">
-                        <foreach name="visitstatusValue" item="vo" key="index">
-                            <option value="{$index}">{$vo['visitstatus']}</option>
+                    <input type="text" name="name" lay-verify="required" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
+                </div>
+                <label class="layui-form-label">回访电话</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="clientPhone" lay-verify="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">年龄</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="old" lay-verify="required" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
+                </div>
+                <label class="layui-form-label">专家号</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="old" lay-verify="required" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">预约时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="date">
+                </div>
+                <label class="layui-form-label">客服姓名</label>
+                <div class="layui-input-inline">
+                    <select name="name" lay-verify="required">
+                        <foreach name="custservices" item="vo" key="index">
+                            <option value="{$index}">{$vo['custservice']}</option>
                         </foreach>
                     </select>
                 </div>
             </div>
-            <label class="layui-form-label">来院状态</label>
-            <div class="layui-input-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">回访状态</label>
                 <div class="layui-input-inline">
-                    <select name="status" lay-verify="required">
-                        <foreach name="statusValue" item="vo" key="index">
-                            <option value="{$index}">{$vo['status']}</option>
-                        </foreach>
-                    </select>
+                    <div class="layui-input-inline">
+                        <select name="visitStatus" lay-verify="required">
+                            <foreach name="visitstatusValue" item="vo" key="index">
+                                <option value="{$index}">{$vo['visitstatus']}</option>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+                <label class="layui-form-label">来院状态</label>
+                <div class="layui-input-inline">
+                    <div class="layui-input-inline">
+                        <select name="status" lay-verify="required">
+                            <foreach name="statusValue" item="vo" key="index">
+                                <option value="{$index}">{$vo['status']}</option>
+                            </foreach>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">消费金额</label>
-            <div class="layui-input-inline">
-                <input type="text" name="money" placeholder="¥_¥ 必须为数字~" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">就诊项目</label>
-            <div class="layui-input-inline">
+            <div class="layui-form-item">
+                <label class="layui-form-label">消费金额</label>
                 <div class="layui-input-inline">
-                    <select name="options" lay-verify="required">
-                        <foreach name="diseasesList" item="vo" key="index">
-                            <option value="{$index}">{$vo['diseases']}</option>
-                        </foreach>
-                    </select>
+                    <input type="text" name="money" placeholder="¥_¥ 必须为数字~" autocomplete="off" class="layui-input">
+                </div>
+                <label class="layui-form-label">就诊项目</label>
+                <div class="layui-input-inline">
+                    <div class="layui-input-inline">
+                        <select name="options" lay-verify="required">
+                            <foreach name="diseasesList" item="vo" key="index">
+                                <option value="{$index}">{$vo['diseases']}</option>
+                            </foreach>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">性别</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男">
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男">
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="fromedit">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="fromedit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 <div class="layui-container" id="layerAddData" style="display:none;">
     <div class="container">
@@ -194,11 +203,13 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
-    layui.use(['table', 'layer', 'laypage', 'form'], () => {
+    layui.use(['table', 'layer', 'laypage', 'form', 'laydate'], () => {
         var table = layui.table;
+        var laydate = layui.laydate;
         var layer = layui.layer;
         var form = layui.form;
         var laypage = layui.laypage;
+        var $ = layui.jquery;
         var tableIns = table.render({
             text: {
                 none: '暂无相关数据',
@@ -255,9 +266,9 @@
                     content: document.getElementById('layerpopCheck').innerHTML,
                 })
             } else if (layEvent === 'del') { // delete tool data
-                layer.confirm('【 ' + data.name + ' 】do you delete source?', (index) => {
+                layer.confirm('【 ' + data.name + ' 】are you soure delete ?', (index) => {
                     var client = new XMLHttpRequest();
-                    client.open("GET", "{:U('Admin/Index/delete/id/" + parseInt(data.id) + "')}");
+                    client.open("GET", "{:U('Admin/Index/visitDel/id/" + parseInt(data.id) + "')}");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
@@ -278,12 +289,13 @@
                     title: '编辑信息',
                     area: ['900px', '600px'],
                     content: document.getElementById('layerpopEdit').innerHTML,
+                    // success: () => { console.log("pop page渲染完成"); laydate.render({ elem: '#date' }) }
                 });
                 setFormValue(data);
                 form.on('submit(fromedit)', data => {
                     var id = document.getElementById('idValue').innerHTML;
                     var client = new XMLHttpRequest();
-                    client.open('GET', "{:U('Admin/index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"')}");
+                    client.open('GET', "{:U('Admin/Index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"')}");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
@@ -309,7 +321,7 @@
                 layer.open({
                     type: 1,
                     title: '新增回访信息',
-                    area: ['900px', '600px'],
+                    area: ['1000px', '600px'],
                     content: document.getElementById('layerAddData').innerHTML,
                 });
                 form.render();

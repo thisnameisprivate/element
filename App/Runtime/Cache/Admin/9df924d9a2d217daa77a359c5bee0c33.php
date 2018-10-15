@@ -33,23 +33,20 @@
             <li class="layui-nav-item">
                 <a href="javascript:;" class="layui-anim layui-anim-up layui-this" id="classification">广元协和医院男科</a>
                 <dl class="layui-nav-child">
-                    <?php if(is_array($hospitals)): foreach($hospitals as $index=>$vo): ?><dd class="layui-anim layui-anim-scaleSpring"><a href="javascript:;" onclick="readyHospital(this);" tableName="<?php echo ($vo['tableName']); ?>"></a></dd><?php endforeach; endif; ?>
+                    <?php if(is_array($hospitals)): foreach($hospitals as $index=>$vo): ?><dd class="layui-anim layui-anim-scaleSpring"><a href="javascript:;" onclick="readyHospital(this);" tableName="<?php echo ($vo['tableName']); ?>"><?php echo ($vo['hospital']); ?></a></dd><?php endforeach; endif; ?>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
+            <li class="layui-nav-item"><a href="">注销</a></li>
         </ul>
     </div>
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;"><span class="layui-icon layui-icon-list">&nbsp;&nbsp;</span>病人预约管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a  href="javascript:;">预约登记列表</a></dd>
-                        <dd><a  href="javascript:;">预约病人搜索</a></dd>
-                        <dd><a  href="javascript:;">重复病人查询</a></dd>
+                        <dd><a  href="javascript:;" onclick="visit();">预约登记列表</a></dd>
                         <dd><a  href="javascript:;">客服明细报表</a></dd>
                         <dd><a  href="javascript:;">月趋势报表</a></dd>
                         <dd><a  href="javascript:;">自定义图像报表</a></dd>
@@ -111,7 +108,7 @@
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">人员管理</a></dd>
                         <dd><a href="javascript:;">权限管理</a></dd>
-                        <dd><a href="javascript:;">医院列表</a></dd>
+                        <dd><a href="javascript:;" onclick="hospitalsList();">医院列表</a></dd>
                         <dd><a href="javascript:;">通知列表</a></dd>
                     </dl>
                 </li>
@@ -135,11 +132,14 @@
     <!-- 底部固定区域 -->
     <a href="javascript:;" title="发布日期: 2018/10/1日:)"><span class="layui-icon layui-icon-website layui-anim layui-anim-fadein layui-anim-loop"></span>&nbsp;&nbsp;&nbsp;广元协和医院预约回访管理系统 ©</a>
 </div>
+</body>
 <script src="/element/Public/statics/layui/layui.js"></script>
-<script>
+<script type="text/javascript">
     //JavaScript代码区域
-    layui.use(['element', 'layer', 'form'], function(){
+    layui.use(['element', 'layer', 'form'], () => {
+        const iframe = document.getElementById('iframe');
         var element = layui.element;
+        // 医院列表下拉框渲染
         readyHospital = tableName => {
             var ification = document.getElementById('classification');
             var selects = document.getElementsByClassName('tableName');
@@ -150,7 +150,22 @@
             document.cookie = "tableName=" + tableName.getAttribute('tableNamem');
             console.log(tableName.getAttribute('tableName'));
         }
+        visit = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
+        hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
+        iframeSetAttr = (url) => {
+            iframe.setAttribute('src', url);
+        }
+        //  Request function
+        Request = (url) => {
+            var Request = new XMLHttpRequest();
+            Request.open('GET', url);
+            Request.send();
+            Request.onreadystatechange = () => {
+                if (Request.readyState === 4 && Request.status === 200) {
+                    document.getElementById('iframe').setAttribute('src', url);
+                }
+            }
+        }
     });
 </script>
-</body>
 </html>

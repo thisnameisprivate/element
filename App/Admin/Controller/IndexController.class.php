@@ -18,6 +18,11 @@ class IndexController extends Controller {
     public function visit () {
         $this->display();
     }
+    /*
+     *  @@ visit Data List.
+     *  @param null
+     *  @return $visitList Type: json.
+     * */
     public function visitCheck () {
         $cookietable = cookie('tableName');
         $hospital = M($cookietable);
@@ -41,6 +46,74 @@ class IndexController extends Controller {
         $interval = ceil($hospitalVisitCount / $totalPage);
         $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
         $this->ajaxReturn($visitList, 'eval');
+    }
+    /*
+     *  @@ visit data delte
+     *  @param null
+     *  @return boolean Type: json
+     * */
+    public function visitDel () {
+        if (! is_numeric($_GET['id'])) return false;
+        $cookietable = cookie('tableName');
+        $resovle = M($cookietable)->where("id = {$_GET['id']}")->delete();
+        if ($resovle) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @hospitals Data List
+     *  @param null
+     *  @display page.
+     * */
+    public function hospitalsList () {
+        $this->display();
+    }
+    /*
+     *  @hospitals Data Check
+     *  @param null
+     *  @return $hospitals Type: json.
+     * */
+    public function hospitalsCheck () {
+        $hospitals = M('hospital')->select();
+        $hospitalsCount = count($hospitals);
+        if ($hospitals) {
+            $this->arrayRecursive($hospitals, 'urldecode', true);
+        } else {
+            $this->ajaxrReturn(false, 'eval');
+        }
+        $hospitals = urldecode(json_encode($hospitals));
+        $hospitalsList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalsCount, \"data\": $hospitals}";
+        $this->ajaxReturn($hospitalsList, 'eval');
+    }
+    /*
+     *  @@ hospitals Data add
+     *  @param null
+     *  @return boolean
+     * */
+    public function hospitalsAdd () {
+        $hospitalsData = json_decode($_GET['data'], true);
+        $resolve = M('hospital')->add($hospitalsData);
+        if ($resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@ hospitals Data del
+     *  @param null
+     *  @return boolean
+     * */
+    public function hospitalsDel () {
+        if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $resolve = M('hospital')->where("id = {$_GET['id']}")->delete();
+        if ($resolve > 0) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
     }
     /*
      *  @@ JsonString handle
