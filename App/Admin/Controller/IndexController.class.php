@@ -17,16 +17,9 @@ class IndexController extends Controller {
     }
     public function visit () {
         $arrivalStatus = M('arrivalstatus')->field('arrivalStatus')->select();
-        $diseases = M('alldiseases')->field('diseases')->select();
+        $diseases = M('alldiseases')->where("tableName = '{$_COOKIE['tableName']}'")->field('diseases')->select();
         $custservice = M('custservice')->field('custservice')->select();
         $fromaddress = M('fromaddress')->field('fromaddress')->select();
-        print_r($arrivalStatus);
-        echo "<br/>";
-        print_r($diseases);
-        echo "<br/>";
-        print_r($custservice);
-        echo "<br/>";
-        print_r($fromaddress);
         $this->assign('arrivalStatus', $arrivalStatus);
         $this->assign('diseases', $diseases);
         $this->assign('custservice', $custservice);
@@ -39,7 +32,7 @@ class IndexController extends Controller {
      *  @return $visitList Type: json.
      * */
     public function visitCheck () {
-        $cookietable = cookie('tableName');
+        $cookietable = $_COOKIE['tableName'];
         $hospital = M($cookietable);
         if ($_GET['search'] == '') {
             $hospitalVisitCount = $hospital->count();
@@ -69,7 +62,7 @@ class IndexController extends Controller {
      * */
     public function visitDel () {
         if (! is_numeric($_GET['id'])) return false;
-        $cookietable = cookie('tableName');
+        $cookietable = $_COOKIE['tableName'];
         $resovle = M($cookietable)->where("id = {$_GET['id']}")->delete();
         if ($resovle) {
             $this->ajaxReturn(true, 'eval');
@@ -84,10 +77,25 @@ class IndexController extends Controller {
      * */
     public function addData () {
         $visitData = json_decode($_GET['data'], true);
-        print_r($visitData);
-        exit;
-        $tableName = cookie('tableName');
+        $tableName = $_COOKIE['tableName'];
         $resolve = M($tableName)->add($visitData);
+        if ($resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@vist data edit
+     *  @param null
+     *  @return boolean. Type: eval
+     * */
+    public function editData () {
+        $visitData = json_decode($_GET['data'], true);
+        $tableName = $_COOKIE['tableName'];
+        $resolve = M($tableName)->where("id = {$_GET['id']}")->save($visitData);
+        print_r($resolve);
+        exit;
         if ($resolve) {
             $this->ajaxReturn(true, 'eval');
         } else {
@@ -160,7 +168,7 @@ class IndexController extends Controller {
      *  @return $diseasesList Type: json
      * */
     public function diseaseCheck () {
-        $tableName = cookie('tableName');
+        $tableName = $_COOKIE['tableName'];
         $diseases = M('alldiseases')->where("tableName = '{$tableName}'")->field(array('id', 'diseases', 'addtime'))->select();
         if ($diseases) {
             $this->arrayRecursive($diseases, 'urldecode', true);
@@ -178,7 +186,7 @@ class IndexController extends Controller {
      * */
     public function diseaseAdd () {
         $diseasesData = json_decode($_GET['data'], true);
-        $diseasesData['tableName'] = cookie('tableName');
+        $diseasesData['tableName'] = $_COOKIE['tableName'];
         $resolve = M('alldiseases')->add($diseasesData);
         if ($resolve) {
             $this->ajaxReturn(true, 'eval');

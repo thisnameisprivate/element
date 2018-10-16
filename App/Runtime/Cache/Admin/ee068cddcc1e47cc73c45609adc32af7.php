@@ -31,7 +31,7 @@
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" lay-verify="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" lay-verify="required" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -47,11 +47,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="date">
+                    <input type="text" name="oldDate" class="layui-input" id="date">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="date">
+                    <input type="text" name="newDate" class="layui-input" id="date">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -65,7 +65,7 @@
                 </div>
                 <label class="layui-form-label">媒体来源</label>
                 <div class="layui-input-inline">
-                    <select name="name" lay-verify="required">
+                    <select name="fromAddress" lay-verify="required">
                         <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
@@ -74,14 +74,14 @@
                 <label class="layui-form-label">病患类型</label>
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
-                        <select name="options" lay-verify="required">
+                        <select name="diseases" lay-verify="required">
                             <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">客服姓名</label>
                 <div class="layui-input-inline">
-                    <select name="name" lay-verify="required">
+                    <select name="custService" lay-verify="required">
                         <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
@@ -105,7 +105,7 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">咨询内容</label>
                 <div class="layui-input-block">
-                    <textarea name="desc" placeholder="请输入咨询内容~" class="layui-textarea"></textarea>
+                    <textarea name="desc1" placeholder="请输入咨询内容~" class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -133,7 +133,7 @@
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" lay-verify="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" lay-verify="required" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -149,11 +149,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="date">
+                    <input type="text" name="oldDate" class="layui-input" id="date">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" id="date">
+                    <input type="text" name="newDate" class="layui-input" id="date">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -167,7 +167,7 @@
                 </div>
                 <label class="layui-form-label">媒体来源</label>
                 <div class="layui-input-inline">
-                    <select name="name" lay-verify="required">
+                    <select name="fromAddress" lay-verify="required">
                         <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
@@ -176,14 +176,14 @@
                 <label class="layui-form-label">病患类型</label>
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
-                        <select name="options" lay-verify="required">
+                        <select name="diseases" lay-verify="required">
                             <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">客服姓名</label>
                 <div class="layui-input-inline">
-                    <select name="name" lay-verify="required">
+                    <select name="custService" lay-verify="required">
                         <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
@@ -207,7 +207,7 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">咨询内容</label>
                 <div class="layui-input-block">
-                    <textarea name="desc" placeholder="请输入咨询内容~" class="layui-textarea"></textarea>
+                    <textarea name="desc1" placeholder="请输入咨询内容~" class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -218,7 +218,7 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="fromedit">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="fromadd">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -257,8 +257,7 @@
             url: "<?php echo U('Admin/Index/visitCheck');?>",
             height:'full-200',
             page: true,
-            cellMinWidth:100,
-            even: true,
+            cellMinWidth:50,
             limit: 25,
             limits: [25, 50, 75],
             loading: true,
@@ -292,14 +291,7 @@
             var data = obj.data;
             var layEvent = obj.event;
             var tr = obj.tr;
-            if (layEvent === 'detail') { // check tool data
-                layer.open({
-                    type: 1,
-                    title: '查看信息',
-                    area: ['65%', '75%'],
-                    content: document.getElementById('layerpopCheck').innerHTML,
-                })
-            } else if (layEvent === 'del') { // delete tool data
+            if (layEvent === 'del') { // delete tool data
                 layer.confirm('【 ' + data.name + ' 】are you soure delete ?', (index) => {
                     var client = new XMLHttpRequest();
                     client.open("GET", "<?php echo U('Admin/Index/visitDel/id/" + parseInt(data.id) + "');?>");
@@ -337,7 +329,7 @@
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
-                            if (client.response === 1) {
+                            if (client.response == 1) {
                                 layer.msg('add success', {icon: 6});
                                 layer.closeAll('page');
                                 tableIns.reload();
@@ -346,9 +338,6 @@
                             }
                         }
                     }
-                    // 由于thinkphp修改了url为兼容模式,导致添加数据过后跳转到登陆页面:(... 未知bug,先这样勉强算修复了.但是现在没有添加成功和失败的弹出框了... Server 环境太老了,只兼容thinkphp3.2.2
-                    var parent = window.parent.document.getElementById('iframe');
-                    parent.setAttribute("src", "/element/index.php?s=/Admin/Index/visit");
                     return false;
                 });
             }
@@ -370,11 +359,13 @@
                 form.render();
                 form.on('submit(fromadd)', data => {
                     var client = new XMLHttpRequest();
+                    console.log(data);
+                    console.log(JSON.stringify(data.field));
                     client.open('GET', "<?php echo U('Admin/Index/addData/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
-                            if (client.response === 1) {
+                            if (client.response == 1) {
                                 layer.msg('add success', {icon: 6});
                                 layer.closeAll('page');
                                 tableIns.reload();
@@ -383,9 +374,6 @@
                             }
                         }
                     }
-                    // 由于thinkphp修改了url为兼容模式,导致添加数据过后跳转到登陆页面:(... 未知bug,先这样勉强算修复了.但是现在没有添加成功和失败的弹出框了... Server 环境太老了,只兼容thinkphp3.2.2
-                    var parent = window.parent.document.getElementById('iframe');
-                    parent.setAttribute("src", "/element/index.php?s=/Admin/Index/visit");
                     return false;
                 });
             }
@@ -413,7 +401,6 @@
         /* 渲染form表单 */
         setFormValue = data => {
             form.val('formedit', {
-                setFormValue
             });
             form.render();
         }

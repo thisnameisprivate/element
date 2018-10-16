@@ -11,11 +11,14 @@
         .layui-layout-admin .layui-header{background: #2F4056;}
     </style>
 </head>
+<script type="text/javascript">
+    // one loading time set default cookie.
+    document.cookie = 'tableName=nk';
+</script>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">广元协和医院新媒体</div>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">控制台</a></li>
             <li class="layui-nav-item"><a href="">商品管理</a></li>
@@ -33,7 +36,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;" class="layui-anim layui-anim-up layui-this" id="classification">广元协和医院男科</a>
                 <dl class="layui-nav-child">
-                    <?php if(is_array($hospitals)): foreach($hospitals as $index=>$vo): ?><dd class="layui-anim layui-anim-scaleSpring"><a href="javascript:;" onclick="readyHospital(this);" tableName="<?php echo ($vo['tableName']); ?>"><?php echo ($vo['hospital']); ?></a></dd><?php endforeach; endif; ?>
+                    <?php if(is_array($hospitals)): foreach($hospitals as $index=>$vo): ?><dd class="layui-anim layui-anim-scaleSpring"><a href="javascript:;" onclick="readyHospital(this);" tablename="<?php echo ($vo['tableName']); ?>"><?php echo ($vo['hospital']); ?></a></dd><?php endforeach; endif; ?>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="">注销</a></li>
@@ -141,13 +144,9 @@
         // 医院列表下拉框渲染
         readyHospital = tableName => {
             var ification = document.getElementById('classification');
-            var selects = document.getElementsByClassName('tableName');
             ification.innerHTML = tableName.innerText + "<span class='layui-nav-more'></span>";
-            for (var i = 0; i < selects.length; i ++) {
-                selects[i].setAttribute('tableName', tableName.getAttribute('tableName'));
-            }
-            document.cookie = "tableName=" + tableName.getAttribute('tableNamem');
-            console.log(tableName.getAttribute('tableName'));
+            console.log(tableName.getAttribute('tablename'));
+            document.cookie = 'tableName=' + tableName.getAttribute('tablename');
         }
         visit = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
         hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
