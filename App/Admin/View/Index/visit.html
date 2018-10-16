@@ -289,7 +289,7 @@
                     title: '编辑信息',
                     area: ['900px', '600px'],
                     content: document.getElementById('layerpopEdit').innerHTML,
-                    // success: () => { console.log("pop page渲染完成"); laydate.render({ elem: '#date' }) }
+                    success: () => { console.log("pop page渲染完成"); laydate.render({ elem: '#date' }) }
                 });
                 setFormValue(data);
                 form.on('submit(fromedit)', data => {

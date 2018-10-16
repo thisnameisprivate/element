@@ -180,7 +180,7 @@ class IndexController extends Controller {
      *  @@param null
      *  @return boolean
      * */
-    public function typesofCheck () { // bug .返回的数据格式不对, 中文字符乱码....
+    public function typesofCheck () {
         $typesof = M('fromaddress')->field(array('id', 'fromaddress', 'addtime'))->select();
         if ($typesof) {
             $this->arrayRecursive($typesof, 'urldecode', true);
@@ -189,7 +189,7 @@ class IndexController extends Controller {
         }
         $typesof = urldecode(json_encode($typesof));
         $typesofList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $typesof}";
-        $this->ajaxReturn($diseasesList, 'eval');
+        $this->ajaxReturn($typesofList, 'eval');
     }
     /*
      *  @@ visitTypesof data delete

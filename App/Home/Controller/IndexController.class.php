@@ -15,7 +15,7 @@ class IndexController extends Controller {
                 cookie('username', $username, 3600);
                 $this->success('login success', U('Admin/Index/index'));
             } else {
-                $this->error('login failed.', U('Admin/Index/index'));
+                $this->error('login failed.', U('Home/Index/index'));
             }
         }
     }
