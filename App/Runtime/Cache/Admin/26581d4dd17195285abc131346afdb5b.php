@@ -72,7 +72,7 @@
                 {field: 'hospital', title: '医院科室', width: 200},
                 {field: 'tableName', title: '对应数据表', width: 200},
                 {field: 'addtime', title: '添加时间', width:200},
-                {fixed: 'right', title: '操作',  width:150, align:'center', toolbar: '#bar'}
+                {fixed: 'right', title: '操作',  width:100, align:'center', toolbar: '#bar'}
             ]],
             id: 'edittable',
         });

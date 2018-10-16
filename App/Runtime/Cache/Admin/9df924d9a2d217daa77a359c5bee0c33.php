@@ -87,11 +87,11 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-set-sm">&nbsp;&nbsp;</span>设置</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">医生设置</a></dd>
-                        <dd><a href="javascript:;" onclick="disease();">疾病设置</a></dd>
-                        <dd><a href="javascript:;" onclick="typesof();">就诊类型设置</a></dd>
-                        <dd><a href="javascript:;">医院科室设置</a></dd>
-                        <dd><a href="javascript:;">搜索引擎设置</a></dd>
+                        <dd><a href="javascript:;" onclick="doctor();">客服人员设置</a></dd>
+                        <dd><a href="javascript:;" onclick="disease();">病患类型设置</a></dd>
+                        <dd><a href="javascript:;" onclick="typesof();">媒体来源设置</a></dd>
+                        <dd><a href="javascript:;" onclick="hospitalsList();">医院科室设置</a></dd>
+                        <dd><a href="javascript:;" onclick="arrivalStatus();">来院状态设置</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -105,9 +105,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-app">&nbsp;&nbsp;</span>系统管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">人员管理</a></dd>
+                        <dd><a href="javascript:;">用户管理</a></dd>
                         <dd><a href="javascript:;">权限管理</a></dd>
-                        <dd><a href="javascript:;" onclick="hospitalsList();">医院列表</a></dd>
+                        <dd><a href="javascript:;">医院列表</a></dd>
                         <dd><a href="javascript:;">通知列表</a></dd>
                     </dl>
                 </li>
@@ -153,6 +153,8 @@
         hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
         disease = () => { iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
         typesof = () => { iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
+        doctor = () =>{ iframeSetAttr("<?php echo U('Admin/Index/doctor');?>") }
+        arrivalStatus = () => { iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
         iframeSetAttr = (url) => { iframe.setAttribute('src', url); }
         //  Request function
         Request = (url) => {

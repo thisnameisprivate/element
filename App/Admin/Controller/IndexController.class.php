@@ -16,6 +16,21 @@ class IndexController extends Controller {
         $this->display();
     }
     public function visit () {
+        $arrivalStatus = M('arrivalstatus')->field('arrivalStatus')->select();
+        $diseases = M('alldiseases')->field('diseases')->select();
+        $custservice = M('custservice')->field('custservice')->select();
+        $fromaddress = M('fromaddress')->field('fromaddress')->select();
+        print_r($arrivalStatus);
+        echo "<br/>";
+        print_r($diseases);
+        echo "<br/>";
+        print_r($custservice);
+        echo "<br/>";
+        print_r($fromaddress);
+        $this->assign('arrivalStatus', $arrivalStatus);
+        $this->assign('diseases', $diseases);
+        $this->assign('custservice', $custservice);
+        $this->assign('fromaddress', $fromaddress);
         $this->display();
     }
     /*
@@ -50,13 +65,30 @@ class IndexController extends Controller {
     /*
      *  @@ visit data delte
      *  @param null
-     *  @return boolean Type: json
+     *  @return boolean Type: eval
      * */
     public function visitDel () {
         if (! is_numeric($_GET['id'])) return false;
         $cookietable = cookie('tableName');
         $resovle = M($cookietable)->where("id = {$_GET['id']}")->delete();
         if ($resovle) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@ visit data add
+     *  @param null
+     *  @return boolean. Type: eval
+     * */
+    public function addData () {
+        $visitData = json_decode($_GET['data'], true);
+        print_r($visitData);
+        exit;
+        $tableName = cookie('tableName');
+        $resolve = M($tableName)->add($visitData);
+        if ($resolve) {
             $this->ajaxReturn(true, 'eval');
         } else {
             $this->ajaxReturn(false, 'eval');
@@ -213,6 +245,108 @@ class IndexController extends Controller {
     public function typesofAdd () {
         $typesofData = json_decode($_GET['data'], true);
         $resolve = M('fromaddress')->add($typesofData);
+        if ($resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     * @@ doctor data page
+     * @param null
+     * */
+    public function doctor () {
+        $this->display();
+    }
+    /*
+     *  @@doctor data list
+     *  @param null
+     *  @return $custserviceList Type: json
+     * */
+    public function doctorCheck () {
+        $custservice = M('custservice')->field(array('id', 'custservice', 'addtime'))->select();
+        if ($custservice) {
+            $this->arrayRecursive($custservice, 'urldecode', true);
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+        $custservice = urldecode(json_encode($custservice));
+        $custserviceList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $custservice}";
+        $this->ajaxReturn($custserviceList, 'eval');
+    }
+    /*
+     *  @@doctor data add
+     *  @param null
+     *  @return boolean
+     * */
+    public function doctorAdd () {
+        $doctorData = json_decode($_GET['data'], true);
+        $resolve = M('custservice')->add($doctorData);
+        if ($resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@doctor data del
+     *  @param null
+     *  @return boolean
+     * */
+    public function doctorDel () {
+        if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $resolve = M('custservice')->where("id = {$_GET['id']}")->delete();
+        if ($resolve > 0) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@ arrivalStatus page
+     *  @param null
+     * */
+    public function arrivalStatus () {
+        $this->display();
+    }
+    /*
+     *  @@ arrivalStatus data list
+     *  @param null
+     *  @return $arrivalStatusList Type: json
+     * */
+    public function arrivalStatusCheck () {
+        $arrivalStatus = M('arrivalstatus')->field(array('id', 'arrivalStatus', 'addtime'))->select();
+        if ($arrivalStatus) {
+            $this->arrayRecursive($arrivalStatus, 'urldecode', true);
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+        $arrivalStatus = urldecode(json_encode($arrivalStatus));
+        $arrivalStatusList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $arrivalStatus}";
+        $this->ajaxReturn($arrivalStatusList, 'eval');
+    }
+    /*
+     *  @@ arrivalStatus data del
+     *  @param null
+     *  @return boolean
+     * */
+    public function arrivalStatusDel () {
+        if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $resovle = M('arrivalstatus')->where("id = {$_GET['id']}")->delete();
+        if ($resovle) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@ arrivalStatus data add
+     *  @param null
+     *  @return boolean
+     * */
+    public function arrivalStatusAdd () {
+        $arrivalData = json_decode($_GET['data'], true);
+        $resolve = M('arrivalstatus')->add($arrivalData);
         if ($resolve) {
             $this->ajaxReturn(true, 'eval');
         } else {

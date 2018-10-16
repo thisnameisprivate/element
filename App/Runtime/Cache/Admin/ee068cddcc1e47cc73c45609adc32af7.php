@@ -25,21 +25,21 @@
         <p style="display:none" id="idValue"></p>
         <form class="layui-form" lay-filter="formedit">
             <div class="layui-form-item">
-                <label class="layui-form-label">回访目标</label>
+                <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
                     <input type="text" name="name" lay-verify="required" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
                 </div>
-                <label class="layui-form-label">回访电话</label>
+                <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="clientPhone" lay-verify="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" lay-verify="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">年龄</label>
+                <label class="layui-form-label">QQ/微信</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="old" lay-verify="required" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
+                    <input type="text" name="qq" placeholder="请输入QQ / 微信~" autocomplete="off" class="layui-input">
                 </div>
-                <label class="layui-form-label">专家号</label>
+                <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
                     <input type="number" name="old" lay-verify="required" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
                 </div>
@@ -49,49 +49,69 @@
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input" id="date">
                 </div>
-                <label class="layui-form-label">客服姓名</label>
+                <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <select name="name" lay-verify="required">
-                        <?php if(is_array($custservices)): foreach($custservices as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
-                    </select>
+                    <input type="text" class="layui-input" id="date">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">回访状态</label>
-                <div class="layui-input-inline">
-                    <div class="layui-input-inline">
-                        <select name="visitStatus" lay-verify="required">
-                            <?php if(is_array($visitstatusValue)): foreach($visitstatusValue as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['visitstatus']); ?></option><?php endforeach; endif; ?>
-                        </select>
-                    </div>
-                </div>
                 <label class="layui-form-label">来院状态</label>
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
-                            <?php if(is_array($statusValue)): foreach($statusValue as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['status']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
+                </div>
+                <label class="layui-form-label">媒体来源</label>
+                <div class="layui-input-inline">
+                    <select name="name" lay-verify="required">
+                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">消费金额</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="money" placeholder="¥_¥ 必须为数字~" autocomplete="off" class="layui-input">
-                </div>
-                <label class="layui-form-label">就诊项目</label>
+                <label class="layui-form-label">病患类型</label>
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="options" lay-verify="required">
-                            <?php if(is_array($diseasesList)): foreach($diseasesList as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
+                </div>
+                <label class="layui-form-label">客服姓名</label>
+                <div class="layui-input-inline">
+                    <select name="name" lay-verify="required">
+                        <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">专家号</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="expert" lay-verify="required" placeholder="请输入专家号~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">性别</label>
-                <div class="layui-input-block">
+                <div class="layui-input-inline">
                     <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男">
+                </div>
+                <label class="layui-form-label">是否本市</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="switch" lay-skin="switch" lay-text="是|否">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">咨询内容</label>
+                <div class="layui-input-block">
+                    <textarea name="desc" placeholder="请输入咨询内容~" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="desc2" placeholder="请输入备注信息~" class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -105,70 +125,100 @@
 </div>
 <div class="layui-container" id="layerAddData" style="display:none;">
     <div class="container">
-        <form class="layui-form" lay-filter="formadd">
+        <form class="layui-form" lay-filter="formAdd">
             <div class="layui-form-item">
-                <label class="layui-form-label">回访目标</label>
+                <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" lay-veify="required" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
+                    <input type="text" name="name" lay-verify="required" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
                 </div>
-                <label class="layui-form-label">回访电话</label>
+                <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="clientPhone" lay-verify="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" lay-verify="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">客服电话</label>
+                <label class="layui-form-label">QQ/微信</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" lay-verify="phone" placeholder="请输入客服小姐姐电话~" autocomplete="off" class="layui-input">
+                    <input type="text" name="qq" placeholder="请输入QQ / 微信~" autocomplete="off" class="layui-input">
                 </div>
-                <label class="layui-form-label">客服姓名</label>
+                <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
-                    <select name="name" lay-verify="required">
-                        <?php if(is_array($custservices)): foreach($custservices as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
-                    </select>
+                    <input type="number" name="old" lay-verify="required" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">回访状态</label>
+                <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <div class="layui-input-inline">
-                        <select name="visitStatus" lay-verify="required">
-                            <?php if(is_array($visitstatusValue)): foreach($visitstatusValue as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['visitstatus']); ?></option><?php endforeach; endif; ?>
-                        </select>
-                    </div>
+                    <input type="text" class="layui-input" id="date">
                 </div>
+                <label class="layui-form-label">回访时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="date">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">来院状态</label>
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
-                            <?php if(is_array($statusValue)): foreach($statusValue as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['status']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
+                </div>
+                <label class="layui-form-label">媒体来源</label>
+                <div class="layui-input-inline">
+                    <select name="name" lay-verify="required">
+                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">消费金额</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="money" placeholder="¥_¥ 必须为数字~" autocomplete="off" class="layui-input">
-                </div>
-                <label class="layui-form-label">就诊项目</label>
+                <label class="layui-form-label">病患类型</label>
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="options" lay-verify="required">
-                            <?php if(is_array($diseasesList)): foreach($diseasesList as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
+                </div>
+                <label class="layui-form-label">客服姓名</label>
+                <div class="layui-input-inline">
+                    <select name="name" lay-verify="required">
+                        <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">专家号</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="expert" lay-verify="required" placeholder="请输入专家号~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">性别</label>
-                <div class="layui-input-block">
+                <div class="layui-input-inline">
                     <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男">
+                </div>
+                <label class="layui-form-label">是否本市</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="switch" lay-skin="switch" lay-text="是|否">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">咨询内容</label>
+                <div class="layui-input-block">
+                    <textarea name="desc" placeholder="请输入咨询内容~" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <textarea name="desc2" placeholder="请输入备注信息~" class="layui-textarea"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="fromadd">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="fromedit">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -187,7 +237,7 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
-    layui.use(['table', 'layer', 'laypage', 'form', 'laydate'], () => {
+    layui.use(['laydate', 'table', 'layer', 'laypage', 'form'], () => {
         var table = layui.table;
         var laydate = layui.laydate;
         var layer = layui.layer;
@@ -246,7 +296,7 @@
                 layer.open({
                     type: 1,
                     title: '查看信息',
-                    area: ['900px', '600px'],
+                    area: ['65%', '75%'],
                     content: document.getElementById('layerpopCheck').innerHTML,
                 })
             } else if (layEvent === 'del') { // delete tool data
@@ -271,9 +321,13 @@
                 layer.open({
                     type: 1,
                     title: '编辑信息',
-                    area: ['900px', '600px'],
+                    area: ['65%', '75%'],
                     content: document.getElementById('layerpopEdit').innerHTML,
-                    success: () => { console.log("pop page渲染完成"); laydate.render({ elem: '#date' }) }
+                    success: () => {
+                        laydate.render({
+                            elem: '#date'
+                        });
+                    }
                 });
                 setFormValue(data);
                 form.on('submit(fromedit)', data => {
@@ -294,7 +348,7 @@
                     }
                     // 由于thinkphp修改了url为兼容模式,导致添加数据过后跳转到登陆页面:(... 未知bug,先这样勉强算修复了.但是现在没有添加成功和失败的弹出框了... Server 环境太老了,只兼容thinkphp3.2.2
                     var parent = window.parent.document.getElementById('iframe');
-                    parent.setAttribute("src", "/visit/index.php?s=/Admin/Index/visit");
+                    parent.setAttribute("src", "/element/index.php?s=/Admin/Index/visit");
                     return false;
                 });
             }
@@ -305,8 +359,13 @@
                 layer.open({
                     type: 1,
                     title: '新增回访信息',
-                    area: ['1000px', '600px'],
+                    area: ['65%', '75%'],
                     content: document.getElementById('layerAddData').innerHTML,
+                    success: () => {
+                        laydate.render({
+                            elem:'#date'
+                        });
+                    }
                 });
                 form.render();
                 form.on('submit(fromadd)', data => {
@@ -326,7 +385,7 @@
                     }
                     // 由于thinkphp修改了url为兼容模式,导致添加数据过后跳转到登陆页面:(... 未知bug,先这样勉强算修复了.但是现在没有添加成功和失败的弹出框了... Server 环境太老了,只兼容thinkphp3.2.2
                     var parent = window.parent.document.getElementById('iframe');
-                    parent.setAttribute("src", "/visit/index.php?s=/Admin/Index/visit");
+                    parent.setAttribute("src", "/element/index.php?s=/Admin/Index/visit");
                     return false;
                 });
             }
@@ -354,7 +413,7 @@
         /* 渲染form表单 */
         setFormValue = data => {
             form.val('formedit', {
-
+                setFormValue
             });
             form.render();
         }

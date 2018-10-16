@@ -26,3 +26,15 @@ id int key auto_increment,
 fromaddress varchar(32) unique not null,
 addtime timestamp not null default current_timestamp
 );
+#创建客服表
+create table custservice (
+id int key auto_increment,
+custservice varchar(32) unique not null,
+addtime timestamp not null default current_timestamp
+);
+#创建来院状态表
+create table arrivalStatus (
+id int key auto_increment,
+arrivalStatus varchar(32) unique not null,
+addtime timestamp not null default current_timestamp
+);
