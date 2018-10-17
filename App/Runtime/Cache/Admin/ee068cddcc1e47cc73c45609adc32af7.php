@@ -95,11 +95,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男">
+                    <input type="checkbox" name="sex" lay-skin="switch" value="女" lay-text="女|男">
                 </div>
                 <label class="layui-form-label">是否本市</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="switch" lay-skin="switch" lay-text="是|否">
+                    <input type="checkbox" name="switch" lay-skin="switch" value="是" lay-text="是|否">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -197,11 +197,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="sex" lay-skin="switch" lay-text="女|男">
+                    <input type="checkbox" name="sex" lay-skin="switch" value="女" lay-text="女|男">
                 </div>
                 <label class="layui-form-label">是否本市</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="switch" lay-skin="switch" lay-text="是|否">
+                    <input type="checkbox" name="switch" lay-skin="switch" value="是" lay-text="是|否">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">

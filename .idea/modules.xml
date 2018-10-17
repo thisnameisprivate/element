@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../PHPandMYSQLdevelOpment/.idea/PHPandMYSQLdevelOpment.iml" filepath="$PROJECT_DIR$/../PHPandMYSQLdevelOpment/.idea/PHPandMYSQLdevelOpment.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ThinkPHP/.idea/ThinkPHP.iml" filepath="$PROJECT_DIR$/../ThinkPHP/.idea/ThinkPHP.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/element.iml" filepath="$PROJECT_DIR$/.idea/element.iml" />
       <module fileurl="file://$PROJECT_DIR$/../imoocBootstrap/.idea/imoocBootstrap.iml" filepath="$PROJECT_DIR$/../imoocBootstrap/.idea/imoocBootstrap.iml" />
       <module fileurl="file://$PROJECT_DIR$/../visitvue/.idea/visitvue.iml" filepath="$PROJECT_DIR$/../visitvue/.idea/visitvue.iml" />
