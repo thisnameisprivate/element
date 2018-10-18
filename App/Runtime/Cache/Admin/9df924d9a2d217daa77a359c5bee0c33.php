@@ -50,7 +50,7 @@
                     <a class="" href="javascript:;"><span class="layui-icon layui-icon-list">&nbsp;&nbsp;</span>病人预约管理</a>
                     <dl class="layui-nav-child">
                         <dd><a  href="javascript:;" onclick="visit();">预约登记列表</a></dd>
-                        <dd><a  href="javascript:;">客服明细报表</a></dd>
+                        <dd><a  href="javascript:;" onclick="detailReport();">客服明细报表</a></dd>
                         <dd><a  href="javascript:;">月趋势报表</a></dd>
                         <dd><a  href="javascript:;">自定义图像报表</a></dd>
                         <dd><a  href="javascript:;">数据横向对比</a></dd>
@@ -137,7 +137,6 @@
 </body>
 <script src="/element/Public/statics/layui/layui.js"></script>
 <script type="text/javascript">
-    //JavaScript代码区域
     layui.use(['element', 'layer', 'form'], () => {
         const iframe = document.getElementById('iframe');
         var element = layui.element;
@@ -148,12 +147,14 @@
             console.log(tableName.getAttribute('tablename'));
             document.cookie = 'tableName=' + tableName.getAttribute('tablename');
         }
-        visit = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
+        // function request.
+        visit         = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
         hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
-        disease = () => { iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
-        typesof = () => { iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
-        doctor = () =>{ iframeSetAttr("<?php echo U('Admin/Index/doctor');?>") }
+        disease       = () => { iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
+        typesof       = () => { iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
+        doctor        = () => { iframeSetAttr("<?php echo U('Admin/Index/doctor');?>") }
         arrivalStatus = () => { iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
+        detailReport  = () => { iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>") }
         iframeSetAttr = (url) => { iframe.setAttribute('src', url); }
         //  Request function
         Request = (url) => {

@@ -64,10 +64,11 @@
                 {field: 'id', title: 'No .', width:80, sort: true},
                 {field: 'arrivalStatus', title: '客服名称', width: 120},
                 {field: 'addtime', title: '添加时间', width: 120},
-                {fixed: 'right', title: '操作',  width: 100, align:'center', toolbar: '#bar'}
+                /* {fixed: 'right', title: '操作',  width: 100, align:'center', toolbar: '#bar'} */
             ]],
             id: 'edittable',
         });
+        /*
         table.on('tool(edittable)', obj => {
             var data = obj.data;
             var layEvent = obj.event;
@@ -91,11 +92,12 @@
                 })
             }
         });
+        */
         table.on('toolbar(edittable)', obj => {
             if (obj.event === 'add') {
                 layer.open({
                     type: 1,
-                    title: '新增来源类型',
+                    title: '新增到诊状态',
                     area: ['600px', '300px'],
                     content: document.getElementById('layerAddTypesof').innerHTML,
                 });

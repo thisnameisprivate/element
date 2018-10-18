@@ -94,8 +94,6 @@ class IndexController extends Controller {
         $visitData = json_decode($_GET['data'], true);
         $tableName = $_COOKIE['tableName'];
         $resolve = M($tableName)->where("id = {$_GET['id']}")->save($visitData);
-        print_r($resolve);
-        exit;
         if ($resolve) {
             $this->ajaxReturn(true, 'eval');
         } else {
@@ -362,13 +360,67 @@ class IndexController extends Controller {
         }
     }
     /*
+     *  @@ detail Report table
+     *  @param null
+     * */
+    public function detailReport () {
+        $this->display();
+    }
+    /*
+     *  @@ detail Report check
+     *  @param null
+     *  @return $custserviceList Tyep: json
+     * */
+    public function detailReportCheck () {
+        $tableName = $_COOKIE['tableName'];
+        $custserviceList = M('custservice')->field('custservice')->select();
+        $total = array();
+        $custserviceStrlen = count($custserviceList);
+        for ($index = 0; $index < $custserviceStrlen; $index ++) {
+            array_push($total, $this->detail(array(
+                "custservice.custservice, {$tableName}.status",
+                array("custservice.custservice = {$tableName}.custservice", "custservice.custservice = '{$custserviceList[$index]['custservice']}'")
+            )));
+        }
+        print_r(count($total));
+        exit;
+        for ($index = 0; $index < count($total); $index ++) {
+            $custserviceList[$index]['custservice'] = array_count_values(array_column($total[$index], 'status'))['已到'];
+            print_r($custserviceList[$index]['custservice']);
+            echo "<br>";
+        }
+        var_dump($total);
+        $arrival = array_count_values(array_column($total[0], 'status'))['已到'];
+        $total = count($total);
+        $arrivalOut = $total - $arrival;
+        if ($custservice) {
+            $this->arrayRecursive($custservice, 'urldecode', true);
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+        $custservice = urldecode(json_encode($custservice));
+        $custserviceList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $custservice}";
+        $this->ajaxReturn($custserviceList, 'eval');
+    }
+    /*
+     *  @@ detail function
+     *  @param $array Type: array[0] condition, array[1] field.
+     *  @return $allStatus Type: array
+     * */
+    private function detail ($array) {
+        $tableName = $_COOKIE['tableName'];
+        $allStatus = M('custservice')->join($tableName)->field($array[0])->where($array[1])->select();
+        return $allStatus;
+//        return array_count_values(array_column($allStatus, 'custservice'));
+    }
+    /*
      *  @@ JsonString handle
      *  @param $array Type: array
      *  @param $function Type: string
      *  @param $apply_to_keys_also Type: boolean
      *  @return jsonString
      * */
-    public function arrayRecursive(&$array, $function, $apply_to_keys_also = false) {
+    private function arrayRecursive(&$array, $function, $apply_to_keys_also = false) {
         static $recursive_counter = 0;
         if (++$recursive_counter > 1000) {
             die('possible deep recursion attack');

@@ -47,11 +47,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="oldDate" class="layui-input" id="date">
+                    <input type="text" name="oldDate" class="layui-input time-item">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="newDate" class="layui-input" id="date">
+                    <input type="text" name="newDate" class="layui-input time-item">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -60,7 +60,7 @@
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
                             <foreach name="arrivalStatus" item="vo" key="index">
-                                <option value="{$index}">{$vo['arrivalStatus']}</option>
+                                <option value="{$arrivalStatus}">{$vo['arrivalStatus']}</option>
                             </foreach>
                         </select>
                     </div>
@@ -69,7 +69,7 @@
                 <div class="layui-input-inline">
                     <select name="fromAddress" lay-verify="required">
                         <foreach name="fromaddress" item="vo" key="index">
-                            <option value="{$index}">{$vo['fromaddress']}</option>
+                            <option value="{$fromaddress}">{$vo['fromaddress']}</option>
                         </foreach>
                     </select>
                 </div>
@@ -80,7 +80,7 @@
                     <div class="layui-input-inline">
                         <select name="diseases" lay-verify="required">
                             <foreach name="diseases" item="vo" key="index">
-                                <option value="{$index}">{$vo['diseases']}</option>
+                                <option value="{$vo['diseases']}">{$vo['diseases']}</option>
                             </foreach>
                         </select>
                     </div>
@@ -89,7 +89,7 @@
                 <div class="layui-input-inline">
                     <select name="custService" lay-verify="required">
                         <foreach name="custservice" item="vo" key="index">
-                            <option value="{$index}">{$vo['custservice']}</option>
+                            <option value="{$vo['custservice']}">{$vo['custservice']}</option>
                         </foreach>
                     </select>
                 </div>
@@ -157,11 +157,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="oldDate" class="layui-input" id="date">
+                    <input type="text" name="oldDate" class="layui-input time-item">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="newDate" class="layui-input" id="date">
+                    <input type="text" name="newDate" class="layui-input time-item">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -170,7 +170,7 @@
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
                             <foreach name="arrivalStatus" item="vo" key="index">
-                                <option value="{$index}">{$vo['arrivalStatus']}</option>
+                                <option value="{$vo['arrivalStatus']}">{$vo['arrivalStatus']}</option>
                             </foreach>
                         </select>
                     </div>
@@ -179,7 +179,7 @@
                 <div class="layui-input-inline">
                     <select name="fromAddress" lay-verify="required">
                         <foreach name="fromaddress" item="vo" key="index">
-                            <option value="{$index}">{$vo['fromaddress']}</option>
+                            <option value="{$vo['fromaddress']}">{$vo['fromaddress']}</option>
                         </foreach>
                     </select>
                 </div>
@@ -190,7 +190,7 @@
                     <div class="layui-input-inline">
                         <select name="diseases" lay-verify="required">
                             <foreach name="diseases" item="vo" key="index">
-                                <option value="{$index}">{$vo['diseases']}</option>
+                                <option value="{$vo['diseases']}">{$vo['diseases']}</option>
                             </foreach>
                         </select>
                     </div>
@@ -199,7 +199,7 @@
                 <div class="layui-input-inline">
                     <select name="custService" lay-verify="required">
                         <foreach name="custservice" item="vo" key="index">
-                            <option value="{$index}">{$vo['custservice']}</option>
+                            <option value="{$vo['custservice']}">{$vo['custservice']}</option>
                         </foreach>
                     </select>
                 </div>
@@ -332,14 +332,19 @@
                     area: ['65%', '75%'],
                     content: document.getElementById('layerpopEdit').innerHTML,
                     success: () => {
-                        laydate.render({
-                            elem: '#date'
-                        });
+                        lay('.time-item').each(function () {
+                            laydate.render({
+                                elem: this,
+                                trigger: 'click'
+                            });
+                        })
                     }
                 });
                 setFormValue(data);
                 form.on('submit(fromedit)', data => {
                     var id = document.getElementById('idValue').innerHTML;
+                    console.log(JSON.stringify(data.field));
+
                     var client = new XMLHttpRequest();
                     client.open('GET', "{:U('Admin/Index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"')}");
                     client.send();
@@ -367,9 +372,12 @@
                     area: ['65%', '75%'],
                     content: document.getElementById('layerAddData').innerHTML,
                     success: () => {
-                        laydate.render({
-                            elem:'#date'
-                        });
+                        lay('.time-item').each(function () {
+                            laydate.render({
+                                elem: this,
+                                trigger: 'click'
+                            })
+                        })
                     }
                 });
                 form.render();

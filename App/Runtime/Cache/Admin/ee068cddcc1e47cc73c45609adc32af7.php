@@ -47,11 +47,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="oldDate" class="layui-input" id="date">
+                    <input type="text" name="oldDate" class="layui-input time-item">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="newDate" class="layui-input" id="date">
+                    <input type="text" name="newDate" class="layui-input time-item">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -59,14 +59,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
-                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($arrivalStatus); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">媒体来源</label>
                 <div class="layui-input-inline">
                     <select name="fromAddress" lay-verify="required">
-                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
+                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($fromaddress); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>
@@ -75,14 +75,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="diseases" lay-verify="required">
-                            <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($vo['diseases']); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">客服姓名</label>
                 <div class="layui-input-inline">
                     <select name="custService" lay-verify="required">
-                        <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
+                        <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($vo['custservice']); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                 </div>
                 <label class="layui-form-label">是否本市</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="switch" lay-skin="switch" value="是" lay-text="是|否">
+                    <input type="checkbox" name="switch" lay-skin="switch" value="本地" lay-text="是|否">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -149,11 +149,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="oldDate" class="layui-input" id="date">
+                    <input type="text" name="oldDate" class="layui-input time-item">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="newDate" class="layui-input" id="date">
+                    <input type="text" name="newDate" class="layui-input time-item">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -161,14 +161,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
-                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($vo['arrivalStatus']); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">媒体来源</label>
                 <div class="layui-input-inline">
                     <select name="fromAddress" lay-verify="required">
-                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
+                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($vo['fromaddress']); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>
@@ -177,14 +177,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="diseases" lay-verify="required">
-                            <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($vo['diseases']); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">客服姓名</label>
                 <div class="layui-input-inline">
                     <select name="custService" lay-verify="required">
-                        <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($index); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
+                        <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($vo['custservice']); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>
@@ -201,7 +201,7 @@
                 </div>
                 <label class="layui-form-label">是否本市</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="switch" lay-skin="switch" value="是" lay-text="是|否">
+                    <input type="checkbox" name="switch" lay-skin="switch" value="本地" lay-text="是|否">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">
@@ -316,14 +316,19 @@
                     area: ['65%', '75%'],
                     content: document.getElementById('layerpopEdit').innerHTML,
                     success: () => {
-                        laydate.render({
-                            elem: '#date'
-                        });
+                        lay('.time-item').each(function () {
+                            laydate.render({
+                                elem: this,
+                                trigger: 'click'
+                            });
+                        })
                     }
                 });
                 setFormValue(data);
                 form.on('submit(fromedit)', data => {
                     var id = document.getElementById('idValue').innerHTML;
+                    console.log(JSON.stringify(data.field));
+
                     var client = new XMLHttpRequest();
                     client.open('GET', "<?php echo U('Admin/Index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
@@ -351,9 +356,12 @@
                     area: ['65%', '75%'],
                     content: document.getElementById('layerAddData').innerHTML,
                     success: () => {
-                        laydate.render({
-                            elem:'#date'
-                        });
+                        lay('.time-item').each(function () {
+                            laydate.render({
+                                elem: this,
+                                trigger: 'click'
+                            })
+                        })
                     }
                 });
                 form.render();
