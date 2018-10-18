@@ -10,5 +10,6 @@
     <orderEntry type="module" module-name="visitvue" />
     <orderEntry type="module" module-name="PHPandMYSQLdevelOpment" />
     <orderEntry type="module" module-name="ThinkPHP" />
+    <orderEntry type="module" module-name="深入PHP面向对象模式与实践" />
   </component>
 </module>

@@ -139,7 +139,6 @@
 </body>
 <script src="__PUBLIC__/statics/layui/layui.js"></script>
 <script type="text/javascript">
-    //JavaScript代码区域
     layui.use(['element', 'layer', 'form'], () => {
         const iframe = document.getElementById('iframe');
         var element = layui.element;
@@ -150,11 +149,12 @@
             console.log(tableName.getAttribute('tablename'));
             document.cookie = 'tableName=' + tableName.getAttribute('tablename');
         }
-        visit = () => { iframeSetAttr("{:U('Admin/Index/visit')}") }
+        // function request.
+        visit         = () => { iframeSetAttr("{:U('Admin/Index/visit')}") }
         hospitalsList = () => { iframeSetAttr("{:U('Admin/Index/hospitalsList')}") }
-        disease = () => { iframeSetAttr("{:U('Admin/Index/disease')}") }
-        typesof = () => { iframeSetAttr("{:U('Admin/Index/typesof')}") }
-        doctor = () =>{ iframeSetAttr("{:U('Admin/Index/doctor')}") }
+        disease       = () => { iframeSetAttr("{:U('Admin/Index/disease')}") }
+        typesof       = () => { iframeSetAttr("{:U('Admin/Index/typesof')}") }
+        doctor        = () => { iframeSetAttr("{:U('Admin/Index/doctor')}") }
         arrivalStatus = () => { iframeSetAttr("{:U('Admin/Index/arrivalStatus')}") }
         iframeSetAttr = (url) => { iframe.setAttribute('src', url); }
         //  Request function

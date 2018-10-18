@@ -163,7 +163,7 @@ class IndexController extends Controller {
         $this->display();
     }
     /*
-     *  @@disease data check
+     *  @@ disease data check
      *  @param null
      *  @return $diseasesList Type: json
      * */
