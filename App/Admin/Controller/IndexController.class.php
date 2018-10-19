@@ -372,27 +372,7 @@ class IndexController extends Controller {
      *  @return $custserviceList Tyep: json
      * */
     public function detailReportCheck () {
-        $tableName = $_COOKIE['tableName'];
-        $custserviceList = M('custservice')->field('custservice')->select();
-        $total = array();
-        $custserviceStrlen = count($custserviceList);
-        for ($index = 0; $index < $custserviceStrlen; $index ++) {
-            array_push($total, $this->detail(array(
-                "custservice.custservice, {$tableName}.status",
-                array("custservice.custservice = {$tableName}.custservice", "custservice.custservice = '{$custserviceList[$index]['custservice']}'")
-            )));
-        }
-        print_r(count($total));
-        exit;
-        for ($index = 0; $index < count($total); $index ++) {
-            $custserviceList[$index]['custservice'] = array_count_values(array_column($total[$index], 'status'))['已到'];
-            print_r($custserviceList[$index]['custservice']);
-            echo "<br>";
-        }
-        var_dump($total);
-        $arrival = array_count_values(array_column($total[0], 'status'))['已到'];
-        $total = count($total);
-        $arrivalOut = $total - $arrival;
+        $custservice = $this->custservice(); // $this->custservice 内部方法调用
         if ($custservice) {
             $this->arrayRecursive($custservice, 'urldecode', true);
         } else {
@@ -403,6 +383,64 @@ class IndexController extends Controller {
         $this->ajaxReturn($custserviceList, 'eval');
     }
     /*
+     *  @@ custservice arrival filter
+     *  @param null
+     *  @return $custservice Type: array
+     * */
+    private function custservice () {
+        $custservice = M('custservice')->field('custservice')->select();
+        $custserviceStrlen = count($custservice);
+        $tableName = $_COOKIE['tableName'];
+        $arrivalTotal = $this->detail(array( // $this->detial 内部方法调用
+            "custservice.custservice, {$tableName}.status",
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "TO_DAYS(oldDate) = TO_DAYS(NOW())")
+        ));
+        $arrivalOutTotal = $this->detail(array(
+            "custservice.custservice, {$tableName}.status",
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "TO_DAYS(oldDate) = TO_DAYS(NOW())")
+        ));
+        $yesterday_arrivalTotal = $this->detail(array(
+            "custservice.custservice, {$tableName}.status",
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+        ));
+        $yesterday_arrivalOutTotal = $this->detail(array(
+            "custservice.custservice, {$tableName}.status",
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+        ));
+        $thisMonth_arrivalTotal = $this->detail(array(
+            "custservice.custservice, {$tableName}.status",
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+        ));
+        $thisMonth_arrivalOutTotal = $this->detail(array(
+            "custservice.custservice, {$tableName}.status",
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+        ));
+        $lastMonth_arrivalTotal = $this->detail(array(
+            "custservice.custservice, {$tableName}.status",
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m'))")
+        ));
+        $lastMonth_arrivalOutTotal = $this->detail(array(
+            "custservice.custservice, {$tableName}.status",
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m'))")
+        ));
+        for ($index = 0; $index < $custserviceStrlen; $index ++) {
+            $custservice[$index] = $custservice[$index];
+            $custservice[$index]['arrival'] = array_count_values(array_column($arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['arrivalOut'] = array_count_values(array_column($arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['yesterArrival'] = array_count_values(array_column($yesterday_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['yesterArrivalOut'] = array_count_values(array_column($yesterday_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['thisArrival'] = array_count_values(array_column($thisMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['thisArrivalOut'] = array_count_values(array_column($thisMonth_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['lastArrival'] = array_count_values(array_column($lastMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['lastArrivalOut'] = array_count_values(array_column($lastMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['arrivalTotal'] = $custservice[$index]['arrival'] + $custservice[$index]['arrivalOut'];
+            $custservice[$index]['yestserTotal'] = $custservice[$index]['yesterArrival'] + $custservice[$index]['yesterArrivalOut'];
+            $custservice[$index]['thisTotal'] = $custservice[$index]['thisArrival'] + $custservice[$index]['thisArrivalOut'];
+            $custservice[$index]['lastTotal'] = $custservice[$index]['lastArrival'] + $custservice[$index]['lastArrivalOut'];
+        }
+        return $custservice;
+    }
+    /*
      *  @@ detail function
      *  @param $array Type: array[0] condition, array[1] field.
      *  @return $allStatus Type: array
@@ -411,7 +449,6 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         $allStatus = M('custservice')->join($tableName)->field($array[0])->where($array[1])->select();
         return $allStatus;
-//        return array_count_values(array_column($allStatus, 'custservice'));
     }
     /*
      *  @@ JsonString handle

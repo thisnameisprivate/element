@@ -47,11 +47,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="oldDate" class="layui-input time-item">
+                    <input type="text" name="oldDate" class="layui-input time-item1">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="newDate" class="layui-input time-item">
+                    <input type="text" name="newDate" class="layui-input time-item1">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -149,11 +149,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="oldDate" class="layui-input time-item">
+                    <input type="text" name="oldDate" class="layui-input time-item2">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="newDate" class="layui-input time-item">
+                    <input type="text" name="newDate" class="layui-input time-item2">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -316,7 +316,7 @@
                     area: ['65%', '75%'],
                     content: document.getElementById('layerpopEdit').innerHTML,
                     success: () => {
-                        lay('.time-item').each(function () {
+                        lay('.time-item1').each(function () {
                             laydate.render({
                                 elem: this,
                                 trigger: 'click'
@@ -356,7 +356,7 @@
                     area: ['65%', '75%'],
                     content: document.getElementById('layerAddData').innerHTML,
                     success: () => {
-                        lay('.time-item').each(function () {
+                        lay('.time-item2').each(function () {
                             laydate.render({
                                 elem: this,
                                 trigger: 'click'
