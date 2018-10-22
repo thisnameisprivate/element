@@ -53,8 +53,8 @@
       <file leaf-file-name="page.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../深入PHP面向对象模式与实践/page.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="67" column="13" lean-forward="true" selection-start-line="67" selection-start-column="13" selection-end-line="67" selection-end-column="13" />
+            <state relative-caret-position="152">
+              <caret line="51" column="5" lean-forward="true" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -281,12 +281,12 @@
       <workItem from="1539734620513" duration="16369000" />
       <workItem from="1539821363594" duration="23029000" />
       <workItem from="1539907716223" duration="16345000" />
-      <workItem from="1540166118157" duration="7658000" />
+      <workItem from="1540166118157" duration="8381000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="177195000" />
+    <option name="totallyTimeSpent" value="177918000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -646,8 +646,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../深入PHP面向对象模式与实践/page.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="67" column="13" lean-forward="true" selection-start-line="67" selection-start-column="13" selection-end-line="67" selection-end-column="13" />
+        <state relative-caret-position="152">
+          <caret line="51" column="5" lean-forward="true" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
         </state>
       </provider>
     </entry>
