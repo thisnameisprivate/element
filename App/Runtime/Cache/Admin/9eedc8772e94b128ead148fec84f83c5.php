@@ -13,34 +13,6 @@
     <title>detail report</title>
 </head>
 <body>
-<!--
-     <table class="layui-table" lay-data="{url:'<?php echo U('Admin/Index/detailReportCheck');?>'}">
-        <thead>
-        <tr>
-            <th lay-data="{field:'custservice', align:'center', width:120}">客服</th>
-            <th lay-data="{align:'center'}" colspan="3">今日</th>
-            <th lay-data="{align:'center'}" colspan="3">昨日</th>
-            <th lay-data="{align:'center'}" colspan="3">本月</th>
-            <th lay-data="{align:'center'}" colspan="3">上月</th>
-        </tr>
-        <tr>
-            <th lay-data="{width:120, align:'center', field:'arrivalTotal'}"></th>
-            <th lay-data="{field:'arrival', width:120}">总数</th>
-            <th lay-data="{field:'arrivalOut', width:120}">已到</th>
-            <th lay-data="{field:'yestserTotal', width:120}">未到</th>
-            <th lay-data="{field:'yesterArrival', width:120}">总数</th>
-            <th lay-data="{field:'yesterArrivalOut', width:120}">已到</th>
-            <th lay-data="{field:'thisTotal', width:120}">未到</th>
-            <th lay-data="{field:'thisArrival', width:120}">总数</th>
-            <th lay-data="{field:'thisArrivalOut', width:120}">已到</th>
-            <th lay-data="{field:'lastTotal', width:120}">未到</th>
-            <th lay-data="{field:'lastArrival', width:120}">总数</th>
-            <th lay-data="{field:'lastArrivalOut', width:120}">已到</th>
-            <th lay-data="{width:120}">未到</th>
-        </tr>
-    </thead>
-    </table>
- -->
 <table id="container" lay-filter="edittable"></table>
 </body>
 <script src="/element/Public/statics/layui/layui.js"></script>
@@ -56,19 +28,24 @@
             height: 'full-200',
             size: 'sm',
             cols: [[
-                {field: 'custservice', title: '客服', width: 80},
-                {field: 'arrivalTotal', title: '总数', width: 100},
-                {field: 'arrival', title: '已到', width: 100},
-                {field: 'arrivalOut', title: '未到', width: 100},
-                {field: 'yestserTotal', title: '总数', width: 100},
-                {field: 'yesterArrival', title: '已到', width: 100},
-                {field: 'yesterArrivalOut', title: '未到', width: 100},
-                {field: 'thisTotal', title: '总数', width: 100},
-                {field: 'thisArrival', title: '已到', width: 100},
-                {field: 'thisArrivalOut', title: '未到', width: 100},
-                {field: 'lastTotal', title: '总数', width: 100},
-                {field: 'lastArrival', title: '已到', width: 100},
-                {field: 'lastArrivalOut', title: '未到', width: 100}
+                {align: 'center', title: '今日', colspan: 4},
+                {align: 'center', title: '昨日', colspan: 3},
+                {align: 'center', title: '本月', colspan: 3},
+                {align: 'center', title: '上月', colspan: 3}
+            ],[
+                {field: 'custservice', title: '客服', width: 80, templet: (data) => { return "<span style='color:darkorange;'>"+ data.custservice +"</span>" }},
+                {field: 'arrivalTotal', title: '总数', width: 100, templet: (data) => { return data.arrivalTotal ? data.arrivalTotal : 0 }},
+                {field: 'arrival', title: '已到', width: 100, templet: (data) => { return data.arrival ? data.arrival : 0 }},
+                {field: 'arrivalOut', title: '未到', width: 100, templet: (data) => { return data.arrivalOut ? data.arrivalOut : 0 }},
+                {field: 'yestserTotal', title: '总数', width: 100, templet: (data) => { return data.yestserTotal ? data.yestserTotal : 0 }},
+                {field: 'yesterArrival', title: '已到', width: 100, templet: (data) => { return data.yesterArrival ? data.yesterArrival : 0 }},
+                {field: 'yesterArrivalOut', title: '未到', width: 100, templet: (data) => { return data.yesterArrivalOut ? data.yesterArrivalOut : 0 }},
+                {field: 'thisTotal', title: '总数', width: 100, templet: (data) => { return data.thisTotal ? data.thisTotal : 0 }},
+                {field: 'thisArrival', title: '已到', width: 100, templet: (data) => { return data.thisArrival ? data.thisArrival : 0 }},
+                {field: 'thisArrivalOut', title: '未到', width: 100, templet: (data) => { return data.thisArrivalOut ? data.thisArrivalOut : 0}},
+                {field: 'lastTotal', title: '总数', width: 100, templet: (data) => { return data.lastTotal ? data.lastTotal : 0 }},
+                {field: 'lastArrival', title: '已到', width: 100, templet: (data) => { return data.lastArrival ? data.lastArrival : 0 }},
+                {field: 'lastArrivalOut', title: '未到', width: 100, templet: (data) => { return data.lastArrivalOut ? data.lastArrivalOut : 0 }}
             ]],
             id: 'edittable'
         });

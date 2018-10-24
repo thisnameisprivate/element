@@ -18,7 +18,7 @@
         <input class="layui-input" name="search" id="search" required lay-verify="required" placeholder="姓名/客户电话" autocomplete="off">
     </form>
 </div>
-<button id="searchbtn" class="layui-btn" data-type="reload">搜索</button>
+<button id="searchbtn" class="layui-btn layui-icon layui-icon-search" data-type="reload">搜索</button>
 <table id="container" lay-filter="edittable"></table>
 <div class="layui-container" id="layerpopEdit" style="display:none;">
     <div class="container">
@@ -47,11 +47,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="oldDate" class="layui-input time-item1">
+                    <input type="text" name="oldDate" class="layui-input time-item">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="newDate" class="layui-input time-item1">
+                    <input type="text" name="newDate" class="layui-input time-item">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -149,11 +149,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="oldDate" class="layui-input time-item2">
+                    <input type="text" name="oldDate" class="layui-input time-item">
                 </div>
                 <label class="layui-form-label">回访时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="newDate" class="layui-input time-item2">
+                    <input type="text" name="newDate" class="layui-input time-item">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -229,7 +229,8 @@
 <script src="/element/Public/statics/layui/layui.js"></script>
 <script type="text/html" id="toolbaradd">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add">添加新的信息</button>
+        <button class="layui-btn layui-btn-sm layui-icon layui-icon-add-1" lay-event="add">&nbsp;添加</button>
+        <button class="layui-btn layui-btn-sm layui-icon layui-icon-refresh" lay-event="reload">&nbsp;刷新</button>
     </div>
 </script>
 <script type="text/html" id="bar">
@@ -263,12 +264,12 @@
             loading: true,
             size: 'sm',
             cols: [[
-                {field: 'id', title: 'No .', width: 80, sort: true},
-                {field: 'name', title: '姓名', width: 80},
-                {field: 'sex', title: '性别', width: 80},
-                {field: 'old', title: '年龄', width: 80, sort: true},
-                {field: 'phone', title: '电话', width: 120},
-                {field: 'qq', title: "QQ", width: 120},
+                {field: 'id', title: 'No .', width: 60, sort: true},
+                {field: 'name', title: '姓名', width: 80, templet: (data) => { return data.status == '已到' ? "<span style='color:orangered;'>"+ data.name +"</span>" : "<span style='color:#5FB878;'>"+ data.name +"</span>" }},
+                {field: 'sex', title: '性别', width: 60},
+                {field: 'old', title: '年龄', width: 60, sort: true},
+                {field: 'phone', title: '电话', width: 110},
+                {field: 'qq', title: "QQ", width: 110},
                 {field: 'expert', title: '专家号', width: 80},
                 {field: 'desc1', title: '咨询内容', width: 80},
                 {field: 'oldDate', title: '预约时间', width: 100},
@@ -278,7 +279,7 @@
                 {field: 'desc2', title: '备注', width: 80},
                 {field: 'custService', title: '客服', width: 80},
                 {field: 'newDate', title: '回访时间', width: 100},
-                {field: 'status', title: '赴约状态', width: 100},
+                {field: 'status', title: '赴约状态', width: 100, templet: (data) => { return data.status == '已到' ? "<span style='color:orangered;'>"+ data.status +"</span>" : "<span style='color:#5FB878;'>"+ data.status +"</span>" }},
                 {field: 'currentTime', title: '添加时间', width: 100},
                 {fixed: 'right', title: '操作', width:150, align:'center', toolbar: '#bar'},
             ]],
@@ -316,7 +317,7 @@
                     area: ['65%', '75%'],
                     content: document.getElementById('layerpopEdit').innerHTML,
                     success: () => {
-                        lay('.time-item1').each(function () {
+                        lay('.time-item').each(function () {
                             laydate.render({
                                 elem: this,
                                 trigger: 'click'
@@ -349,14 +350,16 @@
         });
         table.on('toolbar(edittable)', obj => {
             var checkStatus = table.checkStatus(obj.config.id);
-            if (obj.event === 'add') {
+            if (obj.event === 'reload') {
+                tableIns.reload();
+            } else if (obj.event === 'add') {
                 layer.open({
                     type: 1,
                     title: '新增回访信息',
                     area: ['65%', '75%'],
                     content: document.getElementById('layerAddData').innerHTML,
                     success: () => {
-                        lay('.time-item2').each(function () {
+                        lay('.time-item').each(function () {
                             laydate.render({
                                 elem: this,
                                 trigger: 'click'

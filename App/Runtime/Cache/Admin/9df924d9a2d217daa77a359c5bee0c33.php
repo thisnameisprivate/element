@@ -127,7 +127,7 @@
 
 
     <div class="layui-body">
-        <iframe id="iframe" src="<?php echo U('Admin/Index/visit');?>" frameborder="0"></iframe>
+        <iframe id="iframe" src="<?php echo U('Admin/Index/overView');?>" frameborder="0"></iframe>
     </div>
 </div>
 <div style="position:fixed; bottom:0px; left:200px; z-index:999; font-size:12px; font-weight:600;">
@@ -146,6 +146,7 @@
             ification.innerHTML = tableName.innerText + "<span class='layui-nav-more'></span>";
             console.log(tableName.getAttribute('tablename'));
             document.cookie = 'tableName=' + tableName.getAttribute('tablename');
+            iframeSetAttr("<?php echo U('Admin/Index/overView');?>")
         }
         // function request.
         visit         = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }

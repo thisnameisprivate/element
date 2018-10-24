@@ -12,6 +12,9 @@ class IndexController extends Controller {
         $this->assign('hospitals', $hospitals);
         $this->display();
     }
+    public function overView () {
+        $this->display();
+    }
     public function echarts () {
         $this->display();
     }
