@@ -481,4 +481,16 @@ class IndexController extends Controller {
         }
         $recursive_counter--;
     }
+    /*
+     *  @@expansion Redis.
+     *  @param null
+     *  @return data. Type: json
+     * */
+    public function readCache () {
+        $redis = new \Redis();
+        $redis->connect("x.x.x.x", 6379);
+        $redis->auth('xxxx');
+        $redis->set("data", '123');
+        return $redis->get('data');
+    }
 }
