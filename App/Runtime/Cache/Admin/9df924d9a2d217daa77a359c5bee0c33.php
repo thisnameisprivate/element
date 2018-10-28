@@ -51,7 +51,7 @@
                     <dl class="layui-nav-child">
                         <dd><a  href="javascript:;" onclick="visit();">预约登记列表</a></dd>
                         <dd><a  href="javascript:;" onclick="detailReport();">客服明细报表</a></dd>
-                        <dd><a  href="javascript:;">月趋势报表</a></dd>
+                        <dd><a  href="javascript:;" onclick="monthdata();">月趋势报表</a></dd>
                         <dd><a  href="javascript:;">自定义图像报表</a></dd>
                         <dd><a  href="javascript:;">数据横向对比</a></dd>
                     </dl>
@@ -156,6 +156,7 @@
         doctor        = () => { iframeSetAttr("<?php echo U('Admin/Index/doctor');?>") }
         arrivalStatus = () => { iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
         detailReport  = () => { iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>") }
+        monthdata = () => { iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>") }
         iframeSetAttr = (url) => { iframe.setAttribute('src', url); }
         //  Request function
         Request = (url) => {

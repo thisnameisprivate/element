@@ -444,6 +444,14 @@ class IndexController extends Controller {
         return $custservice;
     }
     /*
+     *  @@monthdata
+     *  @param null
+     *  return   Type: json string
+     * */
+    public function monthdata () {
+        $this->display();
+    }
+    /*
      *  @@ detail function
      *  @param $array Type: array[0] condition, array[1] field.
      *  @return $allStatus Type: array
@@ -482,15 +490,20 @@ class IndexController extends Controller {
         $recursive_counter--;
     }
     /*
-     *  @@expansion Redis.
-     *  @param null
+     *  @@expansion set Cache.
+     *  @param $string Type: String.
      *  @return data. Type: json
      * */
-    public function readCache () {
+    public function setCache ($string) {
         $redis = new \Redis();
-        $redis->connect("x.x.x.x", 6379);
+        $redis->connect('x.x.x.x', 6379);
         $redis->auth('xxxx');
-        $redis->set("data", '123');
-        return $redis->get('data');
+        $redis->select(1);
+        $redis->set('string', $string);
+        if ((boolean) $redis->exists('string')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
