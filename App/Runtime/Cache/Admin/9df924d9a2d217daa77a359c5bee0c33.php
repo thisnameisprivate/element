@@ -125,7 +125,7 @@
             </ul>
         </div>
     </div>
-    <div class="layui-progress" id="loading" style="display: none;">
+    <div class="layui-progress" id="loading" style="dipslay:none">
         <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
     </div>
     <div class="layui-body">
@@ -152,7 +152,7 @@
             iframeSetAttr("<?php echo U('Admin/Index/overView');?>")
         }
         // function request.
-        visit         = () => { loadingStart(); iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
+        visit         = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
         hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
         disease       = () => { iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
         typesof       = () => { iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
@@ -160,7 +160,7 @@
         arrivalStatus = () => { iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
         detailReport  = () => { iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>") }
         monthdata     = () => { iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>") }
-        iframeSetAttr = (url) => { iframe.setAttribute('src', url); }
+        iframeSetAttr = (url) => { loadingStart(); iframe.setAttribute('src', url); }
         //  Request function
         Request = (url) => {
             var Request = new XMLHttpRequest();
@@ -174,29 +174,34 @@
         }
         // loading ...
         loadingStart = () => {
-            var loading = $('#loading').show().children();
-            var promise = new Promise (resolve => {
-                setTimeout(() => {
-                    loading.animate({width: '40%'}, 500, () => {
-                        resolve(resolve);
-                    })
-                }, 500)
+            var projress = $('#loading').show().children();
+            var promise = new Promise(resolve => {
+                    projress.animate({width: '33.8%'}, 100, () => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 100)
+                    });
+            }).then(() => {
+                return new Promise(resolve => {
+                    projress.animate({width: '66.8%'}, 100, () => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 100)
+                    });
+                });
+            }).then(() => {
+                return new Promise(resolve => {
+                    projress.animate({width: '98.8%'}, 150, () => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 150)
+                    });
+                });
+            }).then(resolve => {
+                projress.animate({width: '0%'});
+                $('#loading').hide(200);
             })
-            promise.then(resolve => {
-                setTimeout(() => {
-                    loading.animate({width: '80%'}, 500, () => {
-                        return resolve;
-                    })
-                }, 500)
-            })
-            promise.then(resolve => {
-                setTimeout(() => {
-                    loading.animate({width: '99.9'}, 500, () => {
-                        return;
-                    })
-                })
-            });
-        }
+        };
     });
 </script>
 </html>
