@@ -395,35 +395,35 @@ class IndexController extends Controller {
         $custserviceStrlen = count($custservice);
         $tableName = $_COOKIE['tableName'];
         $arrivalTotal = $this->detail(array( // $this->detial 内部方法调用
-            "custservice.custservice, {$tableName}.status",
+            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
             array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "TO_DAYS(oldDate) = TO_DAYS(NOW())")
         ));
         $arrivalOutTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status",
+            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
             array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "TO_DAYS(oldDate) = TO_DAYS(NOW())")
         ));
         $yesterday_arrivalTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status",
+            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
             array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1")
         ));
         $yesterday_arrivalOutTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status",
+            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
             array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1")
         ));
         $thisMonth_arrivalTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status",
+            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
             array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
         ));
         $thisMonth_arrivalOutTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status",
+            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
             array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
         ));
         $lastMonth_arrivalTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status",
+            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
             array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m'))")
         ));
         $lastMonth_arrivalOutTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status",
+            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
             array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m'))")
         ));
         for ($index = 0; $index < $custserviceStrlen; $index ++) {

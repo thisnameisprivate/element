@@ -15,10 +15,10 @@
 <body>
 <div class="layui-inline">
     <form class="layui-form">
-        <input class="layui-input" name="search" id="search" required lay-verify="required" placeholder="姓名/客户电话" autocomplete="off">
+        <input class="layui-input layui-input-sm" name="search" id="search" required lay-verify="required" placeholder="姓名/客户电话" autocomplete="off">
     </form>
 </div>
-<button id="searchbtn" class="layui-btn layui-icon layui-icon-search" data-type="reload">搜索</button>
+<button id="searchbtn" class="layui-btn layui-btn-sm layui-icon layui-icon-search" data-type="reload">搜索</button>
 <table id="container" lay-filter="edittable"></table>
 <div class="layui-container" id="layerpopEdit" style="display:none;">
     <div class="container">
@@ -234,8 +234,8 @@
     </div>
 </script>
 <script type="text/html" id="bar">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <button class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon"></i></button>
+    <button class="layui-btn layui-btn-xs" lay-event="del"><i class="layui-icon"></i></button>
 </script>
 <script>
     layui.use(['laydate', 'table', 'layer', 'laypage', 'form'], () => {
@@ -260,7 +260,7 @@
             page: true,
             cellMinWidth:50,
             limit: 25,
-            limits: [25, 50, 75],
+            limits: [25, 50, 75, 150],
             loading: true,
             size: 'sm',
             cols: [[
@@ -281,7 +281,7 @@
                 {field: 'newDate', title: '回访时间', width: 100},
                 {field: 'status', title: '赴约状态', width: 100, templet: (data) => { return data.status == '已到' ? "<span style='color:orangered;'>"+ data.status +"</span>" : "<span style='color:#5FB878;'>"+ data.status +"</span>" }},
                 {field: 'currentTime', title: '添加时间', width: 100},
-                {fixed: 'right', title: '操作', width:150, align:'center', toolbar: '#bar'},
+                {fixed: 'right', title: '操作', width:100, align:'center', toolbar: '#bar'},
             ]],
             id: 'edittable',
             done: function () {

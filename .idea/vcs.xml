@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/../PHPandMYSQLdevelOpment" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../phpcms" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../visit" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../深入PHP面向对象模式与实践" vcs="Git" />
   </component>
 </project>

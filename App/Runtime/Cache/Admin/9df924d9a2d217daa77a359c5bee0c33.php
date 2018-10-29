@@ -9,6 +9,7 @@
         .layui-body{height:100%; width:100%; overflow:hidden;}
         #iframe{height:105%; width:91.2%;}
         .layui-layout-admin .layui-header{background: #2F4056;}
+        #loading{margin-left:200px;}
     </style>
 </head>
 <script type="text/javascript">
@@ -124,8 +125,9 @@
             </ul>
         </div>
     </div>
-
-
+    <div class="layui-progress" id="loading" style="display: none;">
+        <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
+    </div>
     <div class="layui-body">
         <iframe id="iframe" src="<?php echo U('Admin/Index/overView');?>" frameborder="0"></iframe>
     </div>
@@ -140,6 +142,7 @@
     layui.use(['element', 'layer', 'form'], () => {
         const iframe = document.getElementById('iframe');
         var element = layui.element;
+        var $ = layui.jquery;
         // 医院列表下拉框渲染
         readyHospital = tableName => {
             var ification = document.getElementById('classification');
@@ -149,7 +152,7 @@
             iframeSetAttr("<?php echo U('Admin/Index/overView');?>")
         }
         // function request.
-        visit         = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
+        visit         = () => { loadingStart(); iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
         hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
         disease       = () => { iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
         typesof       = () => { iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
@@ -165,9 +168,34 @@
             Request.send();
             Request.onreadystatechange = () => {
                 if (Request.readyState === 4 && Request.status === 200) {
-                    document.getElementById('iframe').setAttribute('src', url);
+                    $('#iframe').setAttribute('src', url);
                 }
             }
+        }
+        // loading ...
+        loadingStart = () => {
+            var loading = $('#loading').show().children();
+            var promise = new Promise (resolve => {
+                setTimeout(() => {
+                    loading.animate({width: '40%'}, 500, () => {
+                        resolve(resolve);
+                    })
+                }, 500)
+            })
+            promise.then(resolve => {
+                setTimeout(() => {
+                    loading.animate({width: '80%'}, 500, () => {
+                        return resolve;
+                    })
+                }, 500)
+            })
+            promise.then(resolve => {
+                setTimeout(() => {
+                    loading.animate({width: '99.9'}, 500, () => {
+                        return;
+                    })
+                })
+            });
         }
     });
 </script>
