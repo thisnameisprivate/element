@@ -156,7 +156,7 @@
         doctor        = () => { iframeSetAttr("<?php echo U('Admin/Index/doctor');?>") }
         arrivalStatus = () => { iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
         detailReport  = () => { iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>") }
-        monthdata = () => { iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>") }
+        monthdata     = () => { iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>") }
         iframeSetAttr = (url) => { iframe.setAttribute('src', url); }
         //  Request function
         Request = (url) => {

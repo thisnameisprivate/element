@@ -404,11 +404,11 @@ class IndexController extends Controller {
         ));
         $yesterday_arrivalTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1")
         ));
         $yesterday_arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1")
         ));
         $thisMonth_arrivalTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status",
