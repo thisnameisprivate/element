@@ -370,7 +370,7 @@ class IndexController extends Controller {
      * */
     public function detailReport () {
         $redis = $this->setCache();
-        $this->assign('ttl', $redis->ttl('string'));
+        $this->assign('ttl', $redis->ttl($_COOKIE['tableName']));
         $this->display();
     }
     /*
@@ -380,12 +380,13 @@ class IndexController extends Controller {
      * */
     public function detailReportCheck () {
         $redis = $this->setCache();
-        if ($redis->exists('string')) { // 如果为空则设置redis.否则直接读取
-            $custservice = json_decode($redis->get('string'), true);
+        $tableName = $_COOKIE['tableName'];
+        if ($redis->exists($tableName)) { // 如果为空则设置redis.否则直接读取
+            $custservice = json_decode($redis->get($tableName), true);
         } else {
             $custservice = $this->custservice();
-            $redis->set('string', json_encode($custservice));
-            $redis->expire('string', 1200);
+            $redis->set($tableName, json_encode($custservice));
+            $redis->expire($tableName, 1200);
         }
         if ($custservice) {
             $this->arrayRecursive($custservice, 'urldecode', true);
@@ -505,11 +506,11 @@ class IndexController extends Controller {
      *  @param $string Type: String.
      *  @return $redis. Type: instance
      * */
-    public function setCache () {
+    private function setCache () {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxx');
+            $redis->auth('xxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());

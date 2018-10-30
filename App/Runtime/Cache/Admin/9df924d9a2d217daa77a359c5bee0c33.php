@@ -152,15 +152,34 @@
             iframeSetAttr("<?php echo U('Admin/Index/overView');?>");
         }
         // function request.
-        visit         = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
-        hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
-        disease       = () => { iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
-        typesof       = () => { iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
-        doctor        = () => { iframeSetAttr("<?php echo U('Admin/Index/doctor');?>") }
-        arrivalStatus = () => { iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
-        detailReport  = () => { iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>") }
-        monthdata     = () => { iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>") }
-        iframeSetAttr = (url) => { loadingStart(); iframe.setAttribute('src', url); }
+        visit = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/visit');?>")
+        }
+        hospitalsList = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>")
+        }
+        disease = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/disease');?>")
+        }
+        typesof = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/typesof');?>")
+        }
+        doctor = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/doctor');?>")
+        }
+        arrivalStatus = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>")
+        }
+        detailReport = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>")
+        }
+        monthdata = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>")
+        }
+        iframeSetAttr = (url) => {
+            loadingStart();
+            iframe.setAttribute('src', url);
+        }
         //  Request function
         Request = (url) => {
             var Request = new XMLHttpRequest();
@@ -172,37 +191,15 @@
                 }
             }
         }
-        // projress loading ...
+        // Projress loading ...
         loadingStart = () => {
             var projress = $('#loading').show().children();
-<<<<<<< HEAD
-            var promise = new Promise (resolve => {
-                projress.animate({width: '33.8%'}, 200, () => {
+            var promise = new Promise(resolve => {
+                projress.animate({width: '33.8%'}, 100, () => {
                     setTimeout(() => {
                         resolve();
-                    }, 200)
+                    }, 100)
                 });
-            }).then(resolve => {
-                return new Promise (resolve => {
-                    projress.animate({width: '66.8%'}, 200, () => {
-                        setTimeout(() => {
-                            resolve();
-                        }, 200);
-                    });
-                });
-            }).then(resolve => {
-                return new Promise (resolve => {
-                    projress.animate({width: '99.8%'}, 200, () => {
-                        setTimeout(() => {
-                            resolve();
-                        }, 200);
-=======
-            var promise = new Promise(resolve => {
-                    projress.animate({width: '33.8%'}, 100, () => {
-                        setTimeout(() => {
-                            resolve();
-                        }, 100)
-                    });
             }).then(() => {
                 return new Promise(resolve => {
                     projress.animate({width: '66.8%'}, 100, () => {
@@ -217,19 +214,13 @@
                         setTimeout(() => {
                             resolve();
                         }, 150)
->>>>>>> 034f4c76202cf5f9076aa9a302fdcab52c09a8e7
                     });
                 });
             }).then(resolve => {
                 projress.animate({width: '0%'});
                 $('#loading').hide(200);
-<<<<<<< HEAD
             });
         }
-=======
-            })
-        };
->>>>>>> 034f4c76202cf5f9076aa9a302fdcab52c09a8e7
     });
 </script>
 </html>
