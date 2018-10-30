@@ -21,7 +21,7 @@
     <div class="layui-header">
         <div class="layui-logo">广元协和医院新媒体</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item" onclick='iframeSetAttr("<?php echo U('Admin/Index/overView');?>")'><a href="javascript:;">首页</a></li>
             <li class="layui-nav-item"><a href="">商品管理</a></li>
             <li class="layui-nav-item"><a href="">用户</a></li>
             <li class="layui-nav-item">
@@ -149,10 +149,10 @@
             ification.innerHTML = tableName.innerText + "<span class='layui-nav-more'></span>";
             console.log(tableName.getAttribute('tablename'));
             document.cookie = 'tableName=' + tableName.getAttribute('tablename');
-            iframeSetAttr("<?php echo U('Admin/Index/overView');?>")
+            iframeSetAttr("<?php echo U('Admin/Index/overView');?>");
         }
         // function request.
-        visit         = () => { loadingStart(); iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
+        visit         = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
         hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
         disease       = () => { iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
         typesof       = () => { iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
@@ -160,7 +160,7 @@
         arrivalStatus = () => { iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
         detailReport  = () => { iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>") }
         monthdata     = () => { iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>") }
-        iframeSetAttr = (url) => { iframe.setAttribute('src', url); }
+        iframeSetAttr = (url) => { loadingStart(); iframe.setAttribute('src', url); }
         //  Request function
         Request = (url) => {
             var Request = new XMLHttpRequest();
@@ -172,29 +172,34 @@
                 }
             }
         }
-        // loading ...
+        // projress loading ...
         loadingStart = () => {
-            var loading = $('#loading').show().children();
+            var projress = $('#loading').show().children();
             var promise = new Promise (resolve => {
-                setTimeout(() => {
-                    loading.animate({width: '40%'}, 500, () => {
-                        resolve(resolve);
-                    })
-                }, 500)
-            })
-            promise.then(resolve => {
-                setTimeout(() => {
-                    loading.animate({width: '80%'}, 500, () => {
-                        return resolve;
-                    })
-                }, 500)
-            })
-            promise.then(resolve => {
-                setTimeout(() => {
-                    loading.animate({width: '99.9'}, 500, () => {
-                        return;
-                    })
-                })
+                projress.animate({width: '33.8%'}, 200, () => {
+                    setTimeout(() => {
+                        resolve();
+                    }, 200)
+                });
+            }).then(resolve => {
+                return new Promise (resolve => {
+                    projress.animate({width: '66.8%'}, 200, () => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 200);
+                    });
+                });
+            }).then(resolve => {
+                return new Promise (resolve => {
+                    projress.animate({width: '99.8%'}, 200, () => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 200);
+                    });
+                });
+            }).then(resolve => {
+                projress.animate({width: '0%'});
+                $('#loading').hide(200);
             });
         }
     });

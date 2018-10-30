@@ -13,6 +13,7 @@
     <title>detail report</title>
 </head>
 <body>
+<div style="color:#5FB878;">该数据由于查询量过大,已被设置缓存,可能不是最新数据,距离下次更新还有--- <?php echo ($ttl); ?> ---秒</div>
 <table id="container" lay-filter="edittable"></table>
 </body>
 <script src="/element/Public/statics/layui/layui.js"></script>

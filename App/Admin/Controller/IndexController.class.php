@@ -2,6 +2,8 @@
 
 namespace Admin\Controller;
 use Think\Controller;
+use Think\Exception;
+
 class IndexController extends Controller {
     /*
     *  @@ hospitals select
@@ -367,6 +369,8 @@ class IndexController extends Controller {
      *  @param null
      * */
     public function detailReport () {
+        $redis = $this->setCache();
+        $this->assign('ttl', $redis->ttl('string'));
         $this->display();
     }
     /*
@@ -375,7 +379,14 @@ class IndexController extends Controller {
      *  @return $custserviceList Tyep: json
      * */
     public function detailReportCheck () {
-        $custservice = $this->custservice(); // $this->custservice 内部方法调用
+        $redis = $this->setCache();
+        if ($redis->exists('string')) { // 如果为空则设置redis.否则直接读取
+            $custservice = json_decode($redis->get('string'), true);
+        } else {
+            $custservice = $this->custservice();
+            $redis->set('string', json_encode($custservice));
+            $redis->expire('string', 1200);
+        }
         if ($custservice) {
             $this->arrayRecursive($custservice, 'urldecode', true);
         } else {
@@ -490,20 +501,19 @@ class IndexController extends Controller {
         $recursive_counter--;
     }
     /*
-     *  @@expansion set Cache.
+     *  @@expansion connect redis.
      *  @param $string Type: String.
-     *  @return data. Type: json
+     *  @return $redis. Type: instance
      * */
-    public function setCache ($string) {
-        $redis = new \Redis();
-        $redis->connect('x.x.x.x', 6379);
-        $redis->auth('xxxx');
-        $redis->select(1);
-        $redis->set('string', $string);
-        if ((boolean) $redis->exists('string')) {
-            return true;
-        } else {
-            return false;
+    public function setCache () {
+        try {
+            $redis = new \Redis();
+            $redis->connect('211.149.x.x', 6379);
+            $redis->auth('xxxxxx');
+            $redis->select(1);
+        } catch (Exception $e) {
+            die ("Connect Redis Fail: " . $e->getMessage());
         }
+        return $redis;
     }
 }
