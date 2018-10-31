@@ -15,7 +15,114 @@ class IndexController extends Controller {
         $this->display();
     }
     public function overView () {
+        $situation = $this->custservice(); // 返回一个二维数组
+        $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
+        $arrival = array_sum(array_column($situation, 'arrival'));
+        $arrivalOut = array_sum(array_column($situation, 'arrivalOut'));
+        $yesterTotal = array_sum(array_column($situation, 'yestserTotal'));
+        $yesterArrival = array_sum(array_column($situation, 'yesterArrival'));
+        $yesterArrivalOut = array_sum(array_column($situation, 'yesterArrivalOut'));
+        $thisTotal = array_sum(array_column($situation, 'thisTotal'));
+        $thisArrival = array_sum(array_column($situation, 'thisArrival'));
+        $thisArrivalOut = array_sum(array_column($situation, 'thisArrivalOut'));
+        $lastTotal = array_sum(array_column($situation, 'lastTotal'));
+        $lastArrival = array_sum(array_column($situation, 'lastArrival'));
+        $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
+        $this->assign('arrivalTotal', $arrivalTotal);
+        $this->assign('arrival', $arrival);
+        $this->assign('arrivalOut', $arrivalOut);
+        $this->assign('yesterTotal', $yesterTotal);
+        $this->assign('yesterArrival', $yesterArrival);
+        $this->assign('yesterArrivalOut', $yesterArrivalOut);
+        $this->assign('thisTotal', $thisTotal);
+        $this->assign('thisArrival', $thisArrival);
+        $this->assign('thisArrivalOut', $thisArrivalOut);
+        $this->assign('lastTotal', $lastTotal);
+        $this->assign('lastArrival', $lastArrival);
+        $this->assign('lastArrivalOut', $lastArrivalOut);
+        $this->assign('appointment', $this->appointment()); // return array.
+        $this->assign('thisArrivalSort', $this->thisArrivalList()[0]); // $arrival.
+        $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // $appointment
+        $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
+        $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
         $this->display();
+    }
+    /*
+     *  @@ select to make an thisArrival
+     *  @param null
+     *  @return array() Type: array
+     * */
+    private function thisArrivalList () {
+        $customer = M('custservice')->field('custservice')->select();
+        foreach ($customer  as $k => $v) {
+            foreach ($v as $c => $d) {
+                $customers[] = $d;
+            }
+        }
+        $instance = M($_COOKIE['tableName']);
+        for ($i = 0; $i < count($customers); $i ++) {
+            $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+        }
+        arsort($arrival, SORT_NUMERIC);
+        arsort($appointment, SORT_NUMERIC);
+        array_splice($arrival, 4);
+        array_splice($appointment, 4);
+        return array($arrival, $appointment);
+    }
+    /*
+     *   @@ select to make an lastArrival
+     *   @param null
+     *   @return array() Type: array
+     * */
+    private function lastArrivalList () {
+        $customer = M('custservice')->field('custservice')->select();
+        foreach ($customer as $k => $v) {
+            foreach ($v as $c => $d) {
+                $customers[] = $d;
+            }
+        }
+        $instance = M($_COOKIE['tableName']);
+        for ($i = 0; $i < count($customers); $i ++) {
+            $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1")->count();
+            $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1")->count();
+        }
+        arsort($arrival, SORT_NUMERIC);
+        arsort($appointment, SORT_NUMERIC);
+        array_splice($arrival, 4);
+        array_splice($appointment, 4);
+        return array($arrival, $appointment);
+    }
+    /*
+     *  @@ select To make an appointment in
+     *  @param null
+     *  @return $appointment Type: array
+     * */
+    private function appointment () {
+        $tableName = $_COOKIE['tableName'];
+        $redis = $this->setCache(); // Connect Redis
+        if ($redis->exists($tableName . '_appointment')) {
+            return json_decode($redis->get($tableName . '_appointment'), true);
+        } else {
+            $appointment = $this->appointmentSql(); // select to make an appointment in.
+            $redis->set($tableName . '_appointment', json_encode($appointment));
+            $redis->expire($tableName . '_appointment', 1200);
+            return $appointment;
+        }
+    }
+    /*
+     *  @@ select to make an appointment in sql
+     *  @param null
+     *  @return $appointmentData Type: array
+     * */
+    private function appointmentSql () {
+        $instance = M($_COOKIE['tableName']);
+        $appointmentData = array();
+        $appointmentData['todayTotal'] = $instance->where("TO_DAYS(oldDate) = TO_DAYS(NOW()) AND status = '预约未定'")->count();
+        $appointmentData['yesterTotal'] = $instance->where("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1 AND status = '预约未定'")->count();
+        $appointmentData['thisTotal'] = $instance->where("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m') AND status = '预约未定'")->count();
+        $appointmentData['lastTotal'] = $instance->where("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1 AND status = '预约未定'")->count();
+        return $appointmentData;
     }
     public function echarts () {
         $this->display();
@@ -408,35 +515,67 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         $arrivalTotal = $this->detail(array( // $this->detial 内部方法调用
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "TO_DAYS(oldDate) = TO_DAYS(NOW())")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '已到'",
+                "TO_DAYS(oldDate) = TO_DAYS(NOW())"
+            )
         ));
         $arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "TO_DAYS(oldDate) = TO_DAYS(NOW())")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '未到'",
+                "TO_DAYS(oldDate) = TO_DAYS(NOW())"
+            )
         ));
         $yesterday_arrivalTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '已到'",
+                "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1"
+            )
         ));
         $yesterday_arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '未到'",
+                "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1"
+            )
         ));
         $thisMonth_arrivalTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '已到'",
+                "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')"
+            )
         ));
         $thisMonth_arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '未到'",
+                "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')"
+            )
         ));
         $lastMonth_arrivalTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m'))")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '已到'",
+                "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
+            )
         ));
         $lastMonth_arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m'))")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '未到'",
+                "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
+            )
         ));
         for ($index = 0; $index < $custserviceStrlen; $index ++) {
             $custservice[$index] = $custservice[$index];
@@ -447,7 +586,7 @@ class IndexController extends Controller {
             $custservice[$index]['thisArrival'] = array_count_values(array_column($thisMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['thisArrivalOut'] = array_count_values(array_column($thisMonth_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['lastArrival'] = array_count_values(array_column($lastMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['lastArrivalOut'] = array_count_values(array_column($lastMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['lastArrivalOut'] = array_count_values(array_column($lastMonth_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['arrivalTotal'] = $custservice[$index]['arrival'] + $custservice[$index]['arrivalOut'];
             $custservice[$index]['yestserTotal'] = $custservice[$index]['yesterArrival'] + $custservice[$index]['yesterArrivalOut'];
             $custservice[$index]['thisTotal'] = $custservice[$index]['thisArrival'] + $custservice[$index]['thisArrivalOut'];
@@ -503,7 +642,7 @@ class IndexController extends Controller {
     }
     /*
      *  @@expansion connect redis.
-     *  @param $string Type: String.
+     *  @param null.
      *  @return $redis. Type: instance
      * */
     private function setCache () {
