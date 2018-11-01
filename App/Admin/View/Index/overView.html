@@ -240,6 +240,7 @@ layui.use(['layer', 'element', 'laydate', 'form'], () => {
     for (var i = 0; i < aList.length; i++) {
         aList[i].onclick = function () {
             console.log(this);
+            console.log(this.text);
         }
     }
 });

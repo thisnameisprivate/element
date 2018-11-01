@@ -15,6 +15,13 @@ class IndexController extends Controller {
         $this->display();
     }
     public function overView () {
+        $tableName = $_COOKIE['tableName'];
+        if ($tableName == '') return false;
+        $isTable = M()->query("show tables like '{$tableName}'");
+        if (! $isTable) {
+            // create table, return true of false
+            if (! $this->createTable($tableName)) return false;
+        }
         $situation = $this->custservice(); // 返回一个二维数组
         $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
         $arrival = array_sum(array_column($situation, 'arrival'));
@@ -71,9 +78,9 @@ class IndexController extends Controller {
         return array($arrival, $appointment);
     }
     /*
-     *   @@ select to make an lastArrival
-     *   @param null
-     *   @return array() Type: array
+     *  @@ select to make an lastArrival
+     *  @param null
+     *  @return array() Type: array
      * */
     private function lastArrivalList () {
         $customer = M('custservice')->field('custservice')->select();
@@ -578,7 +585,6 @@ class IndexController extends Controller {
             )
         ));
         for ($index = 0; $index < $custserviceStrlen; $index ++) {
-            $custservice[$index] = $custservice[$index];
             $custservice[$index]['arrival'] = array_count_values(array_column($arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['arrivalOut'] = array_count_values(array_column($arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['yesterArrival'] = array_count_values(array_column($yesterday_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
@@ -649,11 +655,44 @@ class IndexController extends Controller {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxx');
+            $redis->auth('xxxxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
         }
         return $redis;
+    }
+    /*
+     *  @@ create new table
+     *  @param $tableName cookie
+     *  @retur boolean
+     * */
+    private function createTable ($tableName) {
+        $sql = <<<sql
+              CREATE TABLE  `$tableName` (
+              `id` int NOT NULL AUTO_INCREMENT,
+              `name` varchar(15) NOT NULL,
+              `old` int NOT NULL,
+              `phone` bigint(20) NOT NULL,
+              `qq` bigint(20) NOT NULL,
+              `diseases` varchar(30) NOT NULL,
+              `fromAddress` varchar(15) NOT NULL,
+              `switch` varchar(15) NOT NULL DEFAULT '外地',
+              `sex` varchar(15) NOT NULL DEFAULT '男',
+              `desc1` varchar(300) NOT NULL,
+              `expert` varchar(10) NOT NULL,
+              `oldDate` date NOT NULL,
+              `desc2` varchar(300) NOT NULL,
+              `status` varchar(15) NOT NULL,
+              `newDate` date NOT NULL,
+              `currentTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+              `custService` varchar(30) NOT NULL,
+              PRIMARY KEY(`id`),
+              KEY `oldDate` (`oldDate`),
+              KEY `status` (`status`)
+              ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+sql;
+        if (M()->query($sql)) return true;
+        return false;
     }
 }
