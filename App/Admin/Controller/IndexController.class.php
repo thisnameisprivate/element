@@ -495,7 +495,7 @@ class IndexController extends Controller {
     public function detailReportCheck () {
         $redis = $this->setCache();
         $tableName = $_COOKIE['tableName'];
-        if ($redis->exists($tableName)) { // 如果为空则设置redis.否则直接读取
+        if ($redis->exists($tableName)) { // 如果为空则写入redis集合.否则直接读取
             $custservice = json_decode($redis->get($tableName), true);
         } else {
             $custservice = $this->custservice();
@@ -606,6 +606,23 @@ class IndexController extends Controller {
      *  return   Type: json string
      * */
     public function monthdata () {
+        $instance = M($_COOKIE['tableName']);
+        $redis = $this->setCache();
+        if ($redis->exists('arrival')) {
+            $arrival = json_decode($redis->get('arrival'), true);
+        } else {
+            $arrival = array();
+            $arrival['reser'] = $instance->where("status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['advan'] = $instance->where("status = '等待' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['arrival'] = $instance->where("status = '已到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['arrivalOut'] = $instance->where("status = '未到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['halfTotal'] = $instance->where("status = '全流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['half'] = $instance->where("status = '半流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['treat'] = $instance->where("status = '已诊治' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $redis->set('arrival', json_encode($arrival));
+            $redis->expire('arrival', 1200);
+        }
+        $this->assign('arrival', $arrival);
         $this->display();
     }
     /*
@@ -645,6 +662,43 @@ class IndexController extends Controller {
             }
         }
         $recursive_counter--;
+    }
+    /*
+     *  @@user access page
+     *  @param null
+     * */
+    public function access () {
+        $this->display();
+    }
+    /*
+     *  @@user access check
+     *  @param null
+     *  @return $userList Type: josn
+     * */
+    public function accessCheck () {
+        $user = M('user')->select();
+        if ($user) {
+            $this->arrayRecursive($user, 'urldecode', true);
+        } else {
+            $this->ajaxrReturn(false, 'eval');
+        }
+        $user = urldecode(json_encode($user));
+        $userList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $user}";
+        $this->ajaxReturn($userList, 'eval');
+    }
+    /*
+     *  @@userDel
+     *  @param null
+     *  @return boolean Type: eval
+     * */
+    public function userDel () {
+        if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $resovle = M('user')->where("id = {$_GET['id']}")->delete();
+        if ($resovle) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
     }
     /*
      *  @@expansion connect redis.
