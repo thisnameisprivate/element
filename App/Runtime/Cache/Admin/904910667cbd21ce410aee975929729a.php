@@ -41,79 +41,79 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读">
-                    <input type="checkbox" name="" title="可写">
+                    <input type="checkbox" name="" title="可读" value="1">
+                    <input type="checkbox" name="" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改">
-                    <input type="checkbox" name="" title="删除">
+                    <input type="checkbox" name="" title="修改" value="1">
+                    <input type="checkbox" name="" title="删除" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">挂号管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读">
-                    <input type="checkbox" name="" title="可写">
+                    <input type="checkbox" name="" title="可读" value="1">
+                    <input type="checkbox" name="" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改">
-                    <input type="checkbox" name="" title="删除">
+                    <input type="checkbox" name="" title="修改" value="1">
+                    <input type="checkbox" name="" title="删除" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">数据列表</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读">
-                    <input type="checkbox" name="" title="可写">
+                    <input type="checkbox" name="" title="可读" value="1">
+                    <input type="checkbox" name="" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改">
-                    <input type="checkbox" name="" title="删除">
+                    <input type="checkbox" name="" title="修改" value="1">
+                    <input type="checkbox" name="" title="删除" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">设置</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读">
-                    <input type="checkbox" name="" title="可写">
+                    <input type="checkbox" name="" title="可读" value="1">
+                    <input type="checkbox" name="" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改">
-                    <input type="checkbox" name="" title="删除">
+                    <input type="checkbox" name="" title="修改" value="1">
+                    <input type="checkbox" name="" title="删除" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">我的资料</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读">
-                    <input type="checkbox" name="" title="可写">
+                    <input type="checkbox" name="" title="可读" value="1">
+                    <input type="checkbox" name="" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改">
-                    <input type="checkbox" name="" title="删除">
+                    <input type="checkbox" name="" title="修改" value="1">
+                    <input type="checkbox" name="" title="删除" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">系统管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读">
-                    <input type="checkbox" name="" title="可写">
+                    <input type="checkbox" name="" title="可读" value="1">
+                    <input type="checkbox" name="" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改">
-                    <input type="checkbox" name="" title="删除">
+                    <input type="checkbox" name="" title="修改" value="1">
+                    <input type="checkbox" name="" title="删除" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">日志记录</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读">
+                    <input type="checkbox" name="" title="可读" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -157,79 +157,85 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="resready" title="可读">
-                    <input type="checkbox" name="reswrite" title="可写">
+                    <input type="checkbox" name="resready" title="可读" value="1">
+                    <input type="checkbox" name="reswrite" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="resupdate" title="修改">
-                    <input type="checkbox" name="resdelete" title="删除">
+                    <input type="checkbox" name="resupdate" title="修改" value="1">
+                    <input type="checkbox" name="resdelete" title="删除" value="1">
                 </div>
+                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">挂号管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="sysready" title="可读">
-                    <input type="checkbox" name="syswrite" title="可写">
+                    <input type="checkbox" name="sysready" title="可读" value="1">
+                    <input type="checkbox" name="syswrite" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="sysupdate" title="修改">
-                    <input type="checkbox" name="sysdelete" title="删除">
+                    <input type="checkbox" name="sysupdate" title="修改" value="1">
+                    <input type="checkbox" name="sysdelete" title="删除" value="1">
                 </div>
+                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">数据列表</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="listready" title="可读">
-                    <input type="checkbox" name="listwrite" title="可写">
+                    <input type="checkbox" name="listready" title="可读" value="1">
+                    <input type="checkbox" name="listwrite" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="listupdate" title="修改">
-                    <input type="checkbox" name="listdelete" title="删除">
+                    <input type="checkbox" name="listupdate" title="修改" value="1">
+                    <input type="checkbox" name="listdelete" title="删除" value="1">
                 </div>
+                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">设置</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="setready" title="可读">
-                    <input type="checkbox" name="setwrite" title="可写">
+                    <input type="checkbox" name="setready" title="可读" value="1">
+                    <input type="checkbox" name="setwrite" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="setupdate" title="修改">
-                    <input type="checkbox" name="setdelete" title="删除">
+                    <input type="checkbox" name="setupdate" title="修改" value="1">
+                    <input type="checkbox" name="setdelete" title="删除" value="1">
                 </div>
+                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">我的资料</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="myready" title="可读">
-                    <input type="checkbox" name="mywrite" title="可写">
+                    <input type="checkbox" name="myready" title="可读" value="1">
+                    <input type="checkbox" name="mywrite" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="myupdate" title="修改">
-                    <input type="checkbox" name="mydelete" title="删除">
+                    <input type="checkbox" name="myupdate" title="修改" value="1">
+                    <input type="checkbox" name="mydelete" title="删除" value="1">
                 </div>
+                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">系统管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="manageready" title="可读">
-                    <input type="checkbox" name="managewrite" title="可写">
+                    <input type="checkbox" name="manageready" title="可读" value="1">
+                    <input type="checkbox" name="managewrite" title="可写" value="1">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="manageupdate" title="修改">
-                    <input type="checkbox" name="managedelete" title="删除">
+                    <input type="checkbox" name="manageupdate" title="修改" value="1">
+                    <input type="checkbox" name="managedelete" title="删除" value="1">
                 </div>
+                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">日志记录</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="logread" title="可读">
+                    <input type="checkbox" name="logready" title="可读" value="1">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -320,7 +326,6 @@
                 form.on('submit(formedit)', data => {
                     var id = document.getElementById('idValue').innerHTML;
                     var client = new XMLHttpRequest();
-                    console.log(123);
                     client.open('GET', "<?php echo U('Admin/Index/userEdit/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {
@@ -352,8 +357,6 @@
                 form.render();
                 form.on('submit(formadd)', data => {
                     var client = new XMLHttpRequest();
-                    console.log(data);
-                    console.log(JSON.stringify(data.field));
                     client.open('GET', "<?php echo U('Admin/Index/userAdd/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {

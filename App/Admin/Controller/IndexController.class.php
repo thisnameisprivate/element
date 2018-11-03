@@ -706,11 +706,14 @@ class IndexController extends Controller {
      *   @return boolean Type: eval
      * */
     public function userAdd () {
-        $userList = json_decode($_GET['data'], true);
-        print_r($userList);
-        exit;
+        $management = json_decode($_GET['data'], true);
+        $userList['password'] = MD5($management['password']);
+        $userList['username'] = $management['username'];
+        array_splice($management, 0, 2);
+        $management['pid'] = $userList['username'];
+        $managementResolve = M('management')->add($management);
         $resolve = M('user')->add($userList);
-        if ($resolve) {
+        if ($managementResolve && $resolve) {
             $this->ajaxReturn(true, 'eval');
         } else {
             $this->ajaxReturn(false, 'eval');
@@ -722,12 +725,26 @@ class IndexController extends Controller {
      *  @return boolean Type: eval
      * */
     public function userEdit () {
-        $userList = json_decode($_GET['data'], true);
-        $userList['password'] = MD5($userList['password']);
-        print_r($userList);
-        exit;
-        $resolve = M('user')->where("id = '{$_GET['id']}'")->save($userList);
-        if ($resolve) {
+        $management = json_decode($_GET['data'], true);
+        $userList['password'] = MD5($management['password']);
+        $userList['username'] = $management['username'];
+        array_splice($management, 0, 2); // delete username, password field
+        $management['pid'] = $userList['username'];
+        $username = M('user')->where("id = '{$_GET['id']}'")->field('username')->select(); // select user username.
+        $resolve = M('user')->where("id = '{$_GET['id']}'")->save($userList); // save new username, password
+        $managementUser = M('management')->where("pid = '{$username[0]['username']}'")->count();
+        /*
+         *  @@@@@@
+         *  select user username to management table is have? return number.
+         *  if have is add functoin.
+         *  else not have is save function.
+         * */
+        if (! $managementUser) {
+            $managementResolve = M('management')->add($management);
+        } else {
+            $managementResolve = M('management')->where("pid = '{$username[0]['username']}'")->save($management);
+        }
+        if ($managementResolve && $resolve) {
             $this->ajaxReturn(true, 'eval');
         } else {
             $this->ajaxReturn(false, 'eval');
