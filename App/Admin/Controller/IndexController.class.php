@@ -701,6 +701,39 @@ class IndexController extends Controller {
         }
     }
     /*
+     *   @@userAdd
+     *   @param null
+     *   @return boolean Type: eval
+     * */
+    public function userAdd () {
+        $userList = json_decode($_GET['data'], true);
+        print_r($userList);
+        exit;
+        $resolve = M('user')->add($userList);
+        if ($resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@userEdit
+     *  @param null
+     *  @return boolean Type: eval
+     * */
+    public function userEdit () {
+        $userList = json_decode($_GET['data'], true);
+        $userList['password'] = MD5($userList['password']);
+        print_r($userList);
+        exit;
+        $resolve = M('user')->where("id = '{$_GET['id']}'")->save($userList);
+        if ($resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
      *  @@expansion connect redis.
      *  @param null.
      *  @return $redis. Type: instance

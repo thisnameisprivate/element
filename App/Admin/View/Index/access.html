@@ -13,8 +13,7 @@
 <table id="container" lay-filter="edittable"></table>
 <div class="layui-container" id="userAdd" style="display:none;">
     <div class="container">
-        <p style="display:none" id="idValue"></p>
-        <form class="layui-form">
+        <form class="layui-form" lay-filter="formAdd">
             <hr class="layui-bg-green">
             <div>
                 <span class="layui-badge layui-bg-green">用户信息</span>
@@ -119,7 +118,123 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="formadd">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- edit -->
+<div class="layui-container" id="userEdit" style="display:none;">
+    <div class="container">
+        <p style="display:none" id="idValue"></p>
+        <form class="layui-form" lay-filter="formedit">
+            <hr class="layui-bg-green">
+            <div>
+                <span class="layui-badge layui-bg-green">用户信息</span>
+                <span class="layui-badge-dot"></span>
+                <span class="layui-badge-dot layui-bg-orange"></span>
+                <span class="layui-badge-dot layui-bg-green"></span>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" autocomplete="off" class="layui-input" placeholder="请输入用户名~">
+                </div>
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="password" autocomplete="off" class="layui-input" placeholder="请输入密码~">
+                </div>
+            </div>
+            <hr class="layui-bg-green">
+            <div>
+                <span class="layui-badge">用户权限</span>
+                <span class="layui-badge-dot"></span>
+                <span class="layui-badge-dot layui-bg-orange"></span>
+                <span class="layui-badge-dot layui-bg-green"></span>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">预约管理</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="resready" title="可读">
+                    <input type="checkbox" name="reswrite" title="可写">
+                </div>
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="resupdate" title="修改">
+                    <input type="checkbox" name="resdelete" title="删除">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">挂号管理</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="sysready" title="可读">
+                    <input type="checkbox" name="syswrite" title="可写">
+                </div>
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="sysupdate" title="修改">
+                    <input type="checkbox" name="sysdelete" title="删除">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">数据列表</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="listready" title="可读">
+                    <input type="checkbox" name="listwrite" title="可写">
+                </div>
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="listupdate" title="修改">
+                    <input type="checkbox" name="listdelete" title="删除">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">设置</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="setready" title="可读">
+                    <input type="checkbox" name="setwrite" title="可写">
+                </div>
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="setupdate" title="修改">
+                    <input type="checkbox" name="setdelete" title="删除">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">我的资料</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="myready" title="可读">
+                    <input type="checkbox" name="mywrite" title="可写">
+                </div>
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="myupdate" title="修改">
+                    <input type="checkbox" name="mydelete" title="删除">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">系统管理</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="manageready" title="可读">
+                    <input type="checkbox" name="managewrite" title="可写">
+                </div>
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="manageupdate" title="修改">
+                    <input type="checkbox" name="managedelete" title="删除">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">日志记录</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="logread" title="可读">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="formedit">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
@@ -158,7 +273,6 @@
             toolbar: '#toolbaradd',
             url: "{:U('Admin/Index/accessCheck')}",
             height:'full-200',
-            page: true,
             cellMinWidth:50,
             loading: true,
             size: 'sm',
@@ -200,11 +314,13 @@
                     type: 1,
                     title: '编辑信息',
                     area: ['65%', '75%'],
-                    content: document.getElementById('userAdd').innerHTML,
+                    content: document.getElementById('userEdit').innerHTML,
                 });
-                form.on('submit(fromedit)', data => {
+                form.render();
+                form.on('submit(formedit)', data => {
                     var id = document.getElementById('idValue').innerHTML;
                     var client = new XMLHttpRequest();
+                    console.log(123);
                     client.open('GET', "{:U('Admin/Index/userEdit/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"')}");
                     client.send();
                     client.onreadystatechange = () => {
@@ -234,7 +350,7 @@
                     content: document.getElementById('userAdd').innerHTML,
                 });
                 form.render();
-                form.on('submit(fromadd)', data => {
+                form.on('submit(formadd)', data => {
                     var client = new XMLHttpRequest();
                     console.log(data);
                     console.log(JSON.stringify(data.field));
