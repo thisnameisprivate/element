@@ -693,6 +693,8 @@ class IndexController extends Controller {
      * */
     public function userDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $username = M('user')->where("id = {$_GET['id']}")->field('username')->select();
+        $manageResolve = M('management')->where("pid = '{$username[0]['username']}'")->delete();
         $resovle = M('user')->where("id = {$_GET['id']}")->delete();
         if ($resovle) {
             $this->ajaxReturn(true, 'eval');
