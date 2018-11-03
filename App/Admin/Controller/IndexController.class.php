@@ -735,11 +735,14 @@ class IndexController extends Controller {
         $username = M('user')->where("id = '{$_GET['id']}'")->field('username')->select(); // select user username.
         $resolve = M('user')->where("id = '{$_GET['id']}'")->save($userList); // save new username, password
         $managementUser = M('management')->where("pid = '{$username[0]['username']}'")->count();
-        /*
-         *  @@@@@@
-         *  select user username to management table is have? return number.
-         *  if have is add functoin.
-         *  else not have is save function.
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *    select user username to management table is have? return number.         **
+         *  if have is add functoin.                                                   **
+         *  else not have is save function.                                            **
+         *                                                                             **
+         * ******************************************************************************
          * */
         if (! $managementUser) {
             $managementResolve = M('management')->add($management);
