@@ -13,6 +13,7 @@
     <title>detail report</title>
 </head>
 <body>
+<div style="color:#5FB878;">该数据由于查询量过大,已被设置缓存,可能不是最新数据,距离下次更新还有--- <?php echo ($ttl); ?> ---秒</div>
 <table id="container" lay-filter="edittable"></table>
 </body>
 <script src="/element/Public/statics/layui/layui.js"></script>
@@ -34,18 +35,18 @@
                 {align: 'center', title: '上月', colspan: 3}
             ],[
                 {field: 'custservice', title: '客服', width: 80, templet: (data) => { return "<span style='color:darkorange;'>"+ data.custservice +"</span>" }},
-                {field: 'arrivalTotal', title: '总数', width: 100, templet: (data) => { return data.arrivalTotal ? data.arrivalTotal : 0 }},
-                {field: 'arrival', title: '已到', width: 100, templet: (data) => { return data.arrival ? data.arrival : 0 }},
-                {field: 'arrivalOut', title: '未到', width: 100, templet: (data) => { return data.arrivalOut ? data.arrivalOut : 0 }},
-                {field: 'yestserTotal', title: '总数', width: 100, templet: (data) => { return data.yestserTotal ? data.yestserTotal : 0 }},
-                {field: 'yesterArrival', title: '已到', width: 100, templet: (data) => { return data.yesterArrival ? data.yesterArrival : 0 }},
-                {field: 'yesterArrivalOut', title: '未到', width: 100, templet: (data) => { return data.yesterArrivalOut ? data.yesterArrivalOut : 0 }},
-                {field: 'thisTotal', title: '总数', width: 100, templet: (data) => { return data.thisTotal ? data.thisTotal : 0 }},
-                {field: 'thisArrival', title: '已到', width: 100, templet: (data) => { return data.thisArrival ? data.thisArrival : 0 }},
-                {field: 'thisArrivalOut', title: '未到', width: 100, templet: (data) => { return data.thisArrivalOut ? data.thisArrivalOut : 0}},
-                {field: 'lastTotal', title: '总数', width: 100, templet: (data) => { return data.lastTotal ? data.lastTotal : 0 }},
-                {field: 'lastArrival', title: '已到', width: 100, templet: (data) => { return data.lastArrival ? data.lastArrival : 0 }},
-                {field: 'lastArrivalOut', title: '未到', width: 100, templet: (data) => { return data.lastArrivalOut ? data.lastArrivalOut : 0 }}
+                {field: 'arrivalTotal', title: '总数', width: 100, templet: (data) => { return data.arrivalTotal!=0 ? "<span style='color:red;'>" + data.arrivalTotal + "</span>" : 0 }},
+                {field: 'arrival', title: '已到', width: 100, templet: (data) => { return data.arrival!=0 ? "<span style='color:red;'>" + data.arrival + "</span>" : 0 }},
+                {field: 'arrivalOut', title: '未到', width: 100, templet: (data) => { return data.arrivalOut!=0 ? "<span style='color:red;'>" + data.arrivalOut + "</span>" : 0 }},
+                {field: 'yestserTotal', title: '总数', width: 100, templet: (data) => { return data.yestserTotal!=0 ? "<span style='color:red;'>" + data.yestserTotal + "</span>" : 0 }},
+                {field: 'yesterArrival', title: '已到', width: 100, templet: (data) => { return data.yesterArrival!=0 ? "<span style='color:red;'>" + data.yesterArrival + "</span>" : 0 }},
+                {field: 'yesterArrivalOut', title: '未到', width: 100, templet: (data) => { return data.yesterArrivalOut!=0 ? "<span style='color:red;'>" + data.yesterArrivalOut + "</span>" : 0 }},
+                {field: 'thisTotal', title: '总数', width: 100, templet: (data) => { return data.thisTotal!=0 ? "<span style='color:red;'>" + data.thisTotal + "</span>" : 0 }},
+                {field: 'thisArrival', title: '已到', width: 100, templet: (data) => { return data.thisArrival!=0 ? "<span style='color:red;'>" + data.thisArrival + "</span>" : 0 }},
+                {field: 'thisArrivalOut', title: '未到', width: 100, templet: (data) => { return data.thisArrivalOut!=0 ? "<span style='color:red;'>"+ data.thisArrivalOut +"</span>" : 0}},
+                {field: 'lastTotal', title: '总数', width: 100, templet: (data) => { return data.lastTotal!=0 ? "<span style='color:red;'>" + data.lastTotal + "</span>" : 0 }},
+                {field: 'lastArrival', title: '已到', width: 100, templet: (data) => { return data.lastArrival!=0 ? "<span style='color:red;'>"+ data.lastArrival +"</span>" : 0 }},
+                {field: 'lastArrivalOut', title: '未到', width: 100, templet: (data) => { return data.lastArrivalOut!=0 ? "<span style='color:red;'>" + data.lastArrivalOut + "</span>" : 0 }}
             ]],
             id: 'edittable'
         });

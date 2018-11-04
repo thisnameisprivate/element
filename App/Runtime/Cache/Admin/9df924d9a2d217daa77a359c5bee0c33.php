@@ -21,7 +21,7 @@
     <div class="layui-header">
         <div class="layui-logo">广元协和医院新媒体</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item" onclick='iframeSetAttr("<?php echo U('Admin/Index/overView');?>")'><a href="javascript:;">首页</a></li>
             <li class="layui-nav-item"><a href="">商品管理</a></li>
             <li class="layui-nav-item"><a href="">用户</a></li>
             <li class="layui-nav-item">
@@ -53,7 +53,6 @@
                         <dd><a  href="javascript:;" onclick="visit();">预约登记列表</a></dd>
                         <dd><a  href="javascript:;" onclick="detailReport();">客服明细报表</a></dd>
                         <dd><a  href="javascript:;" onclick="monthdata();">月趋势报表</a></dd>
-                        <dd><a  href="javascript:;">自定义图像报表</a></dd>
                         <dd><a  href="javascript:;">数据横向对比</a></dd>
                     </dl>
                 </li>
@@ -109,8 +108,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-app">&nbsp;&nbsp;</span>系统管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">用户管理</a></dd>
-                        <dd><a href="javascript:;">权限管理</a></dd>
+                        <dd><a href="javascript:;" onclick="access();">用户管理</a></dd>
                         <dd><a href="javascript:;">医院列表</a></dd>
                         <dd><a href="javascript:;">通知列表</a></dd>
                     </dl>
@@ -149,18 +147,40 @@
             ification.innerHTML = tableName.innerText + "<span class='layui-nav-more'></span>";
             console.log(tableName.getAttribute('tablename'));
             document.cookie = 'tableName=' + tableName.getAttribute('tablename');
-            iframeSetAttr("<?php echo U('Admin/Index/overView');?>")
+            iframeSetAttr("<?php echo U('Admin/Index/overView');?>");
         }
         // function request.
-        visit         = () => { iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
-        hospitalsList = () => { iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
-        disease       = () => { iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
-        typesof       = () => { iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
-        doctor        = () => { iframeSetAttr("<?php echo U('Admin/Index/doctor');?>") }
-        arrivalStatus = () => { iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
-        detailReport  = () => { iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>") }
-        monthdata     = () => { iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>") }
-        iframeSetAttr = (url) => { loadingStart(); iframe.setAttribute('src', url); }
+        visit = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/visit');?>")
+        }
+        hospitalsList = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>")
+        }
+        disease = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/disease');?>")
+        }
+        typesof = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/typesof');?>")
+        }
+        doctor = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/doctor');?>")
+        }
+        arrivalStatus = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>")
+        }
+        detailReport = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>")
+        }
+        monthdata = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>")
+        }
+        access = () => {
+            iframeSetAttr("<?php echo U('Admin/Index/access');?>")
+        }
+        iframeSetAttr = (url) => {
+            loadingStart();
+            iframe.setAttribute('src', url);
+        }
         //  Request function
         Request = (url) => {
             var Request = new XMLHttpRequest();
@@ -172,15 +192,15 @@
                 }
             }
         }
-        // loading ...
+        // Projress loading ...
         loadingStart = () => {
             var projress = $('#loading').show().children();
             var promise = new Promise(resolve => {
-                    projress.animate({width: '33.8%'}, 100, () => {
-                        setTimeout(() => {
-                            resolve();
-                        }, 100)
-                    });
+                projress.animate({width: '33.8%'}, 100, () => {
+                    setTimeout(() => {
+                        resolve();
+                    }, 100)
+                });
             }).then(() => {
                 return new Promise(resolve => {
                     projress.animate({width: '66.8%'}, 100, () => {
@@ -200,8 +220,8 @@
             }).then(resolve => {
                 projress.animate({width: '0%'});
                 $('#loading').hide(200);
-            })
-        };
+            });
+        }
     });
 </script>
 </html>

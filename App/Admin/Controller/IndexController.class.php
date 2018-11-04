@@ -2,6 +2,8 @@
 
 namespace Admin\Controller;
 use Think\Controller;
+use Think\Exception;
+
 class IndexController extends Controller {
     /*
     *  @@ hospitals select
@@ -13,7 +15,131 @@ class IndexController extends Controller {
         $this->display();
     }
     public function overView () {
+        $tableName = $_COOKIE['tableName'];
+        if ($tableName == '') return false;
+        $isTable = M()->query("show tables like '{$tableName}'");
+        if (! $isTable) {
+            // create table, return true of false
+            if (! $this->createTable($tableName)) return false;
+        }
+        $situation = $this->custservice(); // 返回一个二维数组
+        $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
+        $arrival = array_sum(array_column($situation, 'arrival'));
+        $arrivalOut = array_sum(array_column($situation, 'arrivalOut'));
+        $yesterTotal = array_sum(array_column($situation, 'yestserTotal'));
+        $yesterArrival = array_sum(array_column($situation, 'yesterArrival'));
+        $yesterArrivalOut = array_sum(array_column($situation, 'yesterArrivalOut'));
+        $thisTotal = array_sum(array_column($situation, 'thisTotal'));
+        $thisArrival = array_sum(array_column($situation, 'thisArrival'));
+        $thisArrivalOut = array_sum(array_column($situation, 'thisArrivalOut'));
+        $lastTotal = array_sum(array_column($situation, 'lastTotal'));
+        $lastArrival = array_sum(array_column($situation, 'lastArrival'));
+        $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *  The data will be written to Redis middleware later                         **
+         *  But I don't have much time to code at the moment.                          **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-3.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
+        $this->assign('arrivalTotal', $arrivalTotal);
+        $this->assign('arrival', $arrival);
+        $this->assign('arrivalOut', $arrivalOut);
+        $this->assign('yesterTotal', $yesterTotal);
+        $this->assign('yesterArrival', $yesterArrival);
+        $this->assign('yesterArrivalOut', $yesterArrivalOut);
+        $this->assign('thisTotal', $thisTotal);
+        $this->assign('thisArrival', $thisArrival);
+        $this->assign('thisArrivalOut', $thisArrivalOut);
+        $this->assign('lastTotal', $lastTotal);
+        $this->assign('lastArrival', $lastArrival);
+        $this->assign('lastArrivalOut', $lastArrivalOut);
+        $this->assign('appointment', $this->appointment()); // return array.
+        $this->assign('thisArrivalSort', $this->thisArrivalList()[0]); // $arrival.
+        $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // $appointment
+        $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
+        $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
         $this->display();
+    }
+    /*
+     *  @@ select to make an thisArrival
+     *  @param null
+     *  @return array() Type: array
+     * */
+    private function thisArrivalList () {
+        $customer = M('custservice')->field('custservice')->select();
+        foreach ($customer  as $k => $v) {
+            foreach ($v as $c => $d) {
+                $customers[] = $d;
+            }
+        }
+        $instance = M($_COOKIE['tableName']);
+        for ($i = 0; $i < count($customers); $i ++) {
+            $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+        }
+        arsort($arrival, SORT_NUMERIC);
+        arsort($appointment, SORT_NUMERIC);
+        array_splice($arrival, 4);
+        array_splice($appointment, 4);
+        return array($arrival, $appointment);
+    }
+    /*
+     *  @@ select to make an lastArrival
+     *  @param null
+     *  @return array() Type: array
+     * */
+    private function lastArrivalList () {
+        $customer = M('custservice')->field('custservice')->select();
+        foreach ($customer as $k => $v) {
+            foreach ($v as $c => $d) {
+                $customers[] = $d;
+            }
+        }
+        $instance = M($_COOKIE['tableName']);
+        for ($i = 0; $i < count($customers); $i ++) {
+            $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1")->count();
+            $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1")->count();
+        }
+        arsort($arrival, SORT_NUMERIC);
+        arsort($appointment, SORT_NUMERIC);
+        array_splice($arrival, 4);
+        array_splice($appointment, 4);
+        return array($arrival, $appointment);
+    }
+    /*
+     *  @@ select To make an appointment in
+     *  @param null
+     *  @return $appointment Type: array
+     * */
+    private function appointment () {
+        $tableName = $_COOKIE['tableName'];
+        $redis = $this->setCache(); // Connect Redis
+        if ($redis->exists($tableName . '_appointment')) {
+            return json_decode($redis->get($tableName . '_appointment'), true);
+        } else {
+            $appointment = $this->appointmentSql(); // select to make an appointment in.
+            $redis->set($tableName . '_appointment', json_encode($appointment));
+            $redis->expire($tableName . '_appointment', 1200);
+            return $appointment;
+        }
+    }
+    /*
+     *  @@ select to make an appointment in sql
+     *  @param null
+     *  @return $appointmentData Type: array
+     * */
+    private function appointmentSql () {
+        $instance = M($_COOKIE['tableName']);
+        $appointmentData = array();
+        $appointmentData['todayTotal'] = $instance->where("TO_DAYS(oldDate) = TO_DAYS(NOW()) AND status = '预约未定'")->count();
+        $appointmentData['yesterTotal'] = $instance->where("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1 AND status = '预约未定'")->count();
+        $appointmentData['thisTotal'] = $instance->where("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m') AND status = '预约未定'")->count();
+        $appointmentData['lastTotal'] = $instance->where("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1 AND status = '预约未定'")->count();
+        return $appointmentData;
     }
     public function echarts () {
         $this->display();
@@ -367,6 +493,8 @@ class IndexController extends Controller {
      *  @param null
      * */
     public function detailReport () {
+        $redis = $this->setCache();
+        $this->assign('ttl', $redis->ttl($_COOKIE['tableName']));
         $this->display();
     }
     /*
@@ -375,7 +503,15 @@ class IndexController extends Controller {
      *  @return $custserviceList Tyep: json
      * */
     public function detailReportCheck () {
-        $custservice = $this->custservice(); // $this->custservice 内部方法调用
+        $redis = $this->setCache();
+        $tableName = $_COOKIE['tableName'];
+        if ($redis->exists($tableName)) { // 如果为空则写入redis集合.否则直接读取
+            $custservice = json_decode($redis->get($tableName), true);
+        } else {
+            $custservice = $this->custservice();
+            $redis->set($tableName, json_encode($custservice));
+            $redis->expire($tableName, 1200);
+        }
         if ($custservice) {
             $this->arrayRecursive($custservice, 'urldecode', true);
         } else {
@@ -396,38 +532,69 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         $arrivalTotal = $this->detail(array( // $this->detial 内部方法调用
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "TO_DAYS(oldDate) = TO_DAYS(NOW())")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '已到'",
+                "TO_DAYS(oldDate) = TO_DAYS(NOW())"
+            )
         ));
         $arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "TO_DAYS(oldDate) = TO_DAYS(NOW())")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '未到'",
+                "TO_DAYS(oldDate) = TO_DAYS(NOW())"
+            )
         ));
         $yesterday_arrivalTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '已到'",
+                "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1"
+            )
         ));
         $yesterday_arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '未到'",
+                "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1"
+            )
         ));
         $thisMonth_arrivalTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '已到'",
+                "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')"
+            )
         ));
         $thisMonth_arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '未到'",
+                "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')"
+            )
         ));
         $lastMonth_arrivalTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '已到'", "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m'))")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '已到'",
+                "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
+            )
         ));
         $lastMonth_arrivalOutTotal = $this->detail(array(
             "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array("custservice.custservice = {$tableName}.custservice", "{$tableName}.status = '未到'", "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m'))")
+            array(
+                "custservice.custservice = {$tableName}.custservice",
+                "{$tableName}.status = '未到'",
+                "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
+            )
         ));
         for ($index = 0; $index < $custserviceStrlen; $index ++) {
-            $custservice[$index] = $custservice[$index];
             $custservice[$index]['arrival'] = array_count_values(array_column($arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['arrivalOut'] = array_count_values(array_column($arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['yesterArrival'] = array_count_values(array_column($yesterday_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
@@ -435,7 +602,7 @@ class IndexController extends Controller {
             $custservice[$index]['thisArrival'] = array_count_values(array_column($thisMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['thisArrivalOut'] = array_count_values(array_column($thisMonth_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['lastArrival'] = array_count_values(array_column($lastMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['lastArrivalOut'] = array_count_values(array_column($lastMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
+            $custservice[$index]['lastArrivalOut'] = array_count_values(array_column($lastMonth_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
             $custservice[$index]['arrivalTotal'] = $custservice[$index]['arrival'] + $custservice[$index]['arrivalOut'];
             $custservice[$index]['yestserTotal'] = $custservice[$index]['yesterArrival'] + $custservice[$index]['yesterArrivalOut'];
             $custservice[$index]['thisTotal'] = $custservice[$index]['thisArrival'] + $custservice[$index]['thisArrivalOut'];
@@ -449,6 +616,23 @@ class IndexController extends Controller {
      *  return   Type: json string
      * */
     public function monthdata () {
+        $instance = M($_COOKIE['tableName']);
+        $redis = $this->setCache();
+        if ($redis->exists('arrival')) {
+            $arrival = json_decode($redis->get('arrival'), true);
+        } else {
+            $arrival = array();
+            $arrival['reser'] = $instance->where("status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['advan'] = $instance->where("status = '等待' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['arrival'] = $instance->where("status = '已到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['arrivalOut'] = $instance->where("status = '未到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['halfTotal'] = $instance->where("status = '全流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['half'] = $instance->where("status = '半流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['treat'] = $instance->where("status = '已诊治' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $redis->set('arrival', json_encode($arrival));
+            $redis->expire('arrival', 1200);
+        }
+        $this->assign('arrival', $arrival);
         $this->display();
     }
     /*
@@ -490,20 +674,144 @@ class IndexController extends Controller {
         $recursive_counter--;
     }
     /*
-     *  @@expansion set Cache.
-     *  @param $string Type: String.
-     *  @return data. Type: json
+     *  @@user access page
+     *  @param null
      * */
-    public function setCache ($string) {
-        $redis = new \Redis();
-        $redis->connect('x.x.x.x', 6379);
-        $redis->auth('xxxx');
-        $redis->select(1);
-        $redis->set('string', $string);
-        if ((boolean) $redis->exists('string')) {
-            return true;
+    public function access () {
+        $this->display();
+    }
+    /*
+     *  @@user access check
+     *  @param null
+     *  @return $userList Type: josn
+     * */
+    public function accessCheck () {
+        $user = M('user')->select();
+        if ($user) {
+            $this->arrayRecursive($user, 'urldecode', true);
         } else {
-            return false;
+            $this->ajaxrReturn(false, 'eval');
         }
+        $user = urldecode(json_encode($user));
+        $userList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $user}";
+        $this->ajaxReturn($userList, 'eval');
+    }
+    /*
+     *  @@userDel
+     *  @param null
+     *  @return boolean Type: eval
+     * */
+    public function userDel () {
+        if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
+        $username = M('user')->where("id = {$_GET['id']}")->field('username')->select();
+        $manageResolve = M('management')->where("pid = '{$username[0]['username']}'")->delete();
+        $resovle = M('user')->where("id = {$_GET['id']}")->delete();
+        if ($resovle) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *   @@userAdd
+     *   @param null
+     *   @return boolean Type: eval
+     * */
+    public function userAdd () {
+        $management = json_decode($_GET['data'], true);
+        $userList['password'] = MD5($management['password']);
+        $userList['username'] = $management['username'];
+        array_splice($management, 0, 2);
+        $management['pid'] = $userList['username'];
+        $managementResolve = M('management')->add($management);
+        $resolve = M('user')->add($userList);
+        if ($managementResolve && $resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@userEdit
+     *  @param null
+     *  @return boolean Type: eval
+     * */
+    public function userEdit () {
+        $management = json_decode($_GET['data'], true);
+        $userList['password'] = MD5($management['password']);
+        $userList['username'] = $management['username'];
+        array_splice($management, 0, 2); // delete username, password field
+        $management['pid'] = $userList['username'];
+        $username = M('user')->where("id = '{$_GET['id']}'")->field('username')->select(); // select user username.
+        $resolve = M('user')->where("id = '{$_GET['id']}'")->save($userList); // save new username, password
+        $managementUser = M('management')->where("pid = '{$username[0]['username']}'")->count();
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *    select user username to management table is have? return number.         **
+         *  if have is add functoin.                                                   **
+         *  else not have is save function.                                            **
+         *                                                                             **
+         * ******************************************************************************
+         * */
+        if (! $managementUser) {
+            $managementResolve = M('management')->add($management);
+        } else {
+            $managementResolve = M('management')->where("pid = '{$username[0]['username']}'")->save($management);
+        }
+        if ($managementResolve && $resolve) {
+            $this->ajaxReturn(true, 'eval');
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+    }
+    /*
+     *  @@expansion connect redis.
+     *  @param null.
+     *  @return $redis. Type: instance
+     * */
+    private function setCache () {
+        try {
+            $redis = new \Redis();
+            $redis->connect('211.149.x.x', 6379);
+            $redis->auth('xxxxxx');
+            $redis->select(1);
+        } catch (Exception $e) {
+            die ("Connect Redis Fail: " . $e->getMessage());
+        }
+        return $redis;
+    }
+    /*
+     *  @@ create new table
+     *  @param $tableName cookie
+     *  @retur boolean
+     * */
+    private function createTable ($tableName) {
+        $sql = <<<sql
+              CREATE TABLE  `$tableName` (
+              `id` int NOT NULL AUTO_INCREMENT,
+              `name` varchar(15) NOT NULL,
+              `old` int NOT NULL,
+              `phone` bigint(20) NOT NULL,
+              `qq` bigint(20) NOT NULL,
+              `diseases` varchar(30) NOT NULL,
+              `fromAddress` varchar(15) NOT NULL,
+              `switch` varchar(15) NOT NULL DEFAULT '外地',
+              `sex` varchar(15) NOT NULL DEFAULT '男',
+              `desc1` varchar(300) NOT NULL,
+              `expert` varchar(10) NOT NULL,
+              `oldDate` date NOT NULL,
+              `desc2` varchar(300) NOT NULL,
+              `status` varchar(15) NOT NULL,
+              `newDate` date NOT NULL,
+              `currentTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+              `custService` varchar(30) NOT NULL,
+              PRIMARY KEY(`id`),
+              KEY `oldDate` (`oldDate`),
+              KEY `status` (`status`)
+              ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+sql;
+        if (M()->query($sql)) return true;
+        return false;
     }
 }
