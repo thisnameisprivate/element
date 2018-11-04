@@ -35,6 +35,16 @@ class IndexController extends Controller {
         $lastTotal = array_sum(array_column($situation, 'lastTotal'));
         $lastArrival = array_sum(array_column($situation, 'lastArrival'));
         $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *  The data will be written to Redis middleware later                         **
+         *  But I don't have much time to code at the moment.                          **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-3.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
         $this->assign('arrivalTotal', $arrivalTotal);
         $this->assign('arrival', $arrival);
         $this->assign('arrivalOut', $arrivalOut);
