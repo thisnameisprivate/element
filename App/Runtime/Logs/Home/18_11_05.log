@@ -1055,3 +1055,96 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000421s ]
 INFO: [ app_end ] --END-- [ RunTime:0.000520s ]
 
+[ 2018-11-05T19:06:53+08:00 ] ::1 /element/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001469s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000869s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000987s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000066s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000167s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015571s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.015707s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000557s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000650s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000519s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000641s ]
+
+[ 2018-11-05T19:06:58+08:00 ] ::1 /element/index.php?s=/Home/Index/login.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000482s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000478s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000649s ]
+NOTIC: [8192] mysql_connect(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead E:\wampserver\wamp\www\element\ThinkPHP\Library\Think\Db\Driver\Mysql.class.php 第 52 行.
+SQL: SHOW COLUMNS FROM `user` [ RunTime:0.014669s ]
+SQL: SELECT * FROM `user` WHERE ( username = '叶慧' and password = 'e10adc3949ba59abbe56e057f20f883e' )  [ RunTime:0.012729s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000052s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000215s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017249s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017356s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000307s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000396s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000384s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000474s ]
+
+[ 2018-11-05T19:24:27+08:00 ] ::1 /element/index.php?s=/Admin/Index/addData/data/{%22name%22:%22%E6%B5%8B%E8%AF%95%E4%BF%A1%E6%81%AF%22,%22phone%22:%2219239129111%22,%22qq%22:%221782789127%22,%22old%22:%2299%22,%22oldDate%22:%222018-07-19%22,%22newDate%22:%222018-07-19%22,%22status%22:%22%E5%B7%B2%E5%88%B0%22,%22fromAddress%22:%22360%E7%AB%9E%E4%BB%B7%22,%22diseases%22:%22%E5%A6%87%E7%A7%91%E6%A3%80%E6%9F%A5%22,%22custService%22:%22%E7%8E%8B%E4%BA%9A%E8%90%8D%22,%22expert%22:%2299%22,%22sex%22:%22%E5%A5%B3%22,%22switch%22:%22%E6%9C%AC%E5%9C%B0%22,%22desc1%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?&%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%22,%22desc2%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?%22}.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000369s ]
+NOTIC: [2] preg_replace(): Compilation failed: unmatched parentheses at offset 9 E:\wampserver\wamp\www\element\ThinkPHP\Library\Think\Dispatcher.class.php 第 126 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000398s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000497s ]
+ERR: 非法操作:addData
+
+[ 2018-11-05T19:24:29+08:00 ] ::1 /element/index.php?s=/Admin/Index/addData/data/{%22name%22:%22%E6%B5%8B%E8%AF%95%E4%BF%A1%E6%81%AF%22,%22phone%22:%2219239129111%22,%22qq%22:%221782789127%22,%22old%22:%2299%22,%22oldDate%22:%222018-07-19%22,%22newDate%22:%222018-07-19%22,%22status%22:%22%E5%B7%B2%E5%88%B0%22,%22fromAddress%22:%22360%E7%AB%9E%E4%BB%B7%22,%22diseases%22:%22%E5%A6%87%E7%A7%91%E6%A3%80%E6%9F%A5%22,%22custService%22:%22%E7%8E%8B%E4%BA%9A%E8%90%8D%22,%22expert%22:%2299%22,%22sex%22:%22%E5%A5%B3%22,%22switch%22:%22%E6%9C%AC%E5%9C%B0%22,%22desc1%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?&%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%22,%22desc2%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?%22}.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000400s ]
+NOTIC: [2] preg_replace(): Compilation failed: unmatched parentheses at offset 9 E:\wampserver\wamp\www\element\ThinkPHP\Library\Think\Dispatcher.class.php 第 126 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000410s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000515s ]
+ERR: 非法操作:addData
+
+[ 2018-11-05T19:24:41+08:00 ] ::1 /element/index.php?s=/Admin/Index/addData/data/{%22name%22:%22%E6%B5%8B%E8%AF%95%E4%BF%A1%E6%81%AF%22,%22phone%22:%2219239129111%22,%22qq%22:%221782789127%22,%22old%22:%2299%22,%22oldDate%22:%222018-07-19%22,%22newDate%22:%222018-07-19%22,%22status%22:%22%E5%B7%B2%E5%88%B0%22,%22fromAddress%22:%22360%E7%AB%9E%E4%BB%B7%22,%22diseases%22:%22%E5%A6%87%E7%A7%91%E6%A3%80%E6%9F%A5%22,%22custService%22:%22%E7%8E%8B%E4%BA%9A%E8%90%8D%22,%22expert%22:%2299%22,%22sex%22:%22%E5%A5%B3%22,%22switch%22:%22%E6%9C%AC%E5%9C%B0%22,%22desc1%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?&%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%22,%22desc2%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?%22}.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000382s ]
+NOTIC: [2] preg_replace(): Compilation failed: unmatched parentheses at offset 9 E:\wampserver\wamp\www\element\ThinkPHP\Library\Think\Dispatcher.class.php 第 126 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000394s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000498s ]
+ERR: 非法操作:addData
+
+[ 2018-11-05T19:24:45+08:00 ] ::1 /element/index.php?s=/Admin/Index/addData/data/{%22name%22:%22%E6%B5%8B%E8%AF%95%E4%BF%A1%E6%81%AF%22,%22phone%22:%2219239129111%22,%22qq%22:%221782789127%22,%22old%22:%2299%22,%22oldDate%22:%222018-07-19%22,%22newDate%22:%222018-07-19%22,%22status%22:%22%E5%B7%B2%E5%88%B0%22,%22fromAddress%22:%22360%E7%AB%9E%E4%BB%B7%22,%22diseases%22:%22%E5%A6%87%E7%A7%91%E6%A3%80%E6%9F%A5%22,%22custService%22:%22%E7%8E%8B%E4%BA%9A%E8%90%8D%22,%22expert%22:%2299%22,%22sex%22:%22%E5%A5%B3%22,%22switch%22:%22%E6%9C%AC%E5%9C%B0%22,%22desc1%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?&%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%22,%22desc2%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?%22}.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000378s ]
+NOTIC: [2] preg_replace(): Compilation failed: unmatched parentheses at offset 9 E:\wampserver\wamp\www\element\ThinkPHP\Library\Think\Dispatcher.class.php 第 126 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000393s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000497s ]
+ERR: 非法操作:addData
+
+[ 2018-11-05T19:24:46+08:00 ] ::1 /element/index.php?s=/Admin/Index/addData/data/{%22name%22:%22%E6%B5%8B%E8%AF%95%E4%BF%A1%E6%81%AF%22,%22phone%22:%2219239129111%22,%22qq%22:%221782789127%22,%22old%22:%2299%22,%22oldDate%22:%222018-07-19%22,%22newDate%22:%222018-07-19%22,%22status%22:%22%E5%B7%B2%E5%88%B0%22,%22fromAddress%22:%22360%E7%AB%9E%E4%BB%B7%22,%22diseases%22:%22%E5%A6%87%E7%A7%91%E6%A3%80%E6%9F%A5%22,%22custService%22:%22%E7%8E%8B%E4%BA%9A%E8%90%8D%22,%22expert%22:%2299%22,%22sex%22:%22%E5%A5%B3%22,%22switch%22:%22%E6%9C%AC%E5%9C%B0%22,%22desc1%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?\nilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?&%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%E2%80%A6%22,%22desc2%22:%22ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?ilkajhdfasjkhf%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%80%E6%AE%B5%E6%B5%8B%E8%AF%95%E6%96%87%E5%AD%97%E3%80%82%E3%80%82as.dfa::::)))%3E?%22}.html
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000030s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000490s ]
+NOTIC: [2] preg_replace(): Compilation failed: unmatched parentheses at offset 9 E:\wampserver\wamp\www\element\ThinkPHP\Library\Think\Dispatcher.class.php 第 126 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000426s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000533s ]
+ERR: 非法操作:addData
+

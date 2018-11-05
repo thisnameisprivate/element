@@ -204,10 +204,17 @@ class IndexController extends Controller {
         $jsonVisit = urldecode(json_encode($hospitalVisit));
         $interval = ceil($hospitalVisitCount / $totalPage);
         $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
-        var_dump($visitList);
-        $str = str_replace('\\r\\n', '\r\n', $visitList);
-        var_dump($str);
-        $this->ajaxReturn($visitList, 'eval');
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *  This replacep param must is '\n'. I don't Know why.                        **
+         *  Time wasted here: 5 hours                                                  **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-5.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
+        $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
     }
     /*
      *  @@ visit data delte
@@ -799,7 +806,7 @@ class IndexController extends Controller {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxxx');
+            $redis->auth('xxxxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
