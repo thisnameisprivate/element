@@ -10,9 +10,31 @@ class IndexController extends Controller {
     *  @param null
     * */
     public function index () {
+        $userCookie = $_COOKIE['username'];
+        if (is_null($userCookie)) {
+            $this->error("please login", U("Home/Index/index"));
+        }
+        $userAcc = $this->userManagement($userCookie);
+        if ($userAcc) $this->assign('userAcc', json_encode($userAcc)); // 传值到前端用于储存localStorage.
         $hospitals = M('hospital')->field(array('hospital', 'tableName'))->select();
         $this->assign('hospitals', $hospitals);
         $this->display();
+    }
+    /*
+     *  @@ userManagement select
+     *  @@param null
+     *  @return $userAcc Type: array
+     *
+     * */
+    private function userManagement ($userCookie) {
+        $userAcc = M('management')->where("pid = '{$userCookie}'")->select();
+        if ($userAcc)  {
+            foreach ($userAcc as $k => $v) {
+                return $v;
+            }
+        } else {
+            return false;
+        }
     }
     public function overView () {
         $tableName = $_COOKIE['tableName'];
@@ -182,6 +204,9 @@ class IndexController extends Controller {
         $jsonVisit = urldecode(json_encode($hospitalVisit));
         $interval = ceil($hospitalVisitCount / $totalPage);
         $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
+        var_dump($visitList);
+        $str = str_replace('\\r\\n', '\r\n', $visitList);
+        var_dump($str);
         $this->ajaxReturn($visitList, 'eval');
     }
     /*
@@ -774,7 +799,7 @@ class IndexController extends Controller {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxx');
+            $redis->auth('xxxxxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());

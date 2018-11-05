@@ -9,15 +9,15 @@ insert into user(username, password) values ('admin', md5(123));
 #创建科室表
 CREATE TABLE hospital (
 id int key auto_increment,
-hospital varchar(32) unique not null,
-tableName varchar(32) not null,
+hospital varchar(32) not null,
+tableName varchar(32) unique not null,
 addtime timestamp default current_timestamp not null
 );
 #创建病种表
 create table alldiseases (
 id int key auto_increment,
 diseases varchar(32) not null,
-tableName varchar(32) unique not null ,
+tableName varchar(32) not null ,
 addtime timestamp default current_timestamp not null
 );
 #创建就诊类型表

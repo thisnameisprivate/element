@@ -89,7 +89,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">专家号</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="expert" lay-verify="required" placeholder="请输入专家号~" autocomplete="off" class="layui-input">
+                    <input type="text" name="expert" lay-verify="required" placeholder="请输入专家号~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -191,7 +191,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">专家号</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="expert" lay-verify="required" placeholder="请输入专家号~" autocomplete="off" class="layui-input">
+                    <input type="text" name="expert" lay-verify="required" placeholder="请输入专家号~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -245,6 +245,7 @@
         var form = layui.form;
         var laypage = layui.laypage;
         var $ = layui.jquery;
+        var userAcc = JSON.parse(localStorage.getItem('userAcc'));
         var tableIns = table.render({
             text: {
                 none: '暂无相关数据',
@@ -292,6 +293,7 @@
             var layEvent = obj.event;
             var tr = obj.tr;
             if (layEvent === 'del') { // delete tool data
+                if (! Boolean(userAcc.resdelete)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.confirm('【 ' + data.name + ' 】are you soure delete ?', (index) => {
                     var client = new XMLHttpRequest();
                     client.open("GET", "<?php echo U('Admin/Index/visitDel/id/" + parseInt(data.id) + "');?>");
@@ -309,6 +311,7 @@
                     }
                 });
             } else if (layEvent === 'edit') { // edit tool data
+                if (! Boolean(userAcc.resupdate)) { layer.msg('权限不足', {icon:5}); return false; }
                 document.getElementById('idValue').innerHTML = data.id;
                 layer.open({
                     type: 1,
@@ -350,6 +353,7 @@
             if (obj.event === 'reload') {
                 tableIns.reload();
             } else if (obj.event === 'add') {
+                if (! Boolean(userAcc.reswrite)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.open({
                     type: 1,
                     title: '新增回访信息',
@@ -367,8 +371,6 @@
                 form.render();
                 form.on('submit(fromadd)', data => {
                     var client = new XMLHttpRequest();
-                    console.log(data);
-                    console.log(JSON.stringify(data.field));
                     client.open('GET', "<?php echo U('Admin/Index/addData/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {

@@ -47,6 +47,7 @@
         var table = layui.table;
         var layer = layui.layer;
         var form = layui.form;
+        var userAcc = JSON.parse(localStorage.getItem('userAcc'));
         var tableIns = table.render({
             text: {
                 none: '暂无相关数据'
@@ -73,6 +74,7 @@
             var layEvent = obj.event;
             var tr = obj.tr;
             if (layEvent === 'del') {
+                if (! Boolean(userAcc.setdelete)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.confirm('【'+ data.fromaddress +'】 are you soure delete ?', index => {
                     var client = new XMLHttpRequest();
                     client.open('GET', "<?php echo U('Admin/Index/doctorDel/id/"+ parseInt(data.id) +"');?>");
@@ -93,6 +95,7 @@
         });
         table.on('toolbar(edittable)', obj => {
             if (obj.event === 'add') {
+                if (! Boolean(userAcc.setwrite)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.open({
                     type: 1,
                     title: '新增来源类型',

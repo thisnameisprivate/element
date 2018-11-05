@@ -14,7 +14,8 @@
 </head>
 <script type="text/javascript">
     // one loading time set default cookie.
-    document.cookie = 'tableName=nk';
+    document.cookie = 'tableName=gyxhyynk';
+    localStorage.setItem('userAcc', JSON.stringify(<?php echo ($userAcc); ?>));
 </script>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -53,7 +54,9 @@
                         <dd><a  href="javascript:;" onclick="visit();">预约登记列表</a></dd>
                         <dd><a  href="javascript:;" onclick="detailReport();">客服明细报表</a></dd>
                         <dd><a  href="javascript:;" onclick="monthdata();">月趋势报表</a></dd>
-                        <dd><a  href="javascript:;">数据横向对比</a></dd>
+                        <!--
+                         <dd><a  href="javascript:;">数据横向对比</a></dd>
+                         -->
                     </dl>
                 </li>
                 <!--
@@ -68,6 +71,7 @@
                   </dl>
                 </li>
                  -->
+                <!--
                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-chart-screen">&nbsp;&nbsp;</span>网站挂号管理</a>
                     <dl class="layui-nav-child">
@@ -75,7 +79,9 @@
                         <dd><a href="javascript:;">网站挂号设置</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                -->
+                <!--
+                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-form">&nbsp;&nbsp;</span>数据列表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">总体报表</a></dd>
@@ -87,6 +93,7 @@
                         <dd><a href="javascript:;">客服</a></dd>
                     </dl>
                 </li>
+                 -->
                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-set-sm">&nbsp;&nbsp;</span>设置</a>
                     <dl class="layui-nav-child">
@@ -101,16 +108,20 @@
                     <a href="javascript:;"><span class="layui-icon layui-icon-user">&nbsp;&nbsp;</span>我的资料</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">修改我的资料</a></dd>
-                        <dd><a href="javascript:;">修改密码</a></dd>
+                        <!--
+                         <dd><a href="javascript:;">修改密码</a></dd>
                         <dd><a href="javascript:;">选项设置</a></dd>
+                         -->
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-app">&nbsp;&nbsp;</span>系统管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" onclick="access();">用户管理</a></dd>
-                        <dd><a href="javascript:;">医院列表</a></dd>
+                        <!--
+                         <dd><a href="javascript:;">医院列表</a></dd>
                         <dd><a href="javascript:;">通知列表</a></dd>
+                         -->
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -141,6 +152,7 @@
         const iframe = document.getElementById('iframe');
         var element = layui.element;
         var $ = layui.jquery;
+        var userAcc = JSON.parse(localStorage.getItem('userAcc'));
         // 医院列表下拉框渲染
         readyHospital = tableName => {
             var ification = document.getElementById('classification');
@@ -151,30 +163,39 @@
         }
         // function request.
         visit = () => {
+            if (! Boolean(userAcc.resready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/visit');?>")
         }
         hospitalsList = () => {
+            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>")
         }
         disease = () => {
+            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/disease');?>")
         }
         typesof = () => {
+            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/typesof');?>")
         }
         doctor = () => {
+            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/doctor');?>")
         }
         arrivalStatus = () => {
+            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>")
         }
         detailReport = () => {
+            if (! Boolean(userAcc.resready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>")
         }
         monthdata = () => {
+            if (! Boolean(userAcc.resready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>")
         }
         access = () => {
+            if (! Boolean(userAcc.manageready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/access');?>")
         }
         iframeSetAttr = (url) => {

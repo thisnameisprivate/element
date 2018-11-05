@@ -24,11 +24,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">账号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" autocomplete="off" class="layui-input" placeholder="请输入用户名~">
+                    <input type="text" name="username" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入用户名~">
                 </div>
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="password" autocomplete="off" class="layui-input" placeholder="请输入密码~">
+                    <input type="text" name="password" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入密码~">
                 </div>
             </div>
             <hr class="layui-bg-green">
@@ -140,11 +140,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">账号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" autocomplete="off" class="layui-input" placeholder="请输入用户名~">
+                    <input type="text" name="username" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入用户名~">
                 </div>
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="password" autocomplete="off" class="layui-input" placeholder="请输入密码~">
+                    <input type="text" name="password" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入密码~">
                 </div>
             </div>
             <hr class="layui-bg-green">
@@ -261,6 +261,7 @@
         var form = layui.form;
         var laypage = layui.laypage;
         var $ = layui.jquery;
+        var userAcc = JSON.parse(localStorage.getItem('userAcc'));
         var tableIns = table.render({
             text: {
                 none: '暂无相关数据',
@@ -278,7 +279,7 @@
             size: 'sm',
             cols: [[
                 {field: 'id', title: 'No .', width: 60, sort: true},
-                {field: 'username', title: '用户名', width: 60},
+                {field: 'username', title: '用户名', width: 120},
                 {field: 'password', title: '密码', width: 200},
                 {fixed: 'right', title: '操作', width:100, align:'center', toolbar: '#bar'},
             ]],
@@ -292,6 +293,7 @@
             var layEvent = obj.event;
             var tr = obj.tr;
             if (layEvent === 'del') { // delete tool data
+                if (! Boolean(userAcc.managedelete)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.confirm('【 ' + data.name + ' 】are you soure delete ?', (index) => {
                     var client = new XMLHttpRequest();
                     client.open("GET", "{:U('Admin/Index/userDel/id/" + parseInt(data.id) + "')}");
@@ -309,6 +311,7 @@
                     }
                 });
             } else if (layEvent === 'edit') { // edit tool data
+                if (! Boolean(userAcc.manageupdate)) { layer.msg('权限不足', {icon:5}); return false; }
                 document.getElementById('idValue').innerHTML = data.id;
                 layer.open({
                     type: 1,
@@ -342,6 +345,7 @@
             if (obj.event === 'reload') {
                 tableIns.reload();
             } else if (obj.event === 'add') {
+                if (! Boolean(userAcc.managewrite)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.open({
                     type: 1,
                     title: '新增信息',

@@ -10,9 +10,10 @@ class IndexController extends Controller {
         if ($_POST) {
             $user = M('user');
             $identifter = array($_POST['username'], md5($_POST['password']));
+            print_r($_POST['username']);
             $result = $user->where("username = '%s' and password = '%s'", $identifter)->select();
             if ($result) {
-                cookie('username', $username, 3600);
+                setcookie('username', $_POST['username']);
                 $this->success('login success', U('Admin/Index/index'));
             } else {
                 $this->error('login failed.', U('Home/Index/index'));

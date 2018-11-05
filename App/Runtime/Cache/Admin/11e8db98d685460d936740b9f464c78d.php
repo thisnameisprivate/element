@@ -47,6 +47,7 @@
         var table = layui.table;
         var layer = layui.layer;
         var form = layui.form;
+        var userAcc = JSON.parse(localStorage.getItem('userAcc'));
         var tableIns = table.render({
             text: {
                 none: '暂无相关数据'
@@ -95,6 +96,7 @@
         */
         table.on('toolbar(edittable)', obj => {
             if (obj.event === 'add') {
+                if (! Boolean(userAcc.setwrite)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.open({
                     type: 1,
                     title: '新增到诊状态',
