@@ -280,7 +280,7 @@
             loading: true,
             size: 'sm',
             cols: [[
-                {field: 'id', title: 'No .', width:'4%', sort: true, display:'none'},
+                {field: 'id', title: 'No .', width:'4%', sort: true, hide:true},
                 {field: 'name', title: '姓名', templet: (data) => { return data.status == '已到' ? "<span style='color:orangered;'>"+ data.name +"</span>" : "<span style='color:#5FB878;'>"+ data.name +"</span>" }},
                 {field: 'sex', title: '性别', width:'4%', align:'center'},
                 {field: 'old', title: '年龄', width:'5%', align:'center', sort: true},
@@ -291,7 +291,7 @@
                 {field: 'oldDate', title: '预约时间'},
                 {field: 'diseases', title: '病患类型'},
                 {field: 'fromAddress', title: '媒体来源'},
-                {field: 'switch', title: '地区'},
+                {field: 'switch', title: '地区', hide:true},
                 {field: 'desc2', title: '备注'},
                 {field: 'custService', title: '客服', width:'5%'},
                 {field: 'newDate', title: '回访时间'},
@@ -300,8 +300,7 @@
                 {fixed: 'right', title: '操作', align:'left', toolbar: '#bar', width:'10%'},
             ]],
             id: 'edittable',
-            done: function () {
-
+            done: function (res, curr, count) {
             }
         });
         table.on('tool(edittable)', obj => {

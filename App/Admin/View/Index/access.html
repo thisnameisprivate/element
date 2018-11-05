@@ -165,7 +165,6 @@
                     <input type="checkbox" name="resupdate" title="修改" value="1">
                     <input type="checkbox" name="resdelete" title="删除" value="1">
                 </div>
-                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">挂号管理</label>
@@ -178,7 +177,6 @@
                     <input type="checkbox" name="sysupdate" title="修改" value="1">
                     <input type="checkbox" name="sysdelete" title="删除" value="1">
                 </div>
-                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">数据列表</label>
@@ -191,7 +189,6 @@
                     <input type="checkbox" name="listupdate" title="修改" value="1">
                     <input type="checkbox" name="listdelete" title="删除" value="1">
                 </div>
-                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">设置</label>
@@ -204,7 +201,6 @@
                     <input type="checkbox" name="setupdate" title="修改" value="1">
                     <input type="checkbox" name="setdelete" title="删除" value="1">
                 </div>
-                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">我的资料</label>
@@ -217,7 +213,6 @@
                     <input type="checkbox" name="myupdate" title="修改" value="1">
                     <input type="checkbox" name="mydelete" title="删除" value="1">
                 </div>
-                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">系统管理</label>
@@ -230,7 +225,6 @@
                     <input type="checkbox" name="manageupdate" title="修改" value="1">
                     <input type="checkbox" name="managedelete" title="删除" value="1">
                 </div>
-                <input type="checkbox" lay-skin="switch" lay-text="全选:)|全不选">
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">日志记录</label>
