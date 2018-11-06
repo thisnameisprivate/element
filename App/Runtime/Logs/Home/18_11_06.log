@@ -41,6 +41,7 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000386s ]
 INFO: [ app_end ] --END-- [ RunTime:0.000486s ]
 
+<<<<<<< HEAD
 [ 2018-11-06T18:37:53+08:00 ] ::1 /element/
 INFO: [ app_init ] --START--
 INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
@@ -147,3 +148,5 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000492s ]
 INFO: [ app_end ] --END-- [ RunTime:0.000580s ]
 
+=======
+>>>>>>> 6fc030fb7157e88c02abb668af7b270f92d16cb2
