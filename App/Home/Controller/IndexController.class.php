@@ -10,7 +10,6 @@ class IndexController extends Controller {
         if ($_POST) {
             $user = M('user');
             $identifter = array($_POST['username'], md5($_POST['password']));
-            print_r($_POST['username']);
             $result = $user->where("username = '%s' and password = '%s'", $identifter)->select();
             if ($result) {
                 setcookie('username', $_POST['username']);

@@ -59,14 +59,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
-                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($arrivalStatus); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
+                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($vo['arrivalStatus']); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">媒体来源</label>
                 <div class="layui-input-inline">
                     <select name="fromAddress" lay-verify="required">
-                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($fromaddress); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
+                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($vo['fromaddress']); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>

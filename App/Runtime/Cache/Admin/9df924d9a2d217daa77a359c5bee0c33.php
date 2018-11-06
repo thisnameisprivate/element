@@ -157,7 +157,6 @@
         readyHospital = tableName => {
             var ification = document.getElementById('classification');
             ification.innerHTML = tableName.innerText + "<span class='layui-nav-more'></span>";
-            console.log(tableName.getAttribute('tablename'));
             document.cookie = 'tableName=' + tableName.getAttribute('tablename');
             iframeSetAttr("<?php echo U('Admin/Index/overView');?>");
         }

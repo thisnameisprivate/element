@@ -41,79 +41,79 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读" value="1">
-                    <input type="checkbox" name="" title="可写" value="1">
+                    <input type="checkbox" name="resready" title="可读">
+                    <input type="checkbox" name="reswrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改" value="1">
-                    <input type="checkbox" name="" title="删除" value="1">
+                    <input type="checkbox" name="resupdate" title="修改">
+                    <input type="checkbox" name="resdelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">挂号管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读" value="1">
-                    <input type="checkbox" name="" title="可写" value="1">
+                    <input type="checkbox" name="sysready" title="可读">
+                    <input type="checkbox" name="syswrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改" value="1">
-                    <input type="checkbox" name="" title="删除" value="1">
+                    <input type="checkbox" name="sysupdate" title="修改">
+                    <input type="checkbox" name="sysdelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">数据列表</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读" value="1">
-                    <input type="checkbox" name="" title="可写" value="1">
+                    <input type="checkbox" name="listready" title="可读">
+                    <input type="checkbox" name="listwrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改" value="1">
-                    <input type="checkbox" name="" title="删除" value="1">
+                    <input type="checkbox" name="listupdate" title="修改">
+                    <input type="checkbox" name="listdelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">设置</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读" value="1">
-                    <input type="checkbox" name="" title="可写" value="1">
+                    <input type="checkbox" name="setready" title="可读">
+                    <input type="checkbox" name="setwrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改" value="1">
-                    <input type="checkbox" name="" title="删除" value="1">
+                    <input type="checkbox" name="setupdate" title="修改">
+                    <input type="checkbox" name="setdelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">我的资料</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读" value="1">
-                    <input type="checkbox" name="" title="可写" value="1">
+                    <input type="checkbox" name="myready" title="可读">
+                    <input type="checkbox" name="mywrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改" value="1">
-                    <input type="checkbox" name="" title="删除" value="1">
+                    <input type="checkbox" name="myupdate" title="修改">
+                    <input type="checkbox" name="mydelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">系统管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读" value="1">
-                    <input type="checkbox" name="" title="可写" value="1">
+                    <input type="checkbox" name="manageready" title="可读">
+                    <input type="checkbox" name="managewrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="修改" value="1">
-                    <input type="checkbox" name="" title="删除" value="1">
+                    <input type="checkbox" name="manageupdate" title="修改">
+                    <input type="checkbox" name="managedelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">日志记录</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="" title="可读" value="1">
+                    <input type="checkbox" name="logready" title="可读">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -157,79 +157,79 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">预约管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="resready" title="可读" value="1">
-                    <input type="checkbox" name="reswrite" title="可写" value="1">
+                    <input type="checkbox" name="resready" title="可读">
+                    <input type="checkbox" name="reswrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="resupdate" title="修改" value="1">
-                    <input type="checkbox" name="resdelete" title="删除" value="1">
+                    <input type="checkbox" name="resupdate" title="修改">
+                    <input type="checkbox" name="resdelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">挂号管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="sysready" title="可读" value="1">
-                    <input type="checkbox" name="syswrite" title="可写" value="1">
+                    <input type="checkbox" name="sysready" title="可读">
+                    <input type="checkbox" name="syswrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="sysupdate" title="修改" value="1">
-                    <input type="checkbox" name="sysdelete" title="删除" value="1">
+                    <input type="checkbox" name="sysupdate" title="修改">
+                    <input type="checkbox" name="sysdelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">数据列表</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="listready" title="可读" value="1">
-                    <input type="checkbox" name="listwrite" title="可写" value="1">
+                    <input type="checkbox" name="listready" title="可读">
+                    <input type="checkbox" name="listwrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="listupdate" title="修改" value="1">
-                    <input type="checkbox" name="listdelete" title="删除" value="1">
+                    <input type="checkbox" name="listupdate" title="修改">
+                    <input type="checkbox" name="listdelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">设置</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="setready" title="可读" value="1">
-                    <input type="checkbox" name="setwrite" title="可写" value="1">
+                    <input type="checkbox" name="setready" title="可读">
+                    <input type="checkbox" name="setwrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="setupdate" title="修改" value="1">
-                    <input type="checkbox" name="setdelete" title="删除" value="1">
+                    <input type="checkbox" name="setupdate" title="修改">
+                    <input type="checkbox" name="setdelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">我的资料</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="myready" title="可读" value="1">
-                    <input type="checkbox" name="mywrite" title="可写" value="1">
+                    <input type="checkbox" name="myready" title="可读">
+                    <input type="checkbox" name="mywrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="myupdate" title="修改" value="1">
-                    <input type="checkbox" name="mydelete" title="删除" value="1">
+                    <input type="checkbox" name="myupdate" title="修改">
+                    <input type="checkbox" name="mydelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">系统管理</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="manageready" title="可读" value="1">
-                    <input type="checkbox" name="managewrite" title="可写" value="1">
+                    <input type="checkbox" name="manageready" title="可读">
+                    <input type="checkbox" name="managewrite" title="可写">
                 </div>
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="manageupdate" title="修改" value="1">
-                    <input type="checkbox" name="managedelete" title="删除" value="1">
+                    <input type="checkbox" name="manageupdate" title="修改">
+                    <input type="checkbox" name="managedelete" title="删除">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">日志记录</label>
                 <div class="layui-input-inline">
-                    <input type="checkbox" name="logready" title="可读" value="1">
+                    <input type="checkbox" name="logready" title="可读">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -278,9 +278,43 @@
             loading: true,
             size: 'sm',
             cols: [[
+                    {align: 'center', title: '', colspan: 2},
+                    {align: 'center', title: '预约管理', colspan: 4},
+                    {align: 'center', title: '挂号管理', colspan: 4},
+                    {align: 'center', title: '数据列表', colspan: 4},
+                    {align: 'center', title: '设置', colspan: 4},
+                    {align: 'center', title: '我的资料', colspan: 4},
+                    {align: 'center', title: '系统管理', colspan: 4},
+                    {align: 'center', title: '日志记录', colspan: 3},
+                    {aling: 'center', title: '', clospan:2}
+                ],[
                 {field: 'id', title: 'No .', width: 60, sort: true},
-                {field: 'username', title: '用户名', width: 120},
-                {field: 'password', title: '密码', width: 200},
+                {field: 'pid', title: '用户名', width: '5%'},
+                {field: 'resready', title: '读', templet: data => { return data.resready=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'reswrite', title: '写', templet: data => { return data.reswrite=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'resupdate', title: '改', templet: data => { return data.resupdate=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'resdelete', title: '删', templet: data => { return data.resdelete=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'sysready', title: '读', templet: data => { return data.sysready=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'syswrite', title: '写', templet: data => { return data.syswrite=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'sysupdate', title: '改', templet: data => { return data.sysupdate=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'sysdelete', title: '删', templet: data => { return data.sysdelete=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'listready', title: '读', templet: data => { return data.listready=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'listwrite', title: '写', templet: data => { return data.listwrite=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'listupdate', title: '改', templet: data => { return data.listupdate=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'listdelete', title: '删', templet: data => { return data.listdelete=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'setready', title: '读', templet: data => { return data.setready=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'setwrite', title: '写', templet: data => { return data.setwrite=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'setupdate', title: '改', templet: data => { return data.setupdate=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'setdelete', title: '删', templet: data => { return data.setdelete=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'myready', title: '读', templet: data => { return data.myready=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'mywrite', title: '写', templet: data => { return data.mywrite=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'myupdate', title: '改', templet: data => { return data.myupdate=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'mydelete', title: '删', templet: data => { return data.mydelete=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'manageready', title: '读', templet: data => { return data.manageready=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'managewrite', title: '写', templet: data => { return data.managewrite=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'manageupdate', title: '改', templet: data => { return data.manageupdate=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'managedelete', title: '删', templet: data => { return data.managedelete=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
+                {field: 'logready', title: '读', templet: data => { return data.logready=='on'?"<span style='color:#009688;'>是</spam>":'否'}},
                 {fixed: 'right', title: '操作', width:100, align:'center', toolbar: '#bar'},
             ]],
             id: 'edittable',
@@ -320,6 +354,7 @@
                     content: document.getElementById('userEdit').innerHTML,
                 });
                 form.render();
+                setFormValue(data);
                 form.on('submit(formedit)', data => {
                     var id = document.getElementById('idValue').innerHTML;
                     var client = new XMLHttpRequest();
@@ -372,6 +407,37 @@
                 });
             }
         });
+        /* edit 渲染表单 */
+        setFormValue = data => {
+            form.val('formedit', {
+                'username': data.pid,
+                'resready': data.resready,
+                'reswrite': data.reswrite,
+                'resupdate': data.resupdate,
+                'resdelete': data.resdelete,
+                'sysready': data.sysready,
+                'syswrite': data.syswrite,
+                'sysupdate': data.sysupdate,
+                'sysdelete': data.sysdelete,
+                'listready': data.listready,
+                'listwrite': data.listwrite,
+                'listupdate': data.listupdate,
+                'listdelete': data.listdelete,
+                'setready': data.setready,
+                'setwrite': data.setwrite,
+                'setupdate': data.setupdate,
+                'setdelete': data.setdelete,
+                'myready': data.myready,
+                'mywrite': data.mywrite,
+                'myupdate': data.myupdate,
+                'mydelete': data.mydelete,
+                'manageready': data.manageready,
+                'managewrite': data.managewrite,
+                'manageupdate': data.manageupdate,
+                'managedelete': data.managedelete,
+                'logready': data.logready,
+            })
+        }
     })
 </script>
 </html>
