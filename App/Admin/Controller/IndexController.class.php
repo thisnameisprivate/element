@@ -718,7 +718,7 @@ class IndexController extends Controller {
      *  @return $userList Type: josn
      * */
     public function accessCheck () {
-        $user = M('user')->select();
+        $user = M('management')->join('user')->where("user.username = management.pid")->select();
         if ($user) {
             $this->arrayRecursive($user, 'urldecode', true);
         } else {
@@ -764,7 +764,7 @@ class IndexController extends Controller {
         }
     }
     /*
-     *  @@userEdit
+         *  @@`
      *  @param null
      *  @return boolean Type: eval
      * */
@@ -772,8 +772,11 @@ class IndexController extends Controller {
         $management = json_decode($_GET['data'], true);
         $userList['password'] = MD5($management['password']);
         $userList['username'] = $management['username'];
+        $addtime = date('Y-m-d H:i:s', time());
+        $userList['addtime'] = $addtime;
         array_splice($management, 0, 2); // delete username, password field
         $management['pid'] = $userList['username'];
+        $management['addtime'] = $addtime;
         $username = M('user')->where("id = '{$_GET['id']}'")->field('username')->select(); // select user username.
         $resolve = M('user')->where("id = '{$_GET['id']}'")->save($userList); // save new username, password
         $managementUser = M('management')->where("pid = '{$username[0]['username']}'")->count();
