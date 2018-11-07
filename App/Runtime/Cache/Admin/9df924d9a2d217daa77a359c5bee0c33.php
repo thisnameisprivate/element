@@ -107,7 +107,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-user">&nbsp;&nbsp;</span>我的资料</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">修改我的资料</a></dd>
+                        <dd><a href="javascript:;" onclick="personal();">修改我的资料</a></dd>
                         <!--
                          <dd><a href="javascript:;">修改密码</a></dd>
                         <dd><a href="javascript:;">选项设置</a></dd>
@@ -196,6 +196,10 @@
         access = () => {
             if (! Boolean(userAcc.manageready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/access');?>")
+        }
+        personal = () => {
+            if (! Boolean(userAcc.myready)) { layer.msg("权限不足", {icon: 5}); return false };
+            iframeSetAttr("<?php echo U('Admin/Index/personal');?>");
         }
         iframeSetAttr = (url) => {
             loadingStart();

@@ -36,6 +36,9 @@ class IndexController extends Controller {
             return false;
         }
     }
+    /*
+     *  @@ overView Home page.
+     * */
     public function overView () {
         $tableName = $_COOKIE['tableName'];
         if ($tableName == '') return false;
@@ -44,19 +47,6 @@ class IndexController extends Controller {
             // create table, return true of false
             if (! $this->createTable($tableName)) return false;
         }
-        $situation = $this->custservice(); // 返回一个二维数组
-        $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
-        $arrival = array_sum(array_column($situation, 'arrival'));
-        $arrivalOut = array_sum(array_column($situation, 'arrivalOut'));
-        $yesterTotal = array_sum(array_column($situation, 'yestserTotal'));
-        $yesterArrival = array_sum(array_column($situation, 'yesterArrival'));
-        $yesterArrivalOut = array_sum(array_column($situation, 'yesterArrivalOut'));
-        $thisTotal = array_sum(array_column($situation, 'thisTotal'));
-        $thisArrival = array_sum(array_column($situation, 'thisArrival'));
-        $thisArrivalOut = array_sum(array_column($situation, 'thisArrivalOut'));
-        $lastTotal = array_sum(array_column($situation, 'lastTotal'));
-        $lastArrival = array_sum(array_column($situation, 'lastArrival'));
-        $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
         /* ******************************************************************************
          * ******************************************************************************
          *                                                                             **
@@ -67,24 +57,79 @@ class IndexController extends Controller {
          *                                                                             **
          * ******************************************************************************
          * */
-        $this->assign('arrivalTotal', $arrivalTotal);
-        $this->assign('arrival', $arrival);
-        $this->assign('arrivalOut', $arrivalOut);
-        $this->assign('yesterTotal', $yesterTotal);
-        $this->assign('yesterArrival', $yesterArrival);
-        $this->assign('yesterArrivalOut', $yesterArrivalOut);
-        $this->assign('thisTotal', $thisTotal);
-        $this->assign('thisArrival', $thisArrival);
-        $this->assign('thisArrivalOut', $thisArrivalOut);
-        $this->assign('lastTotal', $lastTotal);
-        $this->assign('lastArrival', $lastArrival);
-        $this->assign('lastArrivalOut', $lastArrivalOut);
-        $this->assign('appointment', $this->appointment()); // return array.
-        $this->assign('thisArrivalSort', $this->thisArrivalList()[0]); // $arrival.
-        $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // $appointment
-        $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
-        $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
+        $redis = $this->setCache();
+        if ($redis->exists($tableName . '_arrivalTotal')) {
+            $keyNames = $redis->keys($tableName . "*");
+            for ($i = 0; $i < count($keyNames); $i ++) {
+                $str = $redis->get($keyNames[$i]);
+                if (! substr($str, 0, 1) == '{') {
+                    $this->assign(explode('_', $keyNames[$i])[1], $str);
+                } else {
+                    $this->assign(explode('_', $keyNames[$i])[1], json_decode($str, true));
+                }
+                $redis->expire($keyNames[$i], $this->statusSuffixConf()['endTime']);
+            }
+        } else {
+            $situation = $this->custservice(); // 返回一个二维数组
+            $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
+            $this->arrivalSetRedis($tableName . '_arrivalTotal', $arrivalTotal);
+            $this->assign('arrivalTotal', $arrivalTotal);
+            $arrival = array_sum(array_column($situation, 'arrival'));
+            $this->arrivalSetRedis($tableName . '_arrival', $arrival);
+            $this->assign('arrival', $arrival);
+            $arrivalOut = array_sum(array_column($situation, 'arrivalOut'));
+            $this->arrivalSetRedis($tableName . '_arrivalOut', $arrivalOut);
+            $this->assign('arrivalOut', $arrivalOut);
+            $yesterTotal = array_sum(array_column($situation, 'yestserTotal'));
+            $this->arrivalSetRedis($tableName . '_yesterTotal', $yesterTotal);
+            $this->assign('yesterTotal', $yesterTotal);
+            $yesterArrival = array_sum(array_column($situation, 'yesterArrival'));
+            $this->arrivalSetRedis($tableName . '_yesterArrival', $yesterArrival);
+            $this->assign('yesterArrival', $yesterArrival);
+            $yesterArrivalOut = array_sum(array_column($situation, 'yesterArrivalOut'));
+            $this->arrivalSetRedis($tableName . '_yesterArrivalOut', $yesterArrivalOut);
+            $this->assign('yesterArrivalOut', $yesterArrivalOut);
+            $thisTotal = array_sum(array_column($situation, 'thisTotal'));
+            $this->arrivalSetRedis($tableName . '_thisTotal', $thisTotal);
+            $this->assign('thisTotal', $thisTotal);
+            $thisArrival = array_sum(array_column($situation, 'thisArrival'));
+            $this->arrivalSetRedis($tableName . '_thisArrival', $thisArrival);
+            $this->assign('thisArrival', $thisArrival);
+            $thisArrivalOut = array_sum(array_column($situation, 'thisArrivalOut'));
+            $this->arrivalSetRedis($tableName . '_thisArrivalOut', $thisArrivalOut);
+            $this->assign('thisArrivalOut', $thisArrivalOut);
+            $lastTotal = array_sum(array_column($situation, 'lastTotal'));
+            $this->arrivalSetRedis($tableName . '_lastTotal', $lastTotal);
+            $this->assign('lastTotal', $lastTotal);
+            $lastArrival = array_sum(array_column($situation, 'lastArrival'));
+            $this->arrivalSetRedis($tableName . '_lastArrival', $lastArrival);
+            $this->assign('lastArrival', $lastArrival);
+            $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
+            $this->arrivalSetRedis($tableName . '_lastArrivalOut', $lastArrivalOut);
+            $this->assign('lastArrivalOut', $lastArrivalOut);
+            $this->arrivalSetRedis($tableName . '_appointment', json_encode($this->appointment()));
+            $this->assign('appointment', $this->appointment()); // return array.
+            $this->arrivalSetRedis($tableName . '_thisArrivalSort', json_encode($this->thisArrivalList()[0]));
+            $this->assign('thisArrivalSort', $this->thisArrivalList()[0]); // return array.
+            $this->arrivalSetRedis($tableName . '_thisAppointmentSort', json_encode($this->thisArrivalList()[1]));
+            $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // return array.
+            $this->arrivalSetRedis($tableName . '_lastArrivalSort', json_encode($this->lastArrivalList()[0]));
+            $this->assign('lastArrivalSort', $this->lastArrivalList()[0]); // return array.
+            $this->arrivalSetRedis($tableName . '_lastAppointmentSort', json_encode($this->lastArrivalList()[1]));
+            $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]); // return array.
+        }
         $this->display();
+    }
+    /*
+     *   @@arrival Set Redis
+     *   @param key Type: string
+     *   @param value Type: variable int.
+     *   @return Boolean Type: Boolean.
+     * */
+    private function arrivalSetRedis ($key, $value) {
+        $redis = $this->setCache();
+        $redis->set($key, $value);
+        $redis->expire($key, $this->statusSuffixConf()['endTime']);
     }
     /*
      *  @@ select to make an thisArrival
@@ -241,10 +286,75 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         $resolve = M($tableName)->add($visitData);
         if ($resolve) {
+            $this->writeDataLpushRedis($visitData);
             $this->ajaxReturn(true, 'eval');
         } else {
             $this->ajaxReturn(false, 'eval');
         }
+    }
+    /*
+     *  @@statusSuffixConf
+     *  @return $statusSuffix Type: array
+     * */
+    private function statusSuffixConf () {
+        return array(
+            'arrival'       => '已到',
+            'arrivalOut'    => '未到',
+            'arrivalStr'    => $_COOKIE['tableName'] . '_arrival',
+            'arrivalOutStr' => $_COOKIE['tableName'] . '_arrivalOut',
+            'endTime'       => 300
+        );
+    }
+    /*
+     *  @@Redis List.
+     *  @@param $data Type: array.
+     *  @@Redis lPush new Data
+     * */
+    private function writeDataLpushRedis ($data) {
+        $jsonData = json_decode($data);
+        $tableName = $_COOKIE['tableName'];
+        $statusSuffix = $this->statusSuffixConf();
+        $redis = $this->setCache();
+        if (date('d', time($data['newDate'])) == date("d")) {
+            if ($data['status'] == $statusSuffix['arrival']) { // ToDay Arrival Redis List.
+                $redis->lPush(date('d') . "d" . $statusSuffix['arrivalStr'], json_encode($data));
+                $redis->expire(date('d') . "d" . $statusSuffix['arrivalStr'],  $statusSuffix['endTime']);
+            }
+            if ($data['status'] == $statusSuffix['arrivalOut']) { // ToDay ArrivalOut Redis List
+                $redis->lPush(date('d') . "d" . $statusSuffix['arrivalOutStr'], $data);
+                $redis->expire(date('d') . "d" . $statusSuffix['arrivalOutStr'], $statusSuffix['endTime']);
+            }
+        } else if (date('d', time($data['newDate'])) == date("d", strtotime("-1 day"))) {
+            if ($data['status'] == $statusSuffix['arrival']) { // YesterDay Arrival Redis List
+                $redis->lPush(date('d', strtotime("-1 day")) . "d" . $statusSuffix['arrivalStr'], $data);
+                $redis->expire(date('d', strtotime("-1 day")) . "d" . $statusSuffix['arrivalStr'], $statusSuffix['endTime']);
+            }
+            if ($data['status'] == $statusSuffix['arrivalOut']) {
+                $redis->lPush(date('d', strtotime("-1 day")) . "d" . $statusSuffix['arrivalOutStr'], $data);
+                $redis->expire(date('d', strtotime("-1 day")) . "d" . $statusSuffix['arrivalOutStr'], $statusSuffix['endTime']);
+            }
+        }
+        if (date('m', time($data['newDate'])) == date("m")) {
+            if ($data['status'] == $statusSuffix['arrival']) { // ThisMonth Arrival Redis List
+                $redis->lPush(date('m') . "m" . $statusSuffix['arrivalStr'], $data);
+                $redis->expire(date('m') . "m" . $statusSuffix['arrivalStr'], $statusSuffix['endTime']);
+            }
+            if ($data['status'] == $statusSuffix['arrivalOut']) {
+                $redis->lPush(date('m') . "m" . $statusSuffix['arrivalOutStr'], $data);
+                $redis->expire(date('m') . "m" . $statusSuffix['arrivalOutStr'], $statusSuffix['endTime']);
+            }
+        } else if (date('m', time($data['newDate'])) == date("m", strtotime("-1 month"))) {
+            if ($data['status'] == $statusSuffix['arrival']) { // LastMonth Arrival Redis List
+                $redis->lPush(date('m', strtotime("-1 month")) . "m" . $statusSuffix['arrivalStr'], $data);
+                $redis->expire(date('m', strtotime("-1 month")) . "m" . $statusSuffix['arrivalStr'], $statusSuffix['endTime']);
+            }
+            if ($data['status'] == $statusSuffix['arrivalOut']) {
+                $redis->lPush(date('m', strtotime("-1 month")) . "m" . $statusSuffix['arrivalOutStr'], $data);
+                $redis->expire(date('m', strtotime("-1 month")) . "m" . $statusSuffix['arrivalOutStr'], $statusSuffix['endTime']);
+            }
+        }
+        exit;
+
     }
     /*
      *  @@vist data edit
@@ -650,8 +760,8 @@ class IndexController extends Controller {
     public function monthdata () {
         $instance = M($_COOKIE['tableName']);
         $redis = $this->setCache();
-        if ($redis->exists('arrival')) {
-            $arrival = json_decode($redis->get('arrival'), true);
+        if ($redis->exists($_COOKIE['tableName'] . '_arrival')) {
+            $arrival = json_decode($redis->get($_COOKIE['tableName'] . '_arrival'), true);
         } else {
             $arrival = array();
             $arrival['reser'] = $instance->where("status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
@@ -661,8 +771,8 @@ class IndexController extends Controller {
             $arrival['halfTotal'] = $instance->where("status = '全流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
             $arrival['half'] = $instance->where("status = '半流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
             $arrival['treat'] = $instance->where("status = '已诊治' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $redis->set('arrival', json_encode($arrival));
-            $redis->expire('arrival', 1200);
+            $redis->set($_COOKIE['tableName'] . '_arrival', json_encode($arrival));
+            $redis->expire($_COOKIE['tableName'] . '_arrival', 1200);
         }
         $this->assign('arrival', $arrival);
         $this->display();
@@ -764,19 +874,27 @@ class IndexController extends Controller {
         }
     }
     /*
-         *  @@`
+     *  @@userEdit
      *  @param null
      *  @return boolean Type: eval
      * */
     public function userEdit () {
         $management = json_decode($_GET['data'], true);
+        $managementKey = array_keys($management);
+        $fields = M('management')->getDbFields();
+        $redundantKeys = array_diff($fields, $managementKey);
+        while (list($k, $v) = each($redundantKeys)) { // value conversion key
+            $redundant[trim($v)] = '';
+        }
+        $management = array_merge($redundant, $management);
+        $addtime = date('Y-m-d H:i:s', time());
+        unset($management['id']);
         $userList['password'] = MD5($management['password']);
         $userList['username'] = $management['username'];
-        $addtime = date('Y-m-d H:i:s', time());
         $userList['addtime'] = $addtime;
-        array_splice($management, 0, 2); // delete username, password field
         $management['pid'] = $userList['username'];
         $management['addtime'] = $addtime;
+        unset($management['username'], $management['password']); // Destruction of the element
         $username = M('user')->where("id = '{$_GET['id']}'")->field('username')->select(); // select user username.
         $resolve = M('user')->where("id = '{$_GET['id']}'")->save($userList); // save new username, password
         $managementUser = M('management')->where("pid = '{$username[0]['username']}'")->count();
@@ -799,6 +917,16 @@ class IndexController extends Controller {
         } else {
             $this->ajaxReturn(false, 'eval');
         }
+    }
+    /*
+     *  @@The personal data page
+     *  @param null
+     * */
+    public function personal () {
+        $this->display();
+    }
+    public function personalCheck () {
+        $this->assign();
     }
     /*
      *  @@expansion connect redis.

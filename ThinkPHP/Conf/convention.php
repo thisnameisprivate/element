@@ -53,7 +53,7 @@ return  array(
 
     /* 数据库设置 */
     'DB_TYPE'               =>  'mysql',     // 数据库类型
-    'DB_HOST'               =>  'xxxxxx', // 服务器地址
+    'DB_HOST'               =>  '211.149.x.x', // 服务器地址
     'DB_NAME'               =>  'xxxxxx',          // 数据库名
     'DB_USER'               =>  'xxxxxx',      // 用户名
     'DB_PWD'                =>  'xxxxxx',          // 密码
