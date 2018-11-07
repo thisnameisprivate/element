@@ -107,7 +107,7 @@
     <div class="right-box">
         <div class="right-box-min-container">
             <div class="layui-card min-container">
-                <div class="layui-card-header">本月到院排行榜</div>
+                <div class="layui-card-header">本月到院排行</div>
                 <div class="layui-card-body">
                     <table class="layui-table" lay-even lay-skin="line" lay-size="sm">
                         <colgroup>
