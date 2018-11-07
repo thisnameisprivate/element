@@ -58,7 +58,6 @@ class IndexController extends Controller {
          * ******************************************************************************
          * */
         $redis = $this->setCache();
-<<<<<<< HEAD
         if ($redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*");
             for ($i = 0; $i < count($keyNames); $i ++) {
@@ -70,18 +69,11 @@ class IndexController extends Controller {
                 }
                 $redis->expire($keyNames[$i], $this->statusSuffixConf()['endTime']);
             }
-=======
-
-        if ($redis->exists($tableName . '_arrivalTotal')) {
-            $this->assign('arrivalTotal', $redis->get($tableName . '_arrivalTotal'));
-            $redis->expire($tableName . '_arrivalTotal', $this->statusSuffixConf()['endTime']);
->>>>>>> ac9232bf241fd5b85c24f2368e3494abbece0347
         } else {
             $situation = $this->custservice(); // 返回一个二维数组
             $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
             $this->arrivalSetRedis($tableName . '_arrivalTotal', $arrivalTotal);
             $this->assign('arrivalTotal', $arrivalTotal);
-<<<<<<< HEAD
             $arrival = array_sum(array_column($situation, 'arrival'));
             $this->arrivalSetRedis($tableName . '_arrival', $arrival);
             $this->assign('arrival', $arrival);
@@ -123,131 +115,6 @@ class IndexController extends Controller {
             $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // return array.
             $this->arrivalSetRedis($tableName . '_lastArrivalSort', json_encode($this->lastArrivalList()[0]));
             $this->assign('lastArrivalSort', $this->lastArrivalList()[0]); // return array.
-=======
-        }
-        if ($redis->exists($tableName . '_arrival')) {
-            $this->assign('arrival', $redis->get($tableName . '_arrival'));
-            $redis->expire($tableName . '_arrival', $this->statusSuffixConf()['endTime']);
-        } else {
-            $arrival = array_sum(array_column($situation, 'arrival'));
-            $this->arrivalSetRedis($tableName . '_arrival', $arrival);
-            $this->assign('arrival', $arrival);
-        }
-        if ($redis->exists($tableName . '_arrivalOut')) {
-            $this->assign('arrivalOut', $redis->get($tableName . '_arrivalOut'));
-            $redis->expire($tableName . '_arrivalOut', $this->statusSuffixConf()['endTime']);
-        } else {
-            $arrivalOut = array_sum(array_column($situation, 'arrivalOut'));
-            $this->arrivalSetRedis($tableName . '_arrivalOut', $arrivalOut);
-            $this->assign('arrivalOut', $arrivalOut);
-        }
-        if ($redis->exists($tableName . '_yesterTotal')) {
-            $this->assign('yesterTotal', $redis->get($tableName . '_yesterTotal'));
-            $redis->expire($tableName . '_yesterTotal', $this->statusSuffixConf()['endTime']);
-        } else {
-            $yesterTotal = array_sum(array_column($situation, 'yestserTotal'));
-            $this->arrivalSetRedis($tableName . '_yesterTotal', $yesterTotal);
-            $this->assign('yesterTotal', $yesterTotal);
-        }
-        if ($redis->exists($tableName . '_yesterArrival')) {
-            $this->assign('yesterArrival', $redis->get($tableName . '_yesterArrival'));
-            $redis->expire($tableName . '_yesterArrival', $this->statusSuffixConf()['endTime']);
-        } else {
-            $yesterArrival = array_sum(array_column($situation, 'yesterArrival'));
-            $this->arrivalSetRedis($tableName . '_yesterArrival', $yesterArrival);
-            $this->assign('yesterArrival', $yesterArrival);
-        }
-        if ($redis->exists($tableName . '_yesterArrivalOut')) {
-            $this->assign('yesterArrivalOut', $redis->get($tableName . '_yesterArrivalOut'));
-            $redis->expire($tableName . '_yesterArrivalOut', $this->statusSuffixConf()['endTime']);
-        } else {
-            $yesterArrivalOut = array_sum(array_column($situation, 'yesterArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_yesterArrivalOut', $yesterArrivalOut);
-            $this->assign('yesterArrivalOut', $yesterArrivalOut);
-        }
-        if ($redis->exists($tableName . '_thisTotal')) {
-            $this->assign('thisTotal', $redis->get($tableName . '_thisTotal'));
-            $redis->expire($tableName . '_thisTotal', $this->statusSuffixConf()['endTime']);
-        } else {
-            $thisTotal = array_sum(array_column($situation, 'thisTotal'));
-            $this->arrivalSetRedis($tableName . '_thisTotal', $thisTotal);
-            $this->assign('thisTotal', $thisTotal);
-        }
-        if ($redis->exists($tableName . '_thisArrival')) {
-            $this->assign('thisArrival', $redis->get($tableName . '_thisArrival'));
-            $redis->expire($tableName . '_thisArrival', $this->statusSuffixConf()['endTime']);
-        } else {
-            $thisArrival = array_sum(array_column($situation, 'thisArrival'));
-            $this->arrivalSetRedis($tableName . '_thisArrival', $thisArrival);
-            $this->assign('thisArrival', $thisArrival);
-        }
-        if ($redis->exists($tableName . '_thisArrivalOut')) {
-            $this->assign('thisArrivalOut', $redis->get($tableName . '_thisArrivalOut'));
-            $redis->expire($tableName . '_thisArrivalOut', $this->statusSuffixConf()['endTime']);
-        } else {
-            $thisArrivalOut = array_sum(array_column($situation, 'thisArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_thisArrivalOut', $thisArrivalOut);
-            $this->assign('thisArrivalOut', $thisArrivalOut);
-        }
-        if ($redis->exists($tableName . '_lastTotal')) {
-            $this->assign('lastTotal', $redis->get($tableName . '_lastTotal'));
-            $redis->expire($tableName . '_lastTotal', $this->statusSuffixConf()['endTime']);
-        } else {
-            $lastTotal = array_sum(array_column($situation, 'lastTotal'));
-            $this->arrivalSetRedis($tableName . '_lastTotal', $lastTotal);
-            $this->assign('lastTotal', $lastTotal);
-        }
-        if ($redis->exists($tableName . '_lastArrival')) {
-            $this->assign('lastArrival', $redis->get($tableName . '_lastArrival'));
-            $redis->expire($tableName . '_lastArrival', $this->statusSuffixConf()['endTime']);
-        } else {
-            $lastArrival = array_sum(array_column($situation, 'lastArrival'));
-            $this->arrivalSetRedis($tableName . '_lastArrival', $lastArrival);
-            $this->assign('lastArrival', $lastArrival);
-        }
-        if ($redis->exists($tableName . '_lastArrivalOut')) {
-            $this->assign('lastArrivalOut', $redis->get($tableName . '_lastArrivalOut'));
-            $redis->expire($tableName . '_lastArrivalOut', $this->statusSuffixConf()['endTime']);
-        } else {
-            $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_lastArrivalOut', $lastArrivalOut);
-            $this->assign('lastArrivalOut', $lastArrivalOut);
-        }
-        if ($redis->exists($tableName . '_appointment')) {
-            $this->assign('appointment', json_decode($redis->get($tableName . '_appointment'), true)); // return array.
-            $redis->expire($tableName . '_appointment', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_appointment', json_encode($this->appointment()));
-            $this->assign('appointment', $this->appointment()); // return array.
-        }
-
-        if ($redis->exists($tableName . '_thisArrivalSort')) {
-            $this->assign('thisArrivalSort', json_decode($redis->get($tableName . '_thisArrivalSort'), true)); // return array.
-            $redis->expire($tableName . '_thisArrivalSort', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_thisArrivalSort', json_encode($this->thisArrivalList()[0]));
-            $this->assign('thisArrivalSort', $this->thisArrivalList()[0]); // return array.
-        }
-
-        if ($redis->exists($tableName . '_thisAppointmentSort')) {
-            $this->assign('thisAppointmentSort', json_decode($redis->get($tableName . '_thisAppointmentSort'), true)); // return array.
-            $redis->expire($tableName . '_thisAppointmentSort', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_thisAppointmentSort', json_encode($this->thisArrivalList()[1]));
-            $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // return array.
-        }
-        if ($redis->exists($tableName . '_lastArrivalSort')) {
-            $this->assign('lastArrivalSort', json_decode($redis->get($tableName . '_lastArrivalSort'), true)); // return array.
-            $redis->expire($tableName . '_lastArrivalSort', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_lastArrivalSort', json_encode($this->lastArrivalList()[0]));
-            $this->assign('lastArrivalSort', $this->lastArrivalList()[0]); // return array.
-        }
-        if ($redis->exists($tableName . '_lastAppointmentSort')) {
-            $this->assign('lastAppointmentSort', json_decode($redis->get($tableName . '_lastAppointmentSort'), true)); // return array.
-            $redis->expire($tableName . '_lastAppointmentSort', $this->statusSuffixConf()['endTime']);
-        } else {
->>>>>>> ac9232bf241fd5b85c24f2368e3494abbece0347
             $this->arrivalSetRedis($tableName . '_lastAppointmentSort', json_encode($this->lastArrivalList()[1]));
             $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]); // return array.
         }
@@ -1070,7 +937,7 @@ class IndexController extends Controller {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxxx');
+            $redis->auth('xxxxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
