@@ -41,7 +41,6 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000397s ]
 INFO: [ app_end ] --END-- [ RunTime:0.000502s ]
 
-<<<<<<< HEAD
 [ 2018-11-08T18:12:26+08:00 ] ::1 /element/index.php?s=/Home/Index/login.html
 INFO: [ app_init ] --START--
 INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
@@ -65,5 +64,3 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.008472s ]
 INFO: [ app_end ] --END-- [ RunTime:0.008570s ]
 
-=======
->>>>>>> d29018196df97ac2cc358dd316b14dfcbca8b7c2

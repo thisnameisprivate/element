@@ -42,7 +42,6 @@ class IndexController extends Controller {
     public function overView () {
         $tableName = $_COOKIE['tableName'];
         if ($tableName == '') return false;
-<<<<<<< HEAD
         /* ******************************************************************************
              * ******************************************************************************
              *                                                                             **
@@ -55,17 +54,12 @@ class IndexController extends Controller {
              * */
         $php_53_num1 = 0;
         $php_53_num2 = 1;
-=======
->>>>>>> d29018196df97ac2cc358dd316b14dfcbca8b7c2
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) { if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
         if ($redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
-<<<<<<< HEAD
             $statusSuffixConf = $this->statusSuffixConf(); // get cache time 300s.
-=======
->>>>>>> d29018196df97ac2cc358dd316b14dfcbca8b7c2
             for ($i = 0; $i < count($keyNames); $i ++) {
                 $str = $redis->get($keyNames[$i]);
                 if (! substr($str, 0, 1) == '{') {
@@ -104,17 +98,10 @@ class IndexController extends Controller {
              * ******************************************************************************
              * */
         $this->assign('appointment', $this->appointment()); // return sort array.
-<<<<<<< HEAD
         $this->assign('thisArrivalSort', $this->thisArrivalList()[$php_53_num1]);
         $this->assign('thisAppointmentSort', $this->thisArrivalList()[$php_53_num2]);
         $this->assign('lastArrivalSort', $this->lastArrivalList()[$php_53_num1]);
         $this->assign('lastAppointmentSort', $this->lastArrivalList()[$php_53_num2]);
-=======
-        $this->assign('thisArrivalSort', $this->thisArrivalList()[0]);
-        $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]);
-        $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
-        $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
->>>>>>> d29018196df97ac2cc358dd316b14dfcbca8b7c2
         $this->display();
     }
     /*
@@ -930,7 +917,7 @@ class IndexController extends Controller {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxxx');
+            $redis->auth('xxxxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
