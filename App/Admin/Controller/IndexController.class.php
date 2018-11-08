@@ -52,8 +52,6 @@ class IndexController extends Controller {
              *                                                                             **
              * ******************************************************************************
              * */
-        $php_53_num1 = 0;
-        $php_53_num2 = 1;
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) { if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
@@ -63,9 +61,11 @@ class IndexController extends Controller {
             for ($i = 0; $i < count($keyNames); $i ++) {
                 $str = $redis->get($keyNames[$i]);
                 if (! substr($str, 0, 1) == '{') {
-                    $this->assign(explode('_', $keyNames[$i])[$php_53_num2], $str);
+                    $strIden = explode('_', $keyNames[$i]);
+                    $this->assign($strIden[1], $str);
                 } else {
-                    $this->assign(explode('_', $keyNames[$i])[$php_53_num2], json_decode($str, true));
+                    $strIden = explode('_', $keyNames[$i]);
+                    $this->assign($strIden[1], json_decode($str, true));
                 }
                 $redis->expire($keyNames[$i], $statusSuffixConf['endTime']);
             }
@@ -97,11 +97,13 @@ class IndexController extends Controller {
              *                                                                             **
              * ******************************************************************************
              * */
+        $thisArrivalList = $this->thisArrivalList();
+        $lastArrivalList = $this->lastArrivalList();
         $this->assign('appointment', $this->appointment()); // return sort array.
-        $this->assign('thisArrivalSort', $this->thisArrivalList()[$php_53_num1]);
-        $this->assign('thisAppointmentSort', $this->thisArrivalList()[$php_53_num2]);
-        $this->assign('lastArrivalSort', $this->lastArrivalList()[$php_53_num1]);
-        $this->assign('lastAppointmentSort', $this->lastArrivalList()[$php_53_num2]);
+        $this->assign('thisArrivalSort', $thisArrivalList[0]);
+        $this->assign('thisAppointmentSort', $thisArrivalList[1]);
+        $this->assign('lastArrivalSort', $lastArrivalList[0]);
+        $this->assign('lastAppointmentSort', $lastArrivalList[1]);
         $this->display();
     }
     /*
@@ -113,7 +115,8 @@ class IndexController extends Controller {
     private function arrivalSetRedis ($key, $value) {
         $redis = $this->setCache();
         $redis->set($key, $value);
-        $redis->expire($key, $this->statusSuffixConf()['endTime']);
+        $statusSuffixConf = $this->statusSuffixConf();
+        $redis->expire($key, $statusSuffixConf['endTime']);
     }
     /*
      *  @@ select to make an thisArrival
