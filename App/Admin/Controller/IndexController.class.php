@@ -39,96 +39,93 @@ class IndexController extends Controller {
     /*
      *  @@ overView Home page.
      * */
-    public function overView () {
+    public function overView ()
+    {
         $tableName = $_COOKIE['tableName'];
         if ($tableName == '') return false;
         $isTable = M()->query("show tables like '{$tableName}'");
-        if (! $isTable) { if (! $this->createTable($tableName)) return false; }
-        $redis = $this->setCache();
-<<<<<<< HEAD
-        if (! $redis->exists($tableName . '_arrivalTotal')) {
-            $keyNames = $redis->keys($tableName . "*"); // get all key.
-=======
-        if ($redis->exists($tableName . '_arrivalTotal')) {
-            $keyNames = $redis->keys($tableName . "*");
->>>>>>> f56d09fa03d6b79d15bf9ea52a8c1aaf482ad92b
-            for ($i = 0; $i < count($keyNames); $i ++) {
-                $str = $redis->get($keyNames[$i]);
-                if (! substr($str, 0, 1) == '{') {
-                    $this->assign(explode('_', $keyNames[$i])[1], $str);
-                } else {
-                    $this->assign(explode('_', $keyNames[$i])[1], json_decode($str, true));
-                }
-                $redis->expire($keyNames[$i], $this->statusSuffixConf()['endTime']);
-            }
-        } else {
-<<<<<<< HEAD
-            $collection = $this->custservice(); // 返回一个二维数组
-            $this->assign('arrivalTotal', $collection['arrivalTotal']);
-            $this->assign('arrival', $collection['arrival']);
-            $this->assign('arrivalOut', $collection['arrivalOut']);
-            $this->assign('yesterTotal', $collection['yesterTotal']);
-            $this->assign('yesterArrival', $collection['yesterArrival']);
-            $this->assign('yesterArrivalOut', $collection['yesterArrivalOut']);
-            $this->assign('thisTotal', $collection['thisTotal']);
-            $this->assign('thisArrival', $collection['thisArrival']);
-            $this->assign('thisArrivalOut', $collection['thisArrivalOut']);
-            $this->assign('lastTotal', $collection['lastTotal']);
-            $this->assign('lastArrival', $collection['lastArrival']);
-            $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
-            while (list ($k, $v) = each ($collection)) {
-                $this->arrivalSetRedis($tableName . "_" . $k, $v);
-            }
-=======
-            $situation = $this->custservice(); // 返回一个二维数组
-            $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
-            $this->arrivalSetRedis($tableName . '_arrivalTotal', $arrivalTotal);
-            $this->assign('arrivalTotal', $arrivalTotal);
-            $arrival = array_sum(array_column($situation, 'arrival'));
-            $this->arrivalSetRedis($tableName . '_arrival', $arrival);
-            $this->assign('arrival', $arrival);
-            $arrivalOut = array_sum(array_column($situation, 'arrivalOut'));
-            $this->arrivalSetRedis($tableName . '_arrivalOut', $arrivalOut);
-            $this->assign('arrivalOut', $arrivalOut);
-            $yesterTotal = array_sum(array_column($situation, 'yestserTotal'));
-            $this->arrivalSetRedis($tableName . '_yesterTotal', $yesterTotal);
-            $this->assign('yesterTotal', $yesterTotal);
-            $yesterArrival = array_sum(array_column($situation, 'yesterArrival'));
-            $this->arrivalSetRedis($tableName . '_yesterArrival', $yesterArrival);
-            $this->assign('yesterArrival', $yesterArrival);
-            $yesterArrivalOut = array_sum(array_column($situation, 'yesterArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_yesterArrivalOut', $yesterArrivalOut);
-            $this->assign('yesterArrivalOut', $yesterArrivalOut);
-            $thisTotal = array_sum(array_column($situation, 'thisTotal'));
-            $this->arrivalSetRedis($tableName . '_thisTotal', $thisTotal);
-            $this->assign('thisTotal', $thisTotal);
-            $thisArrival = array_sum(array_column($situation, 'thisArrival'));
-            $this->arrivalSetRedis($tableName . '_thisArrival', $thisArrival);
-            $this->assign('thisArrival', $thisArrival);
-            $thisArrivalOut = array_sum(array_column($situation, 'thisArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_thisArrivalOut', $thisArrivalOut);
-            $this->assign('thisArrivalOut', $thisArrivalOut);
-            $lastTotal = array_sum(array_column($situation, 'lastTotal'));
-            $this->arrivalSetRedis($tableName . '_lastTotal', $lastTotal);
-            $this->assign('lastTotal', $lastTotal);
-            $lastArrival = array_sum(array_column($situation, 'lastArrival'));
-            $this->arrivalSetRedis($tableName . '_lastArrival', $lastArrival);
-            $this->assign('lastArrival', $lastArrival);
-            $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_lastArrivalOut', $lastArrivalOut);
-            $this->assign('lastArrivalOut', $lastArrivalOut);
-            $this->arrivalSetRedis($tableName . '_appointment', json_encode($this->appointment()));
-            $this->assign('appointment', $this->appointment()); // return array.
-            $this->arrivalSetRedis($tableName . '_thisArrivalSort', json_encode($this->thisArrivalList()[0]));
-            $this->assign('thisArrivalSort', $this->thisArrivalList()[0]); // return array.
-            $this->arrivalSetRedis($tableName . '_thisAppointmentSort', json_encode($this->thisArrivalList()[1]));
-            $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // return array.
-            $this->arrivalSetRedis($tableName . '_lastArrivalSort', json_encode($this->lastArrivalList()[0]));
-            $this->assign('lastArrivalSort', $this->lastArrivalList()[0]); // return array.
-            $this->arrivalSetRedis($tableName . '_lastAppointmentSort', json_encode($this->lastArrivalList()[1]));
-            $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]); // return array.
->>>>>>> f56d09fa03d6b79d15bf9ea52a8c1aaf482ad92b
+        if (!$isTable) {
+            if (!$this->createTable($tableName)) return false;
         }
+        $redis = $this->setCache();
+        if (!$redis->exists($tableName . '_arrivalTotal')) {
+            $keyNames = $redis->keys($tableName . "*"); // get all key.
+            if ($redis->exists($tableName . '_arrivalTotal')) {
+                $keyNames = $redis->keys($tableName . "*");
+                for ($i = 0; $i < count($keyNames); $i++) {
+                    $str = $redis->get($keyNames[$i]);
+                    if (!substr($str, 0, 1) == '{') {
+                        $this->assign(explode('_', $keyNames[$i])[1], $str);
+                    } else {
+                        $this->assign(explode('_', $keyNames[$i])[1], json_decode($str, true));
+                    }
+                    $redis->expire($keyNames[$i], $this->statusSuffixConf()['endTime']);
+                }
+            } else {
+                $collection = $this->custservice(); // 返回一个二维数组
+                $this->assign('arrivalTotal', $collection['arrivalTotal']);
+                $this->assign('arrival', $collection['arrival']);
+                $this->assign('arrivalOut', $collection['arrivalOut']);
+                $this->assign('yesterTotal', $collection['yesterTotal']);
+                $this->assign('yesterArrival', $collection['yesterArrival']);
+                $this->assign('yesterArrivalOut', $collection['yesterArrivalOut']);
+                $this->assign('thisTotal', $collection['thisTotal']);
+                $this->assign('thisArrival', $collection['thisArrival']);
+                $this->assign('thisArrivalOut', $collection['thisArrivalOut']);
+                $this->assign('lastTotal', $collection['lastTotal']);
+                $this->assign('lastArrival', $collection['lastArrival']);
+                $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
+                while (list ($k, $v) = each($collection)) {
+                    $this->arrivalSetRedis($tableName . "_" . $k, $v);
+                }
+                $situation = $this->custservice(); // 返回一个二维数组
+                $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
+                $this->arrivalSetRedis($tableName . '_arrivalTotal', $arrivalTotal);
+                $this->assign('arrivalTotal', $arrivalTotal);
+                $arrival = array_sum(array_column($situation, 'arrival'));
+                $this->arrivalSetRedis($tableName . '_arrival', $arrival);
+                $this->assign('arrival', $arrival);
+                $arrivalOut = array_sum(array_column($situation, 'arrivalOut'));
+                $this->arrivalSetRedis($tableName . '_arrivalOut', $arrivalOut);
+                $this->assign('arrivalOut', $arrivalOut);
+                $yesterTotal = array_sum(array_column($situation, 'yestserTotal'));
+                $this->arrivalSetRedis($tableName . '_yesterTotal', $yesterTotal);
+                $this->assign('yesterTotal', $yesterTotal);
+                $yesterArrival = array_sum(array_column($situation, 'yesterArrival'));
+                $this->arrivalSetRedis($tableName . '_yesterArrival', $yesterArrival);
+                $this->assign('yesterArrival', $yesterArrival);
+                $yesterArrivalOut = array_sum(array_column($situation, 'yesterArrivalOut'));
+                $this->arrivalSetRedis($tableName . '_yesterArrivalOut', $yesterArrivalOut);
+                $this->assign('yesterArrivalOut', $yesterArrivalOut);
+                $thisTotal = array_sum(array_column($situation, 'thisTotal'));
+                $this->arrivalSetRedis($tableName . '_thisTotal', $thisTotal);
+                $this->assign('thisTotal', $thisTotal);
+                $thisArrival = array_sum(array_column($situation, 'thisArrival'));
+                $this->arrivalSetRedis($tableName . '_thisArrival', $thisArrival);
+                $this->assign('thisArrival', $thisArrival);
+                $thisArrivalOut = array_sum(array_column($situation, 'thisArrivalOut'));
+                $this->arrivalSetRedis($tableName . '_thisArrivalOut', $thisArrivalOut);
+                $this->assign('thisArrivalOut', $thisArrivalOut);
+                $lastTotal = array_sum(array_column($situation, 'lastTotal'));
+                $this->arrivalSetRedis($tableName . '_lastTotal', $lastTotal);
+                $this->assign('lastTotal', $lastTotal);
+                $lastArrival = array_sum(array_column($situation, 'lastArrival'));
+                $this->arrivalSetRedis($tableName . '_lastArrival', $lastArrival);
+                $this->assign('lastArrival', $lastArrival);
+                $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
+                $this->arrivalSetRedis($tableName . '_lastArrivalOut', $lastArrivalOut);
+                $this->assign('lastArrivalOut', $lastArrivalOut);
+                $this->arrivalSetRedis($tableName . '_appointment', json_encode($this->appointment()));
+                $this->assign('appointment', $this->appointment()); // return array.
+                $this->arrivalSetRedis($tableName . '_thisArrivalSort', json_encode($this->thisArrivalList()[0]));
+                $this->assign('thisArrivalSort', $this->thisArrivalList()[0]); // return array.
+                $this->arrivalSetRedis($tableName . '_thisAppointmentSort', json_encode($this->thisArrivalList()[1]));
+                $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // return array.
+                $this->arrivalSetRedis($tableName . '_lastArrivalSort', json_encode($this->lastArrivalList()[0]));
+                $this->assign('lastArrivalSort', $this->lastArrivalList()[0]); // return array.
+                $this->arrivalSetRedis($tableName . '_lastAppointmentSort', json_encode($this->lastArrivalList()[1]));
+                $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]); // return array.
+            }
             /* ******************************************************************************
              * ******************************************************************************
              *                                                                             **
@@ -139,12 +136,13 @@ class IndexController extends Controller {
              *                                                                             **
              * ******************************************************************************
              * */
-        $this->assign('appointment', $this->appointment()); // return sort array.
-        $this->assign('thisArrivalSort', $this->thisArrivalList()[0]);
-        $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]);
-        $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
-        $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
-        $this->display();
+            $this->assign('appointment', $this->appointment()); // return sort array.
+            $this->assign('thisArrivalSort', $this->thisArrivalList()[0]);
+            $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]);
+            $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
+            $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
+            $this->display();
+        }
     }
     /*
      *   @@arrival Set Redis
