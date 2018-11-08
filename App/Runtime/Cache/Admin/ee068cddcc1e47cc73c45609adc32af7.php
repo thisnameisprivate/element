@@ -296,7 +296,7 @@
                 if (! Boolean(userAcc.resdelete)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.confirm('【 ' + data.name + ' 】are you soure delete ?', (index) => {
                     var client = new XMLHttpRequest();
-                    client.open("GET", "<?php echo U('Admin/Index/visitDel/id/" + parseInt(data.id) + "');?>");
+                    client.open("GET", "<?php echo U('Admin/Index/visitDel/id/" + parseInt(data.id) + "/data/"+ JSON.stringify(data) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {

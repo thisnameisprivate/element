@@ -54,13 +54,13 @@
                 type: 'pie',
                 radius: '55%',
                 data: [
-                    {value: <?php echo ($arrival['reser']); ?>, name: '预约'},
-                    {value: <?php echo ($arrival['advan']); ?>, name: '等待'},
-                    {value: <?php echo ($arrival['arrival']); ?>, name: '已到'},
-                    {value: <?php echo ($arrival['arrivalOut']); ?>, name: '未到'},
-                    {value: <?php echo ($arrival['halfTotal']); ?>, name: '全流失'},
-                    {value: <?php echo ($arrival['half']); ?>, name: '半流失'},
-                    {value: <?php echo ($arrival['treat']); ?>, name: '已诊治'}
+                    {value: <?php echo ($echarts['reser']); ?>, name: '预约'},
+                    {value: <?php echo ($echarts['advan']); ?>, name: '等待'},
+                    {value: <?php echo ($echarts['arrival']); ?>, name: '已到'},
+                    {value: <?php echo ($echarts['arrivalOut']); ?>, name: '未到'},
+                    {value: <?php echo ($echarts['halfTotal']); ?>, name: '全流失'},
+                    {value: <?php echo ($echarts['half']); ?>, name: '半流失'},
+                    {value: <?php echo ($echarts['treat']); ?>, name: '已诊治'}
                 ],
             }
         ],

@@ -43,156 +43,52 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         if ($tableName == '') return false;
         $isTable = M()->query("show tables like '{$tableName}'");
-        if (! $isTable) {
-            // create table, return true of false
-            if (! $this->createTable($tableName)) return false;
-        }
-        /* ******************************************************************************
-         * ******************************************************************************
-         *                                                                             **
-         *  The data will be written to Redis middleware later                         **
-         *  But I don't have much time to code at the moment.                          **
-         *  Author: kexin                                                              **
-         *  Date: 2018-11-3.                                                           **
-         *                                                                             **
-         * ******************************************************************************
-         * */
+        if (! $isTable) { if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
-
-        if ($redis->exists($tableName . '_arrivalTotal')) {
-            $this->assign('arrivalTotal', $redis->get($tableName . '_arrivalTotal'));
-            $redis->expire($tableName . '_arrivalTotal', $this->statusSuffixConf()['endTime']);
+        if (! $redis->exists($tableName . '_arrivalTotal')) {
+            $keyNames = $redis->keys($tableName . "*"); // get all key.
+            for ($i = 0; $i < count($keyNames); $i ++) {
+                $str = $redis->get($keyNames[$i]);
+                if (! substr($str, 0, 1) == '{') {
+                    $this->assign(explode('_', $keyNames[$i])[1], $str);
+                } else {
+                    $this->assign(explode('_', $keyNames[$i])[1], json_decode($str, true));
+                }
+                $redis->expire($keyNames[$i], $this->statusSuffixConf()['endTime']);
+            }
         } else {
-            $situation = $this->custservice(); // 返回一个二维数组
-            $arrivalTotal = array_sum(array_column($situation, 'arrivalTotal')); // 求已到总数的和
-            $this->arrivalSetRedis($tableName . '_arrivalTotal', $arrivalTotal);
-            $this->assign('arrivalTotal', $arrivalTotal);
+            $collection = $this->custservice(); // 返回一个二维数组
+            $this->assign('arrivalTotal', $collection['arrivalTotal']);
+            $this->assign('arrival', $collection['arrival']);
+            $this->assign('arrivalOut', $collection['arrivalOut']);
+            $this->assign('yesterTotal', $collection['yesterTotal']);
+            $this->assign('yesterArrival', $collection['yesterArrival']);
+            $this->assign('yesterArrivalOut', $collection['yesterArrivalOut']);
+            $this->assign('thisTotal', $collection['thisTotal']);
+            $this->assign('thisArrival', $collection['thisArrival']);
+            $this->assign('thisArrivalOut', $collection['thisArrivalOut']);
+            $this->assign('lastTotal', $collection['lastTotal']);
+            $this->assign('lastArrival', $collection['lastArrival']);
+            $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
+            while (list ($k, $v) = each ($collection)) {
+                $this->arrivalSetRedis($tableName . "_" . $k, $v);
+            }
         }
-        if ($redis->exists($tableName . '_arrival')) {
-            $this->assign('arrival', $redis->get($tableName . '_arrival'));
-            $redis->expire($tableName . '_arrival', $this->statusSuffixConf()['endTime']);
-        } else {
-            $arrival = array_sum(array_column($situation, 'arrival'));
-            $this->arrivalSetRedis($tableName . '_arrival', $arrival);
-            $this->assign('arrival', $arrival);
-        }
-        if ($redis->exists($tableName . '_arrivalOut')) {
-            $this->assign('arrivalOut', $redis->get($tableName . '_arrivalOut'));
-            $redis->expire($tableName . '_arrivalOut', $this->statusSuffixConf()['endTime']);
-        } else {
-            $arrivalOut = array_sum(array_column($situation, 'arrivalOut'));
-            $this->arrivalSetRedis($tableName . '_arrivalOut', $arrivalOut);
-            $this->assign('arrivalOut', $arrivalOut);
-        }
-        if ($redis->exists($tableName . '_yesterTotal')) {
-            $this->assign('yesterTotal', $redis->get($tableName . '_yesterTotal'));
-            $redis->expire($tableName . '_yesterTotal', $this->statusSuffixConf()['endTime']);
-        } else {
-            $yesterTotal = array_sum(array_column($situation, 'yestserTotal'));
-            $this->arrivalSetRedis($tableName . '_yesterTotal', $yesterTotal);
-            $this->assign('yesterTotal', $yesterTotal);
-        }
-        if ($redis->exists($tableName . '_yesterArrival')) {
-            $this->assign('yesterArrival', $redis->get($tableName . '_yesterArrival'));
-            $redis->expire($tableName . '_yesterArrival', $this->statusSuffixConf()['endTime']);
-        } else {
-            $yesterArrival = array_sum(array_column($situation, 'yesterArrival'));
-            $this->arrivalSetRedis($tableName . '_yesterArrival', $yesterArrival);
-            $this->assign('yesterArrival', $yesterArrival);
-        }
-        if ($redis->exists($tableName . '_yesterArrivalOut')) {
-            $this->assign('yesterArrivalOut', $redis->get($tableName . '_yesterArrivalOut'));
-            $redis->expire($tableName . '_yesterArrivalOut', $this->statusSuffixConf()['endTime']);
-        } else {
-            $yesterArrivalOut = array_sum(array_column($situation, 'yesterArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_yesterArrivalOut', $yesterArrivalOut);
-            $this->assign('yesterArrivalOut', $yesterArrivalOut);
-        }
-        if ($redis->exists($tableName . '_thisTotal')) {
-            $this->assign('thisTotal', $redis->get($tableName . '_thisTotal'));
-            $redis->expire($tableName . '_thisTotal', $this->statusSuffixConf()['endTime']);
-        } else {
-            $thisTotal = array_sum(array_column($situation, 'thisTotal'));
-            $this->arrivalSetRedis($tableName . '_thisTotal', $thisTotal);
-            $this->assign('thisTotal', $thisTotal);
-        }
-        if ($redis->exists($tableName . '_thisArrival')) {
-            $this->assign('thisArrival', $redis->get($tableName . '_thisArrival'));
-            $redis->expire($tableName . '_thisArrival', $this->statusSuffixConf()['endTime']);
-        } else {
-            $thisArrival = array_sum(array_column($situation, 'thisArrival'));
-            $this->arrivalSetRedis($tableName . '_thisArrival', $thisArrival);
-            $this->assign('thisArrival', $thisArrival);
-        }
-        if ($redis->exists($tableName . '_thisArrivalOut')) {
-            $this->assign('thisArrivalOut', $redis->get($tableName . '_thisArrivalOut'));
-            $redis->expire($tableName . '_thisArrivalOut', $this->statusSuffixConf()['endTime']);
-        } else {
-            $thisArrivalOut = array_sum(array_column($situation, 'thisArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_thisArrivalOut', $thisArrivalOut);
-            $this->assign('thisArrivalOut', $thisArrivalOut);
-        }
-        if ($redis->exists($tableName . '_lastTotal')) {
-            $this->assign('lastTotal', $redis->get($tableName . '_lastTotal'));
-            $redis->expire($tableName . '_lastTotal', $this->statusSuffixConf()['endTime']);
-        } else {
-            $lastTotal = array_sum(array_column($situation, 'lastTotal'));
-            $this->arrivalSetRedis($tableName . '_lastTotal', $lastTotal);
-            $this->assign('lastTotal', $lastTotal);
-        }
-        if ($redis->exists($tableName . '_lastArrival')) {
-            $this->assign('lastArrival', $redis->get($tableName . '_lastArrival'));
-            $redis->expire($tableName . '_lastArrival', $this->statusSuffixConf()['endTime']);
-        } else {
-            $lastArrival = array_sum(array_column($situation, 'lastArrival'));
-            $this->arrivalSetRedis($tableName . '_lastArrival', $lastArrival);
-            $this->assign('lastArrival', $lastArrival);
-        }
-        if ($redis->exists($tableName . '_lastArrivalOut')) {
-            $this->assign('lastArrivalOut', $redis->get($tableName . '_lastArrivalOut'));
-            $redis->expire($tableName . '_lastArrivalOut', $this->statusSuffixConf()['endTime']);
-        } else {
-            $lastArrivalOut = array_sum(array_column($situation, 'lastArrivalOut'));
-            $this->arrivalSetRedis($tableName . '_lastArrivalOut', $lastArrivalOut);
-            $this->assign('lastArrivalOut', $lastArrivalOut);
-        }
-        if ($redis->exists($tableName . '_appointment')) {
-            $this->assign('appointment', json_decode($redis->get($tableName . '_appointment'), true)); // return array.
-            $redis->expire($tableName . '_appointment', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_appointment', json_encode($this->appointment()));
-            $this->assign('appointment', $this->appointment()); // return array.
-        }
-
-        if ($redis->exists($tableName . '_thisArrivalSort')) {
-            $this->assign('thisArrivalSort', json_decode($redis->get($tableName . '_thisArrivalSort'), true)); // return array.
-            $redis->expire($tableName . '_thisArrivalSort', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_thisArrivalSort', json_encode($this->thisArrivalList()[0]));
-            $this->assign('thisArrivalSort', $this->thisArrivalList()[0]); // return array.
-        }
-
-        if ($redis->exists($tableName . '_thisAppointmentSort')) {
-            $this->assign('thisAppointmentSort', json_decode($redis->get($tableName . '_thisAppointmentSort'), true)); // return array.
-            $redis->expire($tableName . '_thisAppointmentSort', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_thisAppointmentSort', json_encode($this->thisArrivalList()[1]));
-            $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]); // return array.
-        }
-        if ($redis->exists($tableName . '_lastArrivalSort')) {
-            $this->assign('lastArrivalSort', json_decode($redis->get($tableName . '_lastArrivalSort'), true)); // return array.
-            $redis->expire($tableName . '_lastArrivalSort', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_lastArrivalSort', json_encode($this->lastArrivalList()[0]));
-            $this->assign('lastArrivalSort', $this->lastArrivalList()[0]); // return array.
-        }
-        if ($redis->exists($tableName . '_lastAppointmentSort')) {
-            $this->assign('lastAppointmentSort', json_decode($redis->get($tableName . '_lastAppointmentSort'), true)); // return array.
-            $redis->expire($tableName . '_lastAppointmentSort', $this->statusSuffixConf()['endTime']);
-        } else {
-            $this->arrivalSetRedis($tableName . '_lastAppointmentSort', json_encode($this->lastArrivalList()[1]));
-            $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]); // return array.
-        }
+            /* ******************************************************************************
+             * ******************************************************************************
+             *                                                                             **
+             *  The data will be written to Redis middleware later                         **
+             *  But I don't have much time to code at the moment.                          **
+             *  Author: kexin                                                              **
+             *  Date: 2018-11-3.                                                           **
+             *                                                                             **
+             * ******************************************************************************
+             * */
+        $this->assign('appointment', $this->appointment()); // return sort array.
+        $this->assign('thisArrivalSort', $this->thisArrivalList()[0]);
+        $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]);
+        $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
+        $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
         $this->display();
     }
     /*
@@ -342,10 +238,11 @@ class IndexController extends Controller {
      *  @return boolean Type: eval
      * */
     public function visitDel () {
-        if (! is_numeric($_GET['id'])) return false;
+        $visitData = json_decode($_GET['data'], true);
         $cookietable = $_COOKIE['tableName'];
-        $resovle = M($cookietable)->where("id = {$_GET['id']}")->delete();
+        $resovle = M($cookietable)->where("id = '{$visitData['id']}'")->delete();
         if ($resovle) {
+            $this->writeDataLpushRedis("decr", $visitData);
             $this->ajaxReturn(true, 'eval');
         } else {
             $this->ajaxReturn(false, 'eval');
@@ -361,7 +258,7 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         $resolve = M($tableName)->add($visitData);
         if ($resolve) {
-            $this->writeDataLpushRedis($visitData);
+            $this->writeDataLpushRedis("incr", $visitData); // incr redis...set
             $this->ajaxReturn(true, 'eval');
         } else {
             $this->ajaxReturn(false, 'eval');
@@ -385,51 +282,62 @@ class IndexController extends Controller {
      *  @@param $data Type: array.
      *  @@Redis lPush new Data
      * */
-    private function writeDataLpushRedis ($data) {
-        $jsonData = json_decode($data);
+    private function writeDataLpushRedis ($operation, $data) {
         $tableName = $_COOKIE['tableName'];
+        $stateCollegeConf = array(
+            0 => $tableName . '_arrivalTotal',
+            1 => $tableName . '_arrival',
+            2 => $tableName . '_arrivalOut',
+            3 => $tableName . '_yesterTotal',
+            4 => $tableName . '_yesterArrival',
+            5 => $tableName . '_yesterArrivalOut',
+            6 => $tableName . '_thisTotal',
+            7 => $tableName . '_thisArrival',
+            8 => $tableName . '_thisArrivalOut',
+            9 => $tableName . '_lastTotal',
+            10 => $tableName . '_lastArrival',
+            11 => $tableName . '_lastArrivalOut'
+        );
         $statusSuffix = $this->statusSuffixConf();
         $redis = $this->setCache();
-        if (date('d', time($data['newDate'])) == date("d")) {
-            if ($data['status'] == $statusSuffix['arrival']) { // ToDay Arrival Redis List.
-                $redis->lPush(date('d') . "d" . $statusSuffix['arrivalStr'], json_encode($data));
-                $redis->expire(date('d') . "d" . $statusSuffix['arrivalStr'],  $statusSuffix['endTime']);
-            }
-            if ($data['status'] == $statusSuffix['arrivalOut']) { // ToDay ArrivalOut Redis List
-                $redis->lPush(date('d') . "d" . $statusSuffix['arrivalOutStr'], $data);
-                $redis->expire(date('d') . "d" . $statusSuffix['arrivalOutStr'], $statusSuffix['endTime']);
-            }
-        } else if (date('d', time($data['newDate'])) == date("d", strtotime("-1 day"))) {
-            if ($data['status'] == $statusSuffix['arrival']) { // YesterDay Arrival Redis List
-                $redis->lPush(date('d', strtotime("-1 day")) . "d" . $statusSuffix['arrivalStr'], $data);
-                $redis->expire(date('d', strtotime("-1 day")) . "d" . $statusSuffix['arrivalStr'], $statusSuffix['endTime']);
+        if (date('d', time($data['oldDate'])) == (date("d"))) {
+            if ($data['status'] == $statusSuffix['arrival']) {
+                $redis->$operation($stateCollegeConf[0]);
+                $redis->$operation($stateCollegeConf[1]);
             }
             if ($data['status'] == $statusSuffix['arrivalOut']) {
-                $redis->lPush(date('d', strtotime("-1 day")) . "d" . $statusSuffix['arrivalOutStr'], $data);
-                $redis->expire(date('d', strtotime("-1 day")) . "d" . $statusSuffix['arrivalOutStr'], $statusSuffix['endTime']);
+                $redis->$operation($stateCollegeConf[0]);
+                $redis->$operation($stateCollegeConf[2]);
+            }
+        } else if (date('d', time($data['oldDate'])) == date("d", strtotime("-1 day"))) {
+            if ($data['status'] == $statusSuffix['arrival']) {
+                $redis->$operation($stateCollegeConf[3]);
+                $redis->$operation($stateCollegeConf[4]);
+            }
+            if ($data['status'] == $statusSuffix['arrivalOut']) {
+                $redis->$operation($stateCollegeConf[3]);
+                $redis->$operation($stateCollegeConf[5]);
             }
         }
-        if (date('m', time($data['newDate'])) == date("m")) {
-            if ($data['status'] == $statusSuffix['arrival']) { // ThisMonth Arrival Redis List
-                $redis->lPush(date('m') . "m" . $statusSuffix['arrivalStr'], $data);
-                $redis->expire(date('m') . "m" . $statusSuffix['arrivalStr'], $statusSuffix['endTime']);
+        if (date('m', time($data['oldDate'])) == date("m")) {
+            if ($data['status'] == $statusSuffix['arrival']) {
+                $redis->$operation($stateCollegeConf[6]);
+                $redis->$operation($stateCollegeConf[7]);
             }
             if ($data['status'] == $statusSuffix['arrivalOut']) {
-                $redis->lPush(date('m') . "m" . $statusSuffix['arrivalOutStr'], $data);
-                $redis->expire(date('m') . "m" . $statusSuffix['arrivalOutStr'], $statusSuffix['endTime']);
+                $redis->$operation($stateCollegeConf[6]);
+                $redis->$operation($stateCollegeConf[8]);
             }
-        } else if (date('m', time($data['newDate'])) == date("m", strtotime("-1 month"))) {
-            if ($data['status'] == $statusSuffix['arrival']) { // LastMonth Arrival Redis List
-                $redis->lPush(date('m', strtotime("-1 month")) . "m" . $statusSuffix['arrivalStr'], $data);
-                $redis->expire(date('m', strtotime("-1 month")) . "m" . $statusSuffix['arrivalStr'], $statusSuffix['endTime']);
+        } else if (date('m', time($data['oldDate'])) == date("m", strtotime("-1 month"))) {
+            if ($data['status'] == $statusSuffix['arrival']) {
+                $redis->$operation($stateCollegeConf[9]);
+                $redis->$operation($stateCollegeConf[10]);
             }
             if ($data['status'] == $statusSuffix['arrivalOut']) {
-                $redis->lPush(date('m', strtotime("-1 month")) . "m" . $statusSuffix['arrivalOutStr'], $data);
-                $redis->expire(date('m', strtotime("-1 month")) . "m" . $statusSuffix['arrivalOutStr'], $statusSuffix['endTime']);
+                $redis->$operation($stateCollegeConf[9]);
+                $redis->$operation($stateCollegeConf[11]);
             }
         }
-        exit;
-
     }
     /*
      *  @@vist data edit
@@ -723,109 +631,88 @@ class IndexController extends Controller {
         $redis = $this->setCache();
         $tableName = $_COOKIE['tableName'];
         if ($redis->exists($tableName)) { // 如果为空则写入redis集合.否则直接读取
-            $custservice = json_decode($redis->get($tableName), true);
+            $pserionCollection = json_decode($redis->get($tableName), true);
         } else {
-            $custservice = $this->custservice();
-            $redis->set($tableName, json_encode($custservice));
+            $pserionCollection = $this->persionCollection();
+            $redis->set($tableName, json_encode($pserionCollection));
             $redis->expire($tableName, 1200);
         }
-        if ($custservice) {
-            $this->arrayRecursive($custservice, 'urldecode', true);
+        if ($pserionCollection) {
+            $this->arrayRecursive($pserionCollection, 'urldecode', true);
         } else {
             $this->ajaxReturn(false, 'eval');
         }
-        $custservice = urldecode(json_encode($custservice));
-        $custserviceList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $custservice}";
-        $this->ajaxReturn($custserviceList, 'eval');
+        $pserionCollection = urldecode(json_encode($pserionCollection));
+        $pserionCollectionList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $pserionCollection}";
+        $this->ajaxReturn($pserionCollectionList, 'eval');
+    }
+    /*
+     *  @@detail Report check Persion
+     *  @@param null
+     *  @return $persionCollList persion Collection.
+     * */
+    private function persionCollection () {
+        $persion = M('custservice')->field('custservice')->select();
+        foreach ($persion as $k => $v) {
+            foreach ($v as $key => $value) {
+                $keyNames[$k] = $value;
+            }
+        }
+        $persionCollection = array();
+        while (list ($k, $v) = each ($keyNames)) {
+            $persionCollection[$v]['arrival'] = $this->detail("custservice = '{$v}'","TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '已到'");
+            $persionCollection[$v]['arrivalOut'] = $this->detail("custservice = '{$v}'","TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '未到'");
+            $persionCollection[$v]['yesterArrival'] = $this->detail("custservice = '{$v}'","TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status = '已到'");
+            $persionCollection[$v]['yesterArrivalOut'] = $this->detail("custservice = '{$v}'","TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status = '未到'");
+            $persionCollection[$v]['thisArrival'] = $this->detail("custservice = '{$v}'","DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status = '已到'");
+            $persionCollection[$v]['thisArrivalOut'] = $this->detail("custservice = '{$v}'","DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status = '未到'");
+            $persionCollection[$v]['lastArrival'] = $this->detail("custservice = '{$v}'","PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status = '已到'");
+            $persionCollection[$v]['lastArrivalOut'] = $this->detail("custservice = '{$v}'","PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status = '未到'");
+            $persionCollection[$v]['arrivalTotal'] = $persionCollection[$v]['arrival'] + $persionCollection[$v]['arrivalOut'];
+            $persionCollection[$v]['yestserTotal'] = $persionCollection[$v]['yesterArrival'] + $persionCollection[$v]['yesterArrivalOut'];
+            $persionCollection[$v]['thisTotal'] = $persionCollection[$v]['thisArrival'] + $persionCollection[$v]['thisArrivalOut'];
+            $persionCollection[$v]['lastTotal'] = $persionCollection[$v]['lastArrival'] + $persionCollection[$v]['lastArrivalOut'];
+        }
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *  数据序列化, $persionCollection 这个二维数组下添加custserivce key!              **
+         *  array_push()打入到的新的数组                                                 **
+         *  return $persionCollList!                                                   **
+         *                                                                             **
+         * ******************************************************************************
+         * */
+        $persionKeys = array_keys($persionCollection);
+        $persionCollList = array();
+        for ($i = 0; $i < count($persionKeys); $i ++) {
+            if ($persionKeys[$i] == $keyNames[$i]) {
+                $persionCollection[$persionKeys[$i]]['custservice'] = $keyNames[$i];
+                array_push($persionCollList, $persionCollection[$persionKeys[$i]]);
+            }
+        }
+        return $persionCollList;
     }
     /*
      *  @@ custservice arrival filter
      *  @param null
      *  @return $custservice Type: array
      * */
-    private function custservice () {
-        $custservice = M('custservice')->field('custservice')->select();
-        $custserviceStrlen = count($custservice);
+    private function custservice () {;
         $tableName = $_COOKIE['tableName'];
-        $arrivalTotal = $this->detail(array( // $this->detial 内部方法调用
-            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array(
-                "custservice.custservice = {$tableName}.custservice",
-                "{$tableName}.status = '已到'",
-                "TO_DAYS(oldDate) = TO_DAYS(NOW())"
-            )
-        ));
-        $arrivalOutTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array(
-                "custservice.custservice = {$tableName}.custservice",
-                "{$tableName}.status = '未到'",
-                "TO_DAYS(oldDate) = TO_DAYS(NOW())"
-            )
-        ));
-        $yesterday_arrivalTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array(
-                "custservice.custservice = {$tableName}.custservice",
-                "{$tableName}.status = '已到'",
-                "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1"
-            )
-        ));
-        $yesterday_arrivalOutTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array(
-                "custservice.custservice = {$tableName}.custservice",
-                "{$tableName}.status = '未到'",
-                "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1"
-            )
-        ));
-        $thisMonth_arrivalTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array(
-                "custservice.custservice = {$tableName}.custservice",
-                "{$tableName}.status = '已到'",
-                "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')"
-            )
-        ));
-        $thisMonth_arrivalOutTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array(
-                "custservice.custservice = {$tableName}.custservice",
-                "{$tableName}.status = '未到'",
-                "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')"
-            )
-        ));
-        $lastMonth_arrivalTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array(
-                "custservice.custservice = {$tableName}.custservice",
-                "{$tableName}.status = '已到'",
-                "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
-            )
-        ));
-        $lastMonth_arrivalOutTotal = $this->detail(array(
-            "custservice.custservice, {$tableName}.status, {$tableName}.currentTime",
-            array(
-                "custservice.custservice = {$tableName}.custservice",
-                "{$tableName}.status = '未到'",
-                "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
-            )
-        ));
-        for ($index = 0; $index < $custserviceStrlen; $index ++) {
-            $custservice[$index]['arrival'] = array_count_values(array_column($arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['arrivalOut'] = array_count_values(array_column($arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['yesterArrival'] = array_count_values(array_column($yesterday_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['yesterArrivalOut'] = array_count_values(array_column($yesterday_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['thisArrival'] = array_count_values(array_column($thisMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['thisArrivalOut'] = array_count_values(array_column($thisMonth_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['lastArrival'] = array_count_values(array_column($lastMonth_arrivalTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['lastArrivalOut'] = array_count_values(array_column($lastMonth_arrivalOutTotal, 'custservice'))[$custservice[$index]['custservice']];
-            $custservice[$index]['arrivalTotal'] = $custservice[$index]['arrival'] + $custservice[$index]['arrivalOut'];
-            $custservice[$index]['yestserTotal'] = $custservice[$index]['yesterArrival'] + $custservice[$index]['yesterArrivalOut'];
-            $custservice[$index]['thisTotal'] = $custservice[$index]['thisArrival'] + $custservice[$index]['thisArrivalOut'];
-            $custservice[$index]['lastTotal'] = $custservice[$index]['lastArrival'] + $custservice[$index]['lastArrivalOut'];
-        }
-        return $custservice;
+        $collection = array();
+        $collection['arrival'] = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '已到'");
+        $collection['arrivalOut'] = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '未到'");
+        $collection['yesterArrival'] = $this->detail("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status = '已到'");
+        $collection['yesterArrivalOut'] = $this->detail("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status = '未到'");
+        $collection['thisArrival'] = $this->detail("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status = '已到'");
+        $collection['thisArrivalOut'] = $this->detail("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status = '未到'");
+        $collection['lastArrival'] = $this->detail("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status = '已到'");
+        $collection['lastArrivalOut'] = $this->detail("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status = '未到'");
+        $collection['arrivalTotal'] = $collection['arrival'] + $collection['arrivalOut'];
+        $collection['yesterTotal'] = $collection['yesterArrival'] + $collection['yesterArrivalOut'];
+        $collection['thisTotal'] = $collection['thisArrival'] + $collection['thisArrivalOut'];
+        $collection['lastTotal'] = $collection['lastArrival'] + $collection['lastArrivalOut'];
+        return $collection;
     }
     /*
      *  @@monthdata
@@ -835,8 +722,8 @@ class IndexController extends Controller {
     public function monthdata () {
         $instance = M($_COOKIE['tableName']);
         $redis = $this->setCache();
-        if ($redis->exists($_COOKIE['tableName'] . '_arrival')) {
-            $arrival = json_decode($redis->get($_COOKIE['tableName'] . '_arrival'), true);
+        if ($redis->exists($_COOKIE['tableName'] . 'Month_echarst')) {
+            $redis->expire($_COOKIE['tableName'] . 'Month_echarst', 1200);
         } else {
             $arrival = array();
             $arrival['reser'] = $instance->where("status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
@@ -846,10 +733,11 @@ class IndexController extends Controller {
             $arrival['halfTotal'] = $instance->where("status = '全流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
             $arrival['half'] = $instance->where("status = '半流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
             $arrival['treat'] = $instance->where("status = '已诊治' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $redis->set($_COOKIE['tableName'] . '_arrival', json_encode($arrival));
-            $redis->expire($_COOKIE['tableName'] . '_arrival', 1200);
+            $redis->set($_COOKIE['tableName'] . 'Month_echarst', json_encode($arrival));
+            $redis->expire($_COOKIE['tableName'] . 'Month_echarst', 1200);
         }
-        $this->assign('arrival', $arrival);
+        $arrival = json_decode($redis->get($_COOKIE['tableName'] .  'Month_echarst'), true);
+        $this->assign('echarts', $arrival);
         $this->display();
     }
     /*
@@ -857,9 +745,13 @@ class IndexController extends Controller {
      *  @param $array Type: array[0] condition, array[1] field.
      *  @return $allStatus Type: array
      * */
-    private function detail ($array) {
+    private function detail ($time, $status, $persion = null) {
         $tableName = $_COOKIE['tableName'];
-        $allStatus = M('custservice')->join($tableName)->field($array[0])->where($array[1])->select();
+        if (is_null($persion)) {
+            $allStatus = M($tableName)->where(array($time, $status))->count();
+        } else {
+            $allStatus = M($tableName)->where(array($time, $status, $persion))->count();
+        }
         return $allStatus;
     }
     /*
@@ -1012,7 +904,7 @@ class IndexController extends Controller {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxxx');
+            $redis->auth('xxxxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
