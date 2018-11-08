@@ -39,46 +39,41 @@ class IndexController extends Controller {
     /*
      *  @@ overView Home page.
      * */
-    public function overView ()
-    {
+    public function overView () {
         $tableName = $_COOKIE['tableName'];
         if ($tableName == '') return false;
         $isTable = M()->query("show tables like '{$tableName}'");
-        if (!$isTable) {
-            if (!$this->createTable($tableName)) return false;
-        }
+        if (! $isTable) { if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
-        if (!$redis->exists($tableName . '_arrivalTotal')) {
+        if ($redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
-            if ($redis->exists($tableName . '_arrivalTotal')) {
-                $keyNames = $redis->keys($tableName . "*");
-                for ($i = 0; $i < count($keyNames); $i++) {
-                    $str = $redis->get($keyNames[$i]);
-                    if (!substr($str, 0, 1) == '{') {
-                        $this->assign(explode('_', $keyNames[$i])[1], $str);
-                    } else {
-                        $this->assign(explode('_', $keyNames[$i])[1], json_decode($str, true));
-                    }
-                    $redis->expire($keyNames[$i], $this->statusSuffixConf()['endTime']);
+            for ($i = 0; $i < count($keyNames); $i ++) {
+                $str = $redis->get($keyNames[$i]);
+                if (! substr($str, 0, 1) == '{') {
+                    $this->assign(explode('_', $keyNames[$i])[1], $str);
+                } else {
+                    $this->assign(explode('_', $keyNames[$i])[1], json_decode($str, true));
                 }
-            } else {
-                $collection = $this->custservice(); // 返回一个二维数组
-                $this->assign('arrivalTotal', $collection['arrivalTotal']);
-                $this->assign('arrival', $collection['arrival']);
-                $this->assign('arrivalOut', $collection['arrivalOut']);
-                $this->assign('yesterTotal', $collection['yesterTotal']);
-                $this->assign('yesterArrival', $collection['yesterArrival']);
-                $this->assign('yesterArrivalOut', $collection['yesterArrivalOut']);
-                $this->assign('thisTotal', $collection['thisTotal']);
-                $this->assign('thisArrival', $collection['thisArrival']);
-                $this->assign('thisArrivalOut', $collection['thisArrivalOut']);
-                $this->assign('lastTotal', $collection['lastTotal']);
-                $this->assign('lastArrival', $collection['lastArrival']);
-                $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
-                while (list ($k, $v) = each ($collection)) {
-                    $this->arrivalSetRedis($tableName . "_" . $k, $v);
-                }
+                $redis->expire($keyNames[$i], $this->statusSuffixConf()['endTime']);
             }
+        } else {
+            $collection = $this->custservice(); // 返回一个二维数组
+            $this->assign('arrivalTotal', $collection['arrivalTotal']);
+            $this->assign('arrival', $collection['arrival']);
+            $this->assign('arrivalOut', $collection['arrivalOut']);
+            $this->assign('yesterTotal', $collection['yesterTotal']);
+            $this->assign('yesterArrival', $collection['yesterArrival']);
+            $this->assign('yesterArrivalOut', $collection['yesterArrivalOut']);
+            $this->assign('thisTotal', $collection['thisTotal']);
+            $this->assign('thisArrival', $collection['thisArrival']);
+            $this->assign('thisArrivalOut', $collection['thisArrivalOut']);
+            $this->assign('lastTotal', $collection['lastTotal']);
+            $this->assign('lastArrival', $collection['lastArrival']);
+            $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
+            while (list ($k, $v) = each ($collection)) {
+                $this->arrivalSetRedis($tableName . "_" . $k, $v);
+            }
+        }
             /* ******************************************************************************
              * ******************************************************************************
              *                                                                             **
@@ -89,13 +84,12 @@ class IndexController extends Controller {
              *                                                                             **
              * ******************************************************************************
              * */
-            $this->assign('appointment', $this->appointment()); // return sort array.
-            $this->assign('thisArrivalSort', $this->thisArrivalList()[0]);
-            $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]);
-            $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
-            $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
-            $this->display();
-        }
+        $this->assign('appointment', $this->appointment()); // return sort array.
+        $this->assign('thisArrivalSort', $this->thisArrivalList()[0]);
+        $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]);
+        $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
+        $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
+        $this->display();
     }
     /*
      *   @@arrival Set Redis
@@ -910,7 +904,7 @@ class IndexController extends Controller {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxx');
+            $redis->auth('xxxxxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
