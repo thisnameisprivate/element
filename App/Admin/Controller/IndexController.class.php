@@ -28,7 +28,7 @@ class IndexController extends Controller {
             $this->error("please login", U("Home/Index/index"));
         }
         $userAcc = $this->userManagement($userCookie);
-        if ($userAcc) $this->assign('userAcc', json_encode($userAcc)); // 传值到前端用于储存localStorage.
+        if ($userAcc) $this->assign('userAcc', json_encode($userAcc)); // 权限验证 传值到前端用于储存localStorage.
         $hospitals = M('hospital')->field(array('hospital', 'tableName'))->select();
         $this->assign('hospitals', $hospitals);
         $this->display();
@@ -56,15 +56,15 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         if ($tableName == '') return false;
         /* ******************************************************************************
-             * ******************************************************************************
-             *                                                                             **
-             *  Changes made for PHP compatibility with version 5.3.                       **
-             *  Variable declaration php_5.3num1 or num2                                   **
-             *  Author: kexin                                                              **
-             *  Date: 2018-11-8.                                                           **
-             *                                                                             **
-             * ******************************************************************************
-             * */
+         * ******************************************************************************
+         *                                                                             **
+         *  Changes made for PHP compatibility with version 5.3.                       **
+         *  Variable declaration php_5.3num1 or num2                                   **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-8.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) { if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
@@ -253,8 +253,8 @@ class IndexController extends Controller {
         }
         $instance = M($_COOKIE['tableName']);
         for ($i = 0; $i < count($customers); $i ++) {
-            $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
         }
         arsort($arrival, SORT_NUMERIC);
         arsort($appointment, SORT_NUMERIC);
