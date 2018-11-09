@@ -1,5 +1,18 @@
 <?php
 
+
+/* ****************************************************************************************************************
+ *                                                                                                               **
+ *  This system is used to monitor the status of hospital return visit information registration.                 **
+ *  real-time communication Echarts graph trend/distribution, and to monitor the situation of diagnosis.         **
+ *  The architecture USES Redis, MySQL, PHP, Swolle [MeepoPS ThinkPHP framework].                                **
+ *  Developer: KeXin; Creation time: 2018/10/27.                                                                 **
+ *  Acknowledgement: KeXin; Development cycle: February - no maintenance stop.                                   **
+ *  Maintenance staff: kexin                                                                                     **
+ *                                                                                                               **
+ * ****************************************************************************************************************
+ * ****************************************************************************************************************
+ * */
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
@@ -42,19 +55,32 @@ class IndexController extends Controller {
     public function overView () {
         $tableName = $_COOKIE['tableName'];
         if ($tableName == '') return false;
+        /* ******************************************************************************
+             * ******************************************************************************
+             *                                                                             **
+             *  Changes made for PHP compatibility with version 5.3.                       **
+             *  Variable declaration php_5.3num1 or num2                                   **
+             *  Author: kexin                                                              **
+             *  Date: 2018-11-8.                                                           **
+             *                                                                             **
+             * ******************************************************************************
+             * */
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) { if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
         if ($redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
+            $statusSuffixConf = $this->statusSuffixConf(); // get cache time 300s.
             for ($i = 0; $i < count($keyNames); $i ++) {
                 $str = $redis->get($keyNames[$i]);
                 if (! substr($str, 0, 1) == '{') {
-                    $this->assign(explode('_', $keyNames[$i])[1], $str);
+                    $strIden = explode('_', $keyNames[$i]);
+                    $this->assign($strIden[1], $str);
                 } else {
-                    $this->assign(explode('_', $keyNames[$i])[1], json_decode($str, true));
+                    $strIden = explode('_', $keyNames[$i]);
+                    $this->assign($strIden[1], json_decode($str, true));
                 }
-                $redis->expire($keyNames[$i], $this->statusSuffixConf()['endTime']);
+                $redis->expire($keyNames[$i], $statusSuffixConf['endTime']);
             }
         } else {
             $collection = $this->custservice(); // 返回一个二维数组
@@ -84,12 +110,122 @@ class IndexController extends Controller {
              *                                                                             **
              * ******************************************************************************
              * */
+        $thisArrivalList = $this->thisArrivalList();
+        $lastArrivalList = $this->lastArrivalList();
         $this->assign('appointment', $this->appointment()); // return sort array.
-        $this->assign('thisArrivalSort', $this->thisArrivalList()[0]);
-        $this->assign('thisAppointmentSort', $this->thisArrivalList()[1]);
-        $this->assign('lastArrivalSort', $this->lastArrivalList()[0]);
-        $this->assign('lastAppointmentSort', $this->lastArrivalList()[1]);
+        $this->assign('thisArrivalSort', $thisArrivalList[0]);
+        $this->assign('thisAppointmentSort', $thisArrivalList[1]);
+        $this->assign('lastArrivalSort', $lastArrivalList[0]);
+        $this->assign('lastAppointmentSort', $lastArrivalList[1]);
         $this->display();
+    }
+    /*
+     * @@specifed search home
+     *
+     * */
+    public function specified () {
+        $this->assign('iden', $_GET['iden']);
+        $this->display();
+    }
+    /*
+     *  @@specified search
+     *  @@param iden Type: String
+     *
+     * */
+    public function specifiedCheck () {
+        $collectionConf = array(
+            0 => 'arrivalTotal',
+            1 => 'arrival',
+            2 => 'arrivalOut',
+            3 => 'yesterTotal',
+            4 => 'yesterArrival',
+            5 => 'yesterArrivalOut',
+            6 => 'thisTotal',
+            7 => 'thisArrival',
+            8 => 'thisArrivalOut',
+            9 => 'lastTotal',
+            10 => 'lastArrival',
+            11 => 'lastArrivalOut',
+            12 => 'appTodayTotal',
+            13 => 'appYesterTotal',
+            14 => 'appThisTotal',
+            15 => 'appLastTotal'
+        );
+        $conditions = array(
+            0 => "TO_DAYS(oldDate) = TO_DAYS(NOW())",
+            1 => "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1",
+            2 => "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')",
+            3 => "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
+        );
+        $status = $this->statusSuffixConf();
+        $iden = $_GET['iden'];
+        $appCom = '预约未定';
+        $cookietable = $_COOKIE['tableName'];
+        $hospital = M($cookietable);
+        if ($iden == $collectionConf[0]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[1]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[2]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[3]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[4]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[5]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[6]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[7]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[8]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[9]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[10]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[11]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[12]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[13]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$appCom}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[14]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$appCom}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[15]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        }
+        $this->arrayRecursive($hospitalVisit, 'urlencode', true);
+        $jsonVisit = urldecode(json_encode($hospitalVisit));
+        $interval = ceil($hospitalVisitCount / $totalPage);
+        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *  This replacep param must is '\n'.                                          **
+         *  Time wasted here: 5 hours                                                  **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-5.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
+        $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
     }
     /*
      *   @@arrival Set Redis
@@ -100,7 +236,8 @@ class IndexController extends Controller {
     private function arrivalSetRedis ($key, $value) {
         $redis = $this->setCache();
         $redis->set($key, $value);
-        $redis->expire($key, $this->statusSuffixConf()['endTime']);
+        $statusSuffixConf = $this->statusSuffixConf();
+        $redis->expire($key, $statusSuffixConf['endTime']);
     }
     /*
      *  @@ select to make an thisArrival
@@ -920,18 +1057,18 @@ class IndexController extends Controller {
         $sql = <<<sql
               CREATE TABLE  `$tableName` (
               `id` int NOT NULL AUTO_INCREMENT,
-              `name` varchar(15) NOT NULL,
-              `old` int NOT NULL,
-              `phone` bigint(20) NOT NULL,
-              `qq` bigint(20) NOT NULL,
+              `name` varchar(15) NOT NULL DEFAULT '',
+              `old` int NOT NULL DEFAULT '',
+              `phone` bigint(20) NOT NULL DEFAULT '',
+              `qq` bigint(20) NOT NULL DEFAULT,
               `diseases` varchar(30) NOT NULL,
               `fromAddress` varchar(15) NOT NULL,
               `switch` varchar(15) NOT NULL DEFAULT '外地',
               `sex` varchar(15) NOT NULL DEFAULT '男',
-              `desc1` varchar(300) NOT NULL,
+              `desc1` varchar(300) NOT NULL DEFAULT '',
               `expert` varchar(10) NOT NULL,
               `oldDate` date NOT NULL,
-              `desc2` varchar(300) NOT NULL,
+              `desc2` varchar(300) NOT NULL DEFAULT '',
               `status` varchar(15) NOT NULL,
               `newDate` date NOT NULL,
               `currentTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,

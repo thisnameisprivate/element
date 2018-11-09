@@ -13,6 +13,7 @@
     <title>visit</title>
 </head>
 <body>
+<a id="iden" style="display:none;"><?php echo ($iden); ?></a>
 <div class="layui-inline">
     <form class="layui-form">
         <input class="layui-input layui-input-sm" name="search" id="search" required lay-verify="required" placeholder="姓名/客户电话" autocomplete="off">
@@ -239,6 +240,8 @@
 </script>
 <script>
     layui.use(['laydate', 'table', 'layer', 'laypage', 'form'], () => {
+        // iden 标识符
+        var iden = document.getElementById('iden').innerText;
         var table = layui.table;
         var laydate = layui.laydate;
         var layer = layui.layer;
@@ -256,7 +259,7 @@
             },
             elem: '#container',
             toolbar: '#toolbaradd',
-            url: "<?php echo U('Admin/Index/visitCheck');?>",
+            url: "<?php echo U('Admin/Index/specifiedCheck/iden/"+ iden  +"');?>",
             height:'full-200',
             page: true,
             cellMinWidth:50,

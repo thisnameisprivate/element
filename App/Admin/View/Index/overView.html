@@ -35,27 +35,27 @@
                     <tbody>
                     <tr>
                         <td>今日</td>
-                        <td><a href="javascript:;">{$arrivalTotal}</a></td>
-                        <td><a href="javascript:;">{$arrival}</a></td>
-                        <td><a href="javascript:;">{$arrivalOut}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="arrivalTotal">{$arrivalTotal}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="arrival">{$arrival}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="arrivalOut">{$arrivalOut}</a></td>
                     </tr>
                     <tr>
                         <th>昨日</th>
-                        <td><a href="javascript:;">{$yesterTotal}</a></td>
-                        <td><a href="javascript:;">{$yesterArrival}</a></td>
-                        <td><a href="javascript:;">{$yesterArrivalOut}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="yesterTotal">{$yesterTotal}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="yesterArrival">{$yesterArrival}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="yesterArrivalOut">{$yesterArrivalOut}</a></td>
                     </tr>
                     <tr>
                         <th>本月</th>
-                        <td><a href="javascript:;">{$thisTotal}</a></td>
-                        <td><a href="javascript:;">{$thisArrival}</a></td>
-                        <td><a href="javascript:;">{$thisArrivalOut}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="thisTotal">{$thisTotal}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="thisArrival">{$thisArrival}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="thisArrivalOut">{$thisArrivalOut}</a></td>
                     </tr>
                     <tr>
                         <th>上月</th>
-                        <td><a href="javascript:;">{$lastTotal}</a></td>
-                        <td><a href="javascript:;">{$lastArrival}</a></td>
-                        <td><a href="javascript:;">{$lastArrivalOut}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="lastTotal">{$lastTotal}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="lastArrival">{$lastArrival}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="lastArrivalOut">{$lastArrivalOut}</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -81,22 +81,22 @@
                     <tbody>
                     <tr>
                         <td>今日</td>
-                        <td><a href="javascript:;">{$appointment['todayTotal']}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="appTodayTotal">{$appointment['todayTotal']}</a></td>
                         <td><a href="javascript:;"></a></td>
                     </tr>
                     <tr>
                         <th>昨日</th>
-                        <td><a href="javascript:;">{$appointment['yesterTotal']}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="appYesterTotal">{$appointment['yesterTotal']}</a></td>
                         <td><a href="javascript:;"></a></td>
                     </tr>
                     <tr>
                         <th>本月</th>
-                        <td><a href="javascript:;">{$appointment['thisTotal']}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="appThisTotal">{$appointment['thisTotal']}</a></td>
                         <td><a href="javascript:;"></a></td>
                     </tr>
                     <tr>
                         <th>上月</th>
-                        <td><a href="javascript:;">{$appointment['lastTotal']}</a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="appLastTotal">{$appointment['lastTotal']}</a></td>
                         <td><a href="javascript:;"></a></td>
                     </tr>
                     </tbody>
@@ -236,12 +236,10 @@ layui.use(['layer', 'element', 'laydate', 'form'], () => {
     var layer = layui.layer;
     var form = layui.form;
     var laypage = layui.page;
-    var aList = document.getElementsByTagName('a');
-    for (var i = 0; i < aList.length; i++) {
-        aList[i].onclick = function () {
-            console.log(this);
-            console.log(this.text);
-        }
+    var $ = layui.jquery;
+    specified = (data) => {
+        var iden = data.getAttribute('iden');
+        window.parent.iframeSetAttr("{:U('Admin/Index/specified/iden/"+ iden +"')}");
     }
 });
 </script>

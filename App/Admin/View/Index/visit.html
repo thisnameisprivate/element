@@ -31,7 +31,7 @@
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" lay-verify="required" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone"  placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -41,7 +41,7 @@
                 </div>
                 <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="old" lay-verify="required" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
+                    <input type="number" name="old" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -137,11 +137,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" lay-verify="required" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
+                    <input type="text" name="name" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" lay-verify="required" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -151,7 +151,7 @@
                 </div>
                 <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="old" lay-verify="required" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
+                    <input type="number" name="old" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -426,9 +426,24 @@
         }
         /* 渲染form表单 */
         setFormValue = data => {
-            form.val('formedit', {
-            });
             form.render();
+            form.val('formedit', {
+                'name': data.name,
+                'phone': data.phone,
+                'old': data.old,
+                'qq': data.qq,
+                'oldDate': data.oldDate,
+                'newDate': data.newDate,
+                'status': data.status,
+                'fromAddress': data.fromAddress,
+                'diseases': data.diseases,
+                'custService': data.custService,
+                'expert': data.expert,
+                'sex': data.sex,
+                'switch': data.switch,
+                'desc1': data.desc1,
+                'desc2': data.desc2
+            });
         }
     });
 </script>
