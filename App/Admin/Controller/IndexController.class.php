@@ -28,7 +28,7 @@ class IndexController extends Controller {
             $this->error("please login", U("Home/Index/index"));
         }
         $userAcc = $this->userManagement($userCookie);
-        if ($userAcc) $this->assign('userAcc', json_encode($userAcc)); // 传值到前端用于储存localStorage.
+        if ($userAcc) $this->assign('userAcc', json_encode($userAcc)); // 权限验证 传值到前端用于储存localStorage.
         $hospitals = M('hospital')->field(array('hospital', 'tableName'))->select();
         $this->assign('hospitals', $hospitals);
         $this->display();
@@ -56,15 +56,15 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         if ($tableName == '') return false;
         /* ******************************************************************************
-             * ******************************************************************************
-             *                                                                             **
-             *  Changes made for PHP compatibility with version 5.3.                       **
-             *  Variable declaration php_5.3num1 or num2                                   **
-             *  Author: kexin                                                              **
-             *  Date: 2018-11-8.                                                           **
-             *                                                                             **
-             * ******************************************************************************
-             * */
+         * ******************************************************************************
+         *                                                                             **
+         *  Changes made for PHP compatibility with version 5.3.                       **
+         *  Variable declaration php_5.3num1 or num2                                   **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-8.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) { if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
@@ -120,6 +120,114 @@ class IndexController extends Controller {
         $this->display();
     }
     /*
+     * @@specifed search home
+     *
+     * */
+    public function specified () {
+        $this->assign('iden', $_GET['iden']);
+        $this->display();
+    }
+    /*
+     *  @@specified search
+     *  @@param iden Type: String
+     *
+     * */
+    public function specifiedCheck () {
+        $collectionConf = array(
+            0 => 'arrivalTotal',
+            1 => 'arrival',
+            2 => 'arrivalOut',
+            3 => 'yesterTotal',
+            4 => 'yesterArrival',
+            5 => 'yesterArrivalOut',
+            6 => 'thisTotal',
+            7 => 'thisArrival',
+            8 => 'thisArrivalOut',
+            9 => 'lastTotal',
+            10 => 'lastArrival',
+            11 => 'lastArrivalOut',
+            12 => 'appTodayTotal',
+            13 => 'appYesterTotal',
+            14 => 'appThisTotal',
+            15 => 'appLastTotal'
+        );
+        $conditions = array(
+            0 => "TO_DAYS(oldDate) = TO_DAYS(NOW())",
+            1 => "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1",
+            2 => "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')",
+            3 => "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
+        );
+        $status = $this->statusSuffixConf();
+        $iden = $_GET['iden'];
+        $appCom = '预约未定';
+        $cookietable = $_COOKIE['tableName'];
+        $hospital = M($cookietable);
+        if ($iden == $collectionConf[0]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[1]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[2]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[3]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[4]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[5]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[6]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[7]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[8]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[9]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[10]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[11]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrivalOut']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[12]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[13]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$appCom}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[14]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$appCom}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        } else if ($iden == $collectionConf[15]) {
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+        }
+        $this->arrayRecursive($hospitalVisit, 'urlencode', true);
+        $jsonVisit = urldecode(json_encode($hospitalVisit));
+        $interval = ceil($hospitalVisitCount / $totalPage);
+        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *  This replacep param must is '\n'.                                          **
+         *  Time wasted here: 5 hours                                                  **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-5.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
+        $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
+    }
+    /*
      *   @@arrival Set Redis
      *   @param key Type: string
      *   @param value Type: variable int.
@@ -145,8 +253,8 @@ class IndexController extends Controller {
         }
         $instance = M($_COOKIE['tableName']);
         for ($i = 0; $i < count($customers); $i ++) {
-            $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
         }
         arsort($arrival, SORT_NUMERIC);
         arsort($appointment, SORT_NUMERIC);
@@ -755,13 +863,13 @@ class IndexController extends Controller {
             $redis->expire($_COOKIE['tableName'] . 'Month_echarst', 1200);
         } else {
             $arrival = array();
-            $arrival['reser'] = $instance->where("status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['advan'] = $instance->where("status = '等待' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['arrival'] = $instance->where("status = '已到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['arrivalOut'] = $instance->where("status = '未到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['halfTotal'] = $instance->where("status = '全流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['half'] = $instance->where("status = '半流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['treat'] = $instance->where("status = '已诊治' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['reser'] = $instance->where("status = '预约未定' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['advan'] = $instance->where("status = '等待' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['arrival'] = $instance->where("status = '已到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['arrivalOut'] = $instance->where("status = '未到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['halfTotal'] = $instance->where("status = '全流失' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['half'] = $instance->where("status = '半流失' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['treat'] = $instance->where("status = '已诊治' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
             $redis->set($_COOKIE['tableName'] . 'Month_echarst', json_encode($arrival));
             $redis->expire($_COOKIE['tableName'] . 'Month_echarst', 1200);
         }
@@ -949,18 +1057,18 @@ class IndexController extends Controller {
         $sql = <<<sql
               CREATE TABLE  `$tableName` (
               `id` int NOT NULL AUTO_INCREMENT,
-              `name` varchar(15) NOT NULL,
-              `old` int NOT NULL,
-              `phone` bigint(20) NOT NULL,
-              `qq` bigint(20) NOT NULL,
+              `name` varchar(15) NOT NULL DEFAULT '',
+              `old` int NOT NULL DEFAULT '',
+              `phone` bigint(20) NOT NULL DEFAULT '',
+              `qq` bigint(20) NOT NULL DEFAULT,
               `diseases` varchar(30) NOT NULL,
               `fromAddress` varchar(15) NOT NULL,
               `switch` varchar(15) NOT NULL DEFAULT '外地',
               `sex` varchar(15) NOT NULL DEFAULT '男',
-              `desc1` varchar(300) NOT NULL,
+              `desc1` varchar(300) NOT NULL DEFAULT '',
               `expert` varchar(10) NOT NULL,
               `oldDate` date NOT NULL,
-              `desc2` varchar(300) NOT NULL,
+              `desc2` varchar(300) NOT NULL DEFAULT '',
               `status` varchar(15) NOT NULL,
               `newDate` date NOT NULL,
               `currentTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,

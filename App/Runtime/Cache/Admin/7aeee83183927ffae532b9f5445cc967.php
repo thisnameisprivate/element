@@ -35,27 +35,27 @@
                     <tbody>
                     <tr>
                         <td>今日</td>
-                        <td><a href="javascript:;"><?php echo ($arrivalTotal); ?></a></td>
-                        <td><a href="javascript:;"><?php echo ($arrival); ?></a></td>
-                        <td><a href="javascript:;"><?php echo ($arrivalOut); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="arrivalTotal"><?php echo ($arrivalTotal); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="arrival"><?php echo ($arrival); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="arrivalOut"><?php echo ($arrivalOut); ?></a></td>
                     </tr>
                     <tr>
                         <th>昨日</th>
-                        <td><a href="javascript:;"><?php echo ($yesterTotal); ?></a></td>
-                        <td><a href="javascript:;"><?php echo ($yesterArrival); ?></a></td>
-                        <td><a href="javascript:;"><?php echo ($yesterArrivalOut); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="yesterTotal"><?php echo ($yesterTotal); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="yesterArrival"><?php echo ($yesterArrival); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="yesterArrivalOut"><?php echo ($yesterArrivalOut); ?></a></td>
                     </tr>
                     <tr>
                         <th>本月</th>
-                        <td><a href="javascript:;"><?php echo ($thisTotal); ?></a></td>
-                        <td><a href="javascript:;"><?php echo ($thisArrival); ?></a></td>
-                        <td><a href="javascript:;"><?php echo ($thisArrivalOut); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="thisTotal"><?php echo ($thisTotal); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="thisArrival"><?php echo ($thisArrival); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="thisArrivalOut"><?php echo ($thisArrivalOut); ?></a></td>
                     </tr>
                     <tr>
                         <th>上月</th>
-                        <td><a href="javascript:;"><?php echo ($lastTotal); ?></a></td>
-                        <td><a href="javascript:;"><?php echo ($lastArrival); ?></a></td>
-                        <td><a href="javascript:;"><?php echo ($lastArrivalOut); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="lastTotal"><?php echo ($lastTotal); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="lastArrival"><?php echo ($lastArrival); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="lastArrivalOut"><?php echo ($lastArrivalOut); ?></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -81,22 +81,22 @@
                     <tbody>
                     <tr>
                         <td>今日</td>
-                        <td><a href="javascript:;"><?php echo ($appointment['todayTotal']); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="appTodayTotal"><?php echo ($appointment['todayTotal']); ?></a></td>
                         <td><a href="javascript:;"></a></td>
                     </tr>
                     <tr>
                         <th>昨日</th>
-                        <td><a href="javascript:;"><?php echo ($appointment['yesterTotal']); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="appYesterTotal"><?php echo ($appointment['yesterTotal']); ?></a></td>
                         <td><a href="javascript:;"></a></td>
                     </tr>
                     <tr>
                         <th>本月</th>
-                        <td><a href="javascript:;"><?php echo ($appointment['thisTotal']); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="appThisTotal"><?php echo ($appointment['thisTotal']); ?></a></td>
                         <td><a href="javascript:;"></a></td>
                     </tr>
                     <tr>
                         <th>上月</th>
-                        <td><a href="javascript:;"><?php echo ($appointment['lastTotal']); ?></a></td>
+                        <td><a href="javascript:;" onclick="specified(this);" iden="appLastTotal"><?php echo ($appointment['lastTotal']); ?></a></td>
                         <td><a href="javascript:;"></a></td>
                     </tr>
                     </tbody>
@@ -228,12 +228,10 @@ layui.use(['layer', 'element', 'laydate', 'form'], () => {
     var layer = layui.layer;
     var form = layui.form;
     var laypage = layui.page;
-    var aList = document.getElementsByTagName('a');
-    for (var i = 0; i < aList.length; i++) {
-        aList[i].onclick = function () {
-            console.log(this);
-            console.log(this.text);
-        }
+    var $ = layui.jquery;
+    specified = (data) => {
+        var iden = data.getAttribute('iden');
+        window.parent.iframeSetAttr("<?php echo U('Admin/Index/specified/iden/"+ iden +"');?>");
     }
 });
 </script>
