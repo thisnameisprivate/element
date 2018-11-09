@@ -1041,7 +1041,7 @@ class IndexController extends Controller {
         try {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxxx');
+            $redis->auth('xxxxxx');
             $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
