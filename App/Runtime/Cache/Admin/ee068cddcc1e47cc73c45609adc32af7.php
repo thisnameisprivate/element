@@ -133,7 +133,11 @@
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
+<<<<<<< HEAD
                     <input type="text" name="phone" value=" " placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+=======
+                    <input type="text" name="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+>>>>>>> 89daf7ce471e3c098684ad5ef6b37a7e3fcee21c
                 </div>
             </div>
             <div class="layui-form-item">
@@ -143,7 +147,11 @@
                 </div>
                 <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
+<<<<<<< HEAD
                     <input type="number" name="old" value=" " placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
+=======
+                    <input type="number" name="old" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
+>>>>>>> 89daf7ce471e3c098684ad5ef6b37a7e3fcee21c
                 </div>
             </div>
             <div class="layui-form-item">
