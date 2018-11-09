@@ -27,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="101">
-              <caret line="1043" column="32" selection-start-line="1043" selection-start-column="32" selection-end-line="1043" selection-end-column="32" />
+            <state relative-caret-position="316">
+              <caret line="865" column="89" selection-start-line="865" selection-start-column="89" selection-end-line="865" selection-end-column="89" />
               <folding>
                 <element signature="e#8#1289#0#PHP" expanded="true" />
                 <element signature="e#1318#1339#0#PHP" expanded="true" />
@@ -40,7 +40,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="convention.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="convention.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="350">
@@ -199,7 +199,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>redis</find>
       <find>arrival</find>
       <find>monthd</find>
       <find>visitcheck</find>
@@ -229,6 +228,7 @@
       <find>statusSuffixConf</find>
       <find>render</find>
       <find>211</find>
+      <find>currentTime</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -289,8 +289,8 @@
         <option value="$PROJECT_DIR$/App/Admin/View/Index/visit.html" />
         <option value="$PROJECT_DIR$/App/Admin/View/Index/index.html" />
         <option value="$PROJECT_DIR$/App/Home/View/Index/index.html" />
-        <option value="$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php" />
         <option value="$PROJECT_DIR$/ThinkPHP/Conf/convention.php" />
+        <option value="$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php" />
       </list>
     </option>
   </component>
@@ -500,12 +500,12 @@
       <workItem from="1541463364130" duration="22102000" />
       <workItem from="1541549227092" duration="27388000" />
       <workItem from="1541635991327" duration="27942000" />
-      <workItem from="1541722333362" duration="19787000" />
+      <workItem from="1541722333362" duration="19996000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="475855000" />
+    <option name="totallyTimeSpent" value="476064000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -928,21 +928,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="1043" column="32" selection-start-line="1043" selection-start-column="32" selection-end-line="1043" selection-end-column="32" />
-          <folding>
-            <element signature="e#8#1289#0#PHP" expanded="true" />
-            <element signature="e#1318#1339#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
           <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="865" column="89" selection-start-line="865" selection-start-column="89" selection-end-line="865" selection-end-column="89" />
+          <folding>
+            <element signature="e#8#1289#0#PHP" expanded="true" />
+            <element signature="e#1318#1339#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

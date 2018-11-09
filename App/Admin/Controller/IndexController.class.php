@@ -863,13 +863,13 @@ class IndexController extends Controller {
             $redis->expire($_COOKIE['tableName'] . 'Month_echarst', 1200);
         } else {
             $arrival = array();
-            $arrival['reser'] = $instance->where("status = '预约未定' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['advan'] = $instance->where("status = '等待' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['arrival'] = $instance->where("status = '已到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['arrivalOut'] = $instance->where("status = '未到' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['halfTotal'] = $instance->where("status = '全流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['half'] = $instance->where("status = '半流失' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
-            $arrival['treat'] = $instance->where("status = '已诊治' AND DATE_FORMAT(currentTime, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['reser'] = $instance->where("status = '预约未定' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['advan'] = $instance->where("status = '等待' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['arrival'] = $instance->where("status = '已到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['arrivalOut'] = $instance->where("status = '未到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['halfTotal'] = $instance->where("status = '全流失' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['half'] = $instance->where("status = '半流失' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
+            $arrival['treat'] = $instance->where("status = '已诊治' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
             $redis->set($_COOKIE['tableName'] . 'Month_echarst', json_encode($arrival));
             $redis->expire($_COOKIE['tableName'] . 'Month_echarst', 1200);
         }
