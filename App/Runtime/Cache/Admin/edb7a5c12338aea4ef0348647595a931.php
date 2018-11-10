@@ -130,17 +130,17 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
+                    <input type="text" name="name" value=" " placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" value=" " placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">QQ/微信</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="qq" placeholder="请输入QQ / 微信~" autocomplete="off" class="layui-input">
+                    <input type="text" name="qq" value=" " placeholder="请输入QQ / 微信~" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
