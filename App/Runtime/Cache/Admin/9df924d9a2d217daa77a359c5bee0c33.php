@@ -23,27 +23,11 @@
     <div class="layui-header">
         <div class="layui-logo">广元协和医院咨询1.0</div>
         <ul class="layui-nav layui-layout-left">
-<<<<<<< HEAD
-<<<<<<< HEAD
             <li class="layui-nav-item kit-side-fold"><a href="javascript:;"><sapn class="layui-icon layui-icon-shrink-right title-icon-size" tips="侧边栏伸缩"></sapn></a></li>
             <li class="layui-nav-item" onclick='iframeSetAttr("<?php echo U('Admin/Index/overView');?>")'><a href="javascript:;"><span class="layui-icon layui-icon-home title-icon-size" tips="首页"></span></a></li>
             <li class="layui-nav-item"><a href="javascript:;"><span class="layui-icon layui-icon-username title-icon-size" tips="个人资料"></span></a></li>
             <li class="layui-nav-item">
                 <a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size" tips="其他系统"></span></a></a>
-=======
-            <li class="layui-nav-item kit-side-fold"><a href="javascript:;"><sapn class="layui-icon layui-icon-shrink-right title-icon-size"></sapn></a></li>
-            <li class="layui-nav-item" onclick='iframeSetAttr("<?php echo U('Admin/Index/overView');?>")'><a href="javascript:;" lay-tips="首页" lay-direction="2"><span class="layui-icon layui-icon-home" style="font-size:1.2rem;"></span></a></li>
-            <li class="layui-nav-item"><a href="javascript:;"><span class="layui-icon layui-icon-username title-icon-size"></span></a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size"></span></a></a>
->>>>>>> 52d68026df3ccb197401bf140d44bb2517beeba3
-=======
-            <li class="layui-nav-item kit-side-fold"><a href="javascript:;"><sapn class="layui-icon layui-icon-shrink-right title-icon-size"></sapn></a></li>
-            <li class="layui-nav-item" onclick='iframeSetAttr("<?php echo U('Admin/Index/overView');?>")'><a href="javascript:;" lay-tips="首页" lay-direction="2"><span class="layui-icon layui-icon-home" style="font-size:1.2rem;"></span></a></li>
-            <li class="layui-nav-item"><a href="javascript:;"><span class="layui-icon layui-icon-username title-icon-size"></span></a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size"></span></a></a>
->>>>>>> 52d68026df3ccb197401bf140d44bb2517beeba3
                 <dl class="layui-nav-child">
                     <dd><a href="">邮件管理</a></dd>
                     <dd><a href="">消息管理</a></dd>
@@ -264,8 +248,6 @@
                 $('#loading').hide(200);
             });
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
         // 侧边栏伸缩
         var isShow = true;
         $('.kit-side-fold').click(function () {
@@ -321,22 +303,6 @@
             }}, {mouseout: function () {
                 layer.close('tips');
             }});
-=======
-=======
->>>>>>> 52d68026df3ccb197401bf140d44bb2517beeba3
-        // nav show or hide
-        $('.kit-side-fold').click(function () {
-            console.log(123);
-            $('.layui-body').css('left', 60 + 'px');
-            $('.layui-footer').css('left', 60 + 'px');
-            $('dd').each(function () {
-                $(this).hide();
-            })
-        })
-<<<<<<< HEAD
->>>>>>> 52d68026df3ccb197401bf140d44bb2517beeba3
-=======
->>>>>>> 52d68026df3ccb197401bf140d44bb2517beeba3
     });
 </script>
 </html>
