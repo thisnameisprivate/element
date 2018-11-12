@@ -211,6 +211,12 @@ class IndexController extends Controller {
             $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->count();
             $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         }
+        // trim array diseases \t
+        for ($i = 0; $i < count($hospitalVisit); $i ++) {
+            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
+            unset($hospitalVisit[$i]['diseases']);
+            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
+        }
         $this->arrayRecursive($hospitalVisit, 'urlencode', true);
         $jsonVisit = urldecode(json_encode($hospitalVisit));
         $interval = ceil($hospitalVisitCount / $totalPage);
@@ -352,6 +358,12 @@ class IndexController extends Controller {
                 $hospitalVisitCount = $hospital->where($phone)->count();
                 $hospitalVisit = $hospital->where($phone)->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
             }
+        }
+        // trim array diseases \t
+        for ($i = 0; $i < count($hospitalVisit); $i ++) {
+            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
+            unset($hospitalVisit[$i]['diseases']);
+            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
         }
         $this->arrayRecursive($hospitalVisit, 'urlencode', true);
         $jsonVisit = urldecode(json_encode($hospitalVisit));
