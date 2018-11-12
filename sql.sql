@@ -1,3 +1,25 @@
+#创建数据表
+CREATE TABLE gyxhyynk (
+id int key not null auto_increment,
+name varchar(15) not null,
+old int not null,
+phone bigint(20) not null,
+qq bigint(20) not null,
+diseases varchar(30) not null,
+fromAddress varchar(15) not null,
+switch varchar(15) not null default '外地',
+sex varchar(15) not null default '男',
+desc1 varchar(1500) default null,
+expert varchar(10) not null,
+oldDate date not null,
+desc2 varchar(300) not null,
+status varchar(15) not null,
+newDate date not null,
+currentTime timestamp null default current_timestamp,
+custService varchar(30) not null,
+KEY `oldDate` (`oldDate`),
+KEY `status` (`status`)
+);
 #创建用户表
 CREATE TABLE user (
 id int key auto_increment,
@@ -33,7 +55,7 @@ custservice varchar(32) unique not null,
 addtime timestamp not null default current_timestamp
 );
 #创建来院状态表
-create table arrivalStatus (
+create table arrivalstatus (
 id int key auto_increment,
 arrivalStatus varchar(32) unique not null,
 addtime timestamp not null default current_timestamp
@@ -69,3 +91,7 @@ managedelete varchar(10) default '',
 logready varchar(10) default '',
 addtime timestamp default current_timestamp not null
 );
+# Management 默认账号权限添加
+insert into management (pid, resready, reswrite, resupdate, resdelete, sysready, syswrite, sysupdate, sysdelete, listready, listwrite, listupdate, listdelete, setready, setwrite, setupdate, setdelete, myready, mywrite, myupdate, mydelete, manageready, managewrite, manageupdate, managedelete, logready) values
+('admin', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on','on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on');
+

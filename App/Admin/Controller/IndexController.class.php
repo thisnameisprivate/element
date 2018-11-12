@@ -66,7 +66,7 @@ class IndexController extends Controller {
          * ******************************************************************************
          * */
         $isTable = M()->query("show tables like '{$tableName}'");
-        if (! $isTable) { if (! $this->createTable($tableName)) return false; }
+        if (! $isTable) {if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
         if ($redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
@@ -211,10 +211,13 @@ class IndexController extends Controller {
             $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->count();
             $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         }
-        // trim array diseases \t
+        // trim array \t
         for ($i = 0; $i < count($hospitalVisit); $i ++) {
             $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
+            $desc1 = trim($hospitalVisit[$i]['dsec1']);
             unset($hospitalVisit[$i]['diseases']);
+            unset($hospitalVisit[$i]['desc1']);
+            $hospitalVisit[$i]['desc1'] = $desc1;
             $hospitalVisit[$i]['diseases'] = $diseasesTrim;
         }
         $this->arrayRecursive($hospitalVisit, 'urlencode', true);
@@ -359,10 +362,13 @@ class IndexController extends Controller {
                 $hospitalVisit = $hospital->where($phone)->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
             }
         }
-        // trim array diseases \t
+        // trim array \t
         for ($i = 0; $i < count($hospitalVisit); $i ++) {
             $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
+            $desc1 = trim($hospitalVisit[$i]['desc1']);
             unset($hospitalVisit[$i]['diseases']);
+            unset($hospitalVisit[$i]['desc1']);
+            $hospitalVisit[$i]['desc1'] = $desc1;
             $hospitalVisit[$i]['diseases'] = $diseasesTrim;
         }
         $this->arrayRecursive($hospitalVisit, 'urlencode', true);
@@ -1054,7 +1060,7 @@ class IndexController extends Controller {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
             $redis->auth('xxxxxx');
-            $redis->select(1);
+            $redis->select(3);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
         }
@@ -1070,9 +1076,9 @@ class IndexController extends Controller {
               CREATE TABLE  `$tableName` (
               `id` int NOT NULL AUTO_INCREMENT,
               `name` varchar(15) NOT NULL DEFAULT '',
-              `old` int NOT NULL DEFAULT '',
-              `phone` bigint(20) NOT NULL DEFAULT '',
-              `qq` bigint(20) NOT NULL DEFAULT,
+              `old` int NOT NULL DEFAULT 0,
+              `phone` bigint(20) NOT NULL DEFAULT 0,
+              `qq` bigint(20) NOT NULL DEFAULT 0,
               `diseases` varchar(30) NOT NULL,
               `fromAddress` varchar(15) NOT NULL,
               `switch` varchar(15) NOT NULL DEFAULT '外地',
@@ -1088,7 +1094,7 @@ class IndexController extends Controller {
               PRIMARY KEY(`id`),
               KEY `oldDate` (`oldDate`),
               KEY `status` (`status`)
-              ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+              ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 sql;
         if (M()->query($sql)) return true;
         return false;
