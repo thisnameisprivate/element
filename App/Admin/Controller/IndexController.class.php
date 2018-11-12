@@ -1077,7 +1077,7 @@ class IndexController extends Controller {
               `fromAddress` varchar(15) NOT NULL,
               `switch` varchar(15) NOT NULL DEFAULT '外地',
               `sex` varchar(15) NOT NULL DEFAULT '男',
-              `desc1` varchar(300) NOT NULL DEFAULT '',
+              `desc1` varchar(1500) NOT NULL DEFAULT '',
               `expert` varchar(10) NOT NULL,
               `oldDate` date NOT NULL,
               `desc2` varchar(300) NOT NULL DEFAULT '',
