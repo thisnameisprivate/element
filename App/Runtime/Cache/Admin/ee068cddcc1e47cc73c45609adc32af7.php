@@ -330,6 +330,7 @@
                 });
                 setFormValue(data);
                 form.on('submit(fromedit)', data => {
+                    data.field.desc1 = jsonStrReplace(data.field.desc1);
                     var id = document.getElementById('idValue').innerHTML;
                     var client = new XMLHttpRequest();
                     client.open('GET', "<?php echo U('Admin/Index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"');?>");
@@ -371,6 +372,7 @@
                 });
                 form.render();
                 form.on('submit(fromadd)', data => {
+                    data.field.desc1 = jsonStrReplace(data.field.desc1);
                     var client = new XMLHttpRequest();
                     client.open('GET', "<?php echo U('Admin/Index/addData/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
@@ -429,6 +431,10 @@
                 'desc1': data.desc1,
                 'desc2': data.desc2
             });
+        }
+        /* 在提交的信息中做验证, 替换日期中的 / 字符 */
+        jsonStrReplace = (data) => {
+            return data.replace(/\//g, '-');
         }
     });
 </script>

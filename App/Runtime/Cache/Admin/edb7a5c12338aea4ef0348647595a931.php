@@ -1,11 +1,11 @@
-<!doctype html>
+<?php if (!defined('THINK_PATH')) exit();?><!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="__PUBLIC__/statics/layui/css/layui.css">
+    <link rel="stylesheet" href="/element/Public/statics/layui/css/layui.css">
     <style>
         .container{position:relative; width:900px; height: 500px; top:0; left:0; bottom:0; right:0; margin:auto; padding-top: 50px;}
         body{overflow-y: scroll; margin-top:20px;}
@@ -13,6 +13,7 @@
     <title>visit</title>
 </head>
 <body>
+<a id="iden" style="display:none;"><?php echo ($iden); ?></a>
 <div class="layui-inline">
     <form class="layui-form">
         <input class="layui-input layui-input-sm" name="search" id="search" required lay-verify="required" placeholder="姓名/客户电话" autocomplete="off">
@@ -59,18 +60,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
-                            <foreach name="arrivalStatus" item="vo" key="index">
-                                <option value="{$vo['arrivalStatus']}">{$vo['arrivalStatus']}</option>
-                            </foreach>
+                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($vo['arrivalStatus']); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">媒体来源</label>
                 <div class="layui-input-inline">
                     <select name="fromAddress" lay-verify="required">
-                        <foreach name="fromaddress" item="vo" key="index">
-                            <option value="{$vo['fromaddress']}">{$vo['fromaddress']}</option>
-                        </foreach>
+                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($vo['fromaddress']); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>
@@ -79,18 +76,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="diseases" lay-verify="required">
-                            <foreach name="diseases" item="vo" key="index">
-                                <option value="{$vo['diseases']}">{$vo['diseases']}</option>
-                            </foreach>
+                            <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($vo['diseases']); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">客服姓名</label>
                 <div class="layui-input-inline">
                     <select name="custService" lay-verify="required">
-                        <foreach name="custservice" item="vo" key="index">
-                            <option value="{$vo['custservice']}">{$vo['custservice']}</option>
-                        </foreach>
+                        <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($vo['custservice']); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>
@@ -137,7 +130,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
+                    <input type="text" name="name" value=" " placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
@@ -151,7 +144,7 @@
                 </div>
                 <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="old" value=" " placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
+                    <input type="number" name="old" placeholder="请输入病人年龄~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -169,18 +162,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="status" lay-verify="required">
-                            <foreach name="arrivalStatus" item="vo" key="index">
-                                <option value="{$vo['arrivalStatus']}">{$vo['arrivalStatus']}</option>
-                            </foreach>
+                            <?php if(is_array($arrivalStatus)): foreach($arrivalStatus as $index=>$vo): ?><option value="<?php echo ($vo['arrivalStatus']); ?>"><?php echo ($vo['arrivalStatus']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">媒体来源</label>
                 <div class="layui-input-inline">
                     <select name="fromAddress" lay-verify="required">
-                        <foreach name="fromaddress" item="vo" key="index">
-                            <option value="{$vo['fromaddress']}">{$vo['fromaddress']}</option>
-                        </foreach>
+                        <?php if(is_array($fromaddress)): foreach($fromaddress as $index=>$vo): ?><option value="<?php echo ($vo['fromaddress']); ?>"><?php echo ($vo['fromaddress']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>
@@ -189,18 +178,14 @@
                 <div class="layui-input-inline">
                     <div class="layui-input-inline">
                         <select name="diseases" lay-verify="required">
-                            <foreach name="diseases" item="vo" key="index">
-                                <option value="{$vo['diseases']}">{$vo['diseases']}</option>
-                            </foreach>
+                            <?php if(is_array($diseases)): foreach($diseases as $index=>$vo): ?><option value="<?php echo ($vo['diseases']); ?>"><?php echo ($vo['diseases']); ?></option><?php endforeach; endif; ?>
                         </select>
                     </div>
                 </div>
                 <label class="layui-form-label">客服姓名</label>
                 <div class="layui-input-inline">
                     <select name="custService" lay-verify="required">
-                        <foreach name="custservice" item="vo" key="index">
-                            <option value="{$vo['custservice']}">{$vo['custservice']}</option>
-                        </foreach>
+                        <?php if(is_array($custservice)): foreach($custservice as $index=>$vo): ?><option value="<?php echo ($vo['custservice']); ?>"><?php echo ($vo['custservice']); ?></option><?php endforeach; endif; ?>
                     </select>
                 </div>
             </div>
@@ -242,7 +227,7 @@
     </div>
 </div>
 </body>
-<script src="__PUBLIC__/statics/layui/layui.js"></script>
+<script src="/element/Public/statics/layui/layui.js"></script>
 <script type="text/html" id="toolbaradd">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm layui-icon layui-icon-add-1" lay-event="add">&nbsp;添加</button>
@@ -255,6 +240,8 @@
 </script>
 <script>
     layui.use(['laydate', 'table', 'layer', 'laypage', 'form'], () => {
+        // iden 标识符
+        var iden = document.getElementById('iden').innerText;
         var table = layui.table;
         var laydate = layui.laydate;
         var layer = layui.layer;
@@ -272,23 +259,22 @@
             },
             elem: '#container',
             toolbar: '#toolbaradd',
-            url: "{:U('Admin/Index/visitCheck')}",
+            url: "<?php echo U('Admin/Index/specifiedCheck/iden/"+ iden  +"');?>",
             height:'full-200',
             page: true,
-            even: true,
             cellMinWidth:50,
             limit: 25,
             limits: [25, 50, 75, 150],
             loading: true,
             size: 'sm',
             cols: [[
-                {field: 'id', title: 'No .', sort: true, hide:true},
-                {field: 'name', title: '姓名', width:'6%', templet: (data) => { return data.status == '已到' ? "<span style='color:orangered;'>"+ data.name +"</span>" : "<span style='color:#5FB878;'>"+ data.name +"</span>" }},
+                {field: 'id', title: 'No .', width:'4%', sort: true, hide:true},
+                {field: 'name', title: '姓名', templet: (data) => { return data.status == '已到' ? "<span style='color:orangered;'>"+ data.name +"</span>" : "<span style='color:#5FB878;'>"+ data.name +"</span>" }},
                 {field: 'sex', title: '性别', width:'4%', align:'center'},
                 {field: 'old', title: '年龄', width:'5%', align:'center', sort: true},
                 {field: 'phone', title: '电话', width:'8%'},
-                {field: 'qq', title: "QQ", width:'4%'},
-                {field: 'expert', title: '专家号'},
+                {field: 'qq', title: "QQ"},
+                {field: 'expert', title: '专家号', width:'5%'},
                 {field: 'desc1', title: '咨询内容'},
                 {field: 'oldDate', title: '预约时间'},
                 {field: 'diseases', title: '病患类型'},
@@ -298,7 +284,7 @@
                 {field: 'custService', title: '客服', width:'5%'},
                 {field: 'newDate', title: '回访时间'},
                 {field: 'status', title: '赴约状态', templet: (data) => { return data.status == '已到' ? "<span style='color:orangered;'>"+ data.status +"</span>" : "<span style='color:#5FB878;'>"+ data.status +"</span>" }},
-                {field: 'currentTime', title: '添加时间', hide:true},
+                {field: 'currentTime', title: '添加时间'},
                 {fixed: 'right', title: '操作', align:'left', toolbar: '#bar', width:'10%'},
             ]],
             id: 'edittable',
@@ -313,7 +299,7 @@
                 if (! Boolean(userAcc.resdelete)) { layer.msg('权限不足', {icon:5}); return false; }
                 layer.confirm('【 ' + data.name + ' 】are you soure delete ?', (index) => {
                     var client = new XMLHttpRequest();
-                    client.open("GET", "{:U('Admin/Index/visitDel/id/" + parseInt(data.id) + "/data/"+ JSON.stringify(data) +"')}");
+                    client.open("GET", "<?php echo U('Admin/Index/visitDel/id/" + parseInt(data.id) + "/data/"+ JSON.stringify(data) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
@@ -346,10 +332,9 @@
                 });
                 setFormValue(data);
                 form.on('submit(fromedit)', data => {
-                    data.field.desc1 = jsonStrReplace(data.field.desc1);
                     var id = document.getElementById('idValue').innerHTML;
                     var client = new XMLHttpRequest();
-                    client.open('GET', "{:U('Admin/Index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"')}");
+                    client.open('GET', "<?php echo U('Admin/Index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
@@ -388,9 +373,8 @@
                 });
                 form.render();
                 form.on('submit(fromadd)', data => {
-                    data.field.desc1 = jsonStrReplace(data.field.desc1);
                     var client = new XMLHttpRequest();
-                    client.open('GET', "{:U('Admin/Index/addData/data/"+ JSON.stringify(data.field) +"')}");
+                    client.open('GET', "<?php echo U('Admin/Index/addData/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
                     client.onreadystatechange = () => {
                         if (client.readyState === 4 && client.status === 200) {
@@ -429,7 +413,7 @@
         }
         /* 渲染form表单 */
         setFormValue = data => {
-            // form.render();
+            form.render();
             form.val('formedit', {
                 'name': data.name,
                 'phone': data.phone,
@@ -447,10 +431,6 @@
                 'desc1': data.desc1,
                 'desc2': data.desc2
             });
-        }
-        /* 在提交的信息中做验证, 替换日期中的 / 字符 */
-        jsonStrReplace = (data) => {
-            return data.replace(/\//g, '-');
         }
     });
 </script>

@@ -68,7 +68,7 @@ class IndexController extends Controller {
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) {if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
-        if ($redis->exists($tableName . '_arrivalTotal')) {
+        if (! $redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
             $statusSuffixConf = $this->statusSuffixConf(); // get cache time 300s.
             for ($i = 0; $i < count($keyNames); $i ++) {
@@ -163,41 +163,41 @@ class IndexController extends Controller {
         $cookietable = $_COOKIE['tableName'];
         $hospital = M($cookietable);
         if ($iden == $collectionConf[0]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+            $hospitalVisitCount = $hospital->where(array($conditions[0]))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0]))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[1]) {
             $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->count();
             $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[2]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrivalOut']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+            $hospitalVisitCount = $hospital->where(array($conditions[0], "status != '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[0], "status != '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[3]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+            $hospitalVisitCount = $hospital->where(array($conditions[1]))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1]))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[4]) {
             $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->count();
             $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[5]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrivalOut']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+            $hospitalVisitCount = $hospital->where(array($conditions[1], "status != '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[1], "status != '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[6]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+            $hospitalVisitCount = $hospital->where(array($conditions[2]))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2]))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[7]) {
             $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->count();
             $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[8]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrivalOut']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+            $hospitalVisitCount = $hospital->where(array($conditions[2], "status != '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[2], "status != '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[9]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrival']}' or status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+            $hospitalVisitCount = $hospital->where(array($conditions[3]))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3]))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[10]) {
             $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->count();
             $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[11]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrivalOut']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrivalOut']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
+            $hospitalVisitCount = $hospital->where(array($conditions[3], "status != '{$status['arrival']}'"))->count();
+            $hospitalVisit = $hospital->where(array($conditions[3], "status != '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
         } else if ($iden == $collectionConf[12]) {
             $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->count();
             $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
@@ -856,13 +856,13 @@ class IndexController extends Controller {
         $tableName = $_COOKIE['tableName'];
         $collection = array();
         $collection['arrival'] = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '已到'");
-        $collection['arrivalOut'] = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '未到'");
+        $collection['arrivalOut'] = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status != '已到'");
         $collection['yesterArrival'] = $this->detail("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status = '已到'");
-        $collection['yesterArrivalOut'] = $this->detail("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status = '未到'");
+        $collection['yesterArrivalOut'] = $this->detail("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status != '已到'");
         $collection['thisArrival'] = $this->detail("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status = '已到'");
-        $collection['thisArrivalOut'] = $this->detail("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status = '未到'");
+        $collection['thisArrivalOut'] = $this->detail("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status != '已到'");
         $collection['lastArrival'] = $this->detail("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status = '已到'");
-        $collection['lastArrivalOut'] = $this->detail("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status = '未到'");
+        $collection['lastArrivalOut'] = $this->detail("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status != '已到'");
         $collection['arrivalTotal'] = $collection['arrival'] + $collection['arrivalOut'];
         $collection['yesterTotal'] = $collection['yesterArrival'] + $collection['yesterArrivalOut'];
         $collection['thisTotal'] = $collection['thisArrival'] + $collection['thisArrivalOut'];
@@ -1060,7 +1060,7 @@ class IndexController extends Controller {
             $redis = new \Redis();
             $redis->connect('211.149.x.x', 6379);
             $redis->auth('xxxxxx');
-            $redis->select(3);
+            $redis->select(1);
         } catch (Exception $e) {
             die ("Connect Redis Fail: " . $e->getMessage());
         }
