@@ -130,17 +130,17 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
+                    <input type="text" name="name" value=" " placeholder="请输入病人名字或昵称~" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" value=" " placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">QQ/微信</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="qq" placeholder="请输入QQ / 微信~" autocomplete="off" class="layui-input">
+                    <input type="text" name="qq" value=" " placeholder="请输入QQ / 微信~" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">年龄</label>
                 <div class="layui-input-inline">
@@ -262,6 +262,7 @@
             url: "<?php echo U('Admin/Index/specifiedCheck/iden/"+ iden  +"');?>",
             height:'full-200',
             page: true,
+            even: true,
             cellMinWidth:50,
             limit: 25,
             limits: [25, 50, 75, 150],
@@ -332,6 +333,7 @@
                 });
                 setFormValue(data);
                 form.on('submit(fromedit)', data => {
+                    data.field.desc1 = jsonStrReplace(data.field.desc1);
                     var id = document.getElementById('idValue').innerHTML;
                     var client = new XMLHttpRequest();
                     client.open('GET', "<?php echo U('Admin/Index/editData/id/" + parseInt(id) + "/data/"+ JSON.stringify(data.field) +"');?>");
@@ -373,6 +375,7 @@
                 });
                 form.render();
                 form.on('submit(fromadd)', data => {
+                    data.field.desc1 = jsonStrReplace(data.field.desc1);
                     var client = new XMLHttpRequest();
                     client.open('GET', "<?php echo U('Admin/Index/addData/data/"+ JSON.stringify(data.field) +"');?>");
                     client.send();
@@ -431,6 +434,10 @@
                 'desc1': data.desc1,
                 'desc2': data.desc2
             });
+        }
+        /* 在提交的信息中做验证, 替换日期中的 / 字符 */
+        jsonStrReplace = (data) => {
+            return data.replace(/\//g, '-');
         }
     });
 </script>

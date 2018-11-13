@@ -23,11 +23,11 @@
     <div class="layui-header">
         <div class="layui-logo">广元协和医院咨询1.0</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item kit-side-fold"><a href="javascript:;"><sapn class="layui-icon layui-icon-shrink-right title-icon-size"></sapn></a></li>
-            <li class="layui-nav-item" onclick='iframeSetAttr("{:U('Admin/Index/overView')}")'><a href="javascript:;" lay-tips="首页" lay-direction="2"><span class="layui-icon layui-icon-home" style="font-size:1.2rem;"></span></a></li>
-            <li class="layui-nav-item"><a href="javascript:;"><span class="layui-icon layui-icon-username title-icon-size"></span></a></li>
+            <li class="layui-nav-item kit-side-fold"><a href="javascript:;"><sapn class="layui-icon layui-icon-shrink-right title-icon-size" tips="侧边栏伸缩"></sapn></a></li>
+            <li class="layui-nav-item" onclick='iframeSetAttr("{:U('Admin/Index/overView')}")'><a href="javascript:;"><span class="layui-icon layui-icon-home title-icon-size" tips="首页"></span></a></li>
+            <li class="layui-nav-item"><a href="javascript:;"><span class="layui-icon layui-icon-username title-icon-size" tips="个人资料"></span></a></li>
             <li class="layui-nav-item">
-                <a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size"></span></a></a>
+                <a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size" tips="其他系统"></span></a></a>
                 <dl class="layui-nav-child">
                     <dd><a href="">邮件管理</a></dd>
                     <dd><a href="">消息管理</a></dd>
@@ -48,15 +48,15 @@
         </ul>
     </div>
 
-    <div class="layui-side layui-bg-black">
+    <div class="layui-side layui-bg-black" id="layui-side">
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;"><span class="layui-icon layui-icon-list">&nbsp;&nbsp;</span>病人预约管理</a>
+                    <a href="javascript:;"><span class="layui-icon layui-icon-component">&nbsp;&nbsp;</span><span class="slide-font">病人预约管理</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a  href="javascript:;" onclick="visit();">预约登记列表</a></dd>
-                        <dd><a  href="javascript:;" onclick="detailReport();">客服明细报表</a></dd>
-                        <dd><a  href="javascript:;" onclick="monthdata();">月趋势报表</a></dd>
+                        <dd><a  href="javascript:;" onclick="visit();"><span class="layui-icon layui-icon-edit">&nbsp;&nbsp;</span><span class="slide-font">预约登记列表</span></a></dd>
+                        <dd><a  href="javascript:;" onclick="detailReport();"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">客服明细报表</span></a></dd>
+                        <dd><a  href="javascript:;" onclick="monthdata();"><span class="layui-icon layui-icon-console">&nbsp;&nbsp;</span><span class="slide-font">月趋势报表</span></a></dd>
                         <!--
                          <dd><a  href="javascript:;">数据横向对比</a></dd>
                          -->
@@ -98,19 +98,19 @@
                 </li>
                  -->
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><span class="layui-icon layui-icon-set-sm">&nbsp;&nbsp;</span>设置</a>
+                    <a href="javascript:;"><span class="layui-icon layui-icon-set-sm">&nbsp;&nbsp;</span><span class="slide-font">设置</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" onclick="doctor();">客服人员设置</a></dd>
-                        <dd><a href="javascript:;" onclick="disease();">病患类型设置</a></dd>
-                        <dd><a href="javascript:;" onclick="typesof();">媒体来源设置</a></dd>
-                        <dd><a href="javascript:;" onclick="hospitalsList();">医院科室设置</a></dd>
-                        <dd><a href="javascript:;" onclick="arrivalStatus();">来院状态设置</a></dd>
+                        <dd><a href="javascript:;" onclick="doctor();"><span class="layui-icon layui-icon-dialogue">&nbsp;&nbsp;</span><span class="slide-font">客服人员设置</span></a></dd>
+                        <dd><a href="javascript:;" onclick="disease();"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">病患类型设置</span></a></dd>
+                        <dd><a href="javascript:;" onclick="typesof();"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">媒体来源设置</span></a></dd>
+                        <dd><a href="javascript:;" onclick="hospitalsList();"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">医院科室设置</span></a></dd>
+                        <dd><a href="javascript:;" onclick="arrivalStatus();"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">来院状态设置</span></a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><span class="layui-icon layui-icon-user">&nbsp;&nbsp;</span>我的资料</a>
+                    <a href="javascript:;"><span class="layui-icon layui-icon-user">&nbsp;&nbsp;</span><span class="slide-font">我的资料</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" onclick="personal();">修改我的资料</a></dd>
+                        <dd><a href="javascript:;" onclick="personal();"><span class="layui-icon layui-icon-edit">&nbsp;&nbsp;</span><span class="slide-font">修改我的资料</span></a></dd>
                         <!--
                          <dd><a href="javascript:;">修改密码</a></dd>
                         <dd><a href="javascript:;">选项设置</a></dd>
@@ -118,9 +118,9 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><span class="layui-icon layui-icon-app">&nbsp;&nbsp;</span>系统管理</a>
+                    <a href="javascript:;"><span class="layui-icon layui-icon-auz">&nbsp;&nbsp;</span><span class="slide-font">系统管理</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" onclick="access();">用户管理</a></dd>
+                        <dd><a href="javascript:;" onclick="access();"><span class="layui-icon layui-icon-user">&nbsp;&nbsp;</span><span class="slide-font">用户管理</span></a></dd>
                         <!--
                          <dd><a href="javascript:;">医院列表</a></dd>
                         <dd><a href="javascript:;">通知列表</a></dd>
@@ -128,10 +128,10 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><span class="layui-icon layui-icon-log">&nbsp;&nbsp;</span>日志记录</a>
+                    <a href="javascript:;"><span class="layui-icon layui-icon-log">&nbsp;&nbsp;</span><span class="slide-font">日志记录</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">操作日志</a></dd>
-                        <dd><a href="javascript:;">登录错误日志</a></dd>
+                        <dd><a href="javascript:;"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">操作日志</span></a></dd>
+                        <dd><a href="javascript:;"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">登录错误日志</span></a></dd>
                     </dl>
                 </li>
             </ul>
@@ -140,11 +140,11 @@
     <div class="layui-progress" id="loading" style="dipslay:none">
         <div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
     </div>
-    <div class="layui-body">
+    <div class="layui-body" id="layuibody">
         <iframe id="iframe" src="{:U('Admin/Index/overView')}" frameborder="0"></iframe>
     </div>
 </div>
-<div style="position:fixed; bottom:0px; left:200px; z-index:999; font-size:12px; font-weight:600;">
+<div id="bottom-title" style="position:fixed; bottom:0px; left:200px; z-index:999; font-size:12px; font-weight:600;">
     <!-- 底部固定区域 -->
     <a href="javascript:;" title="发布日期: 2018/10/1日:)"><span class="layui-icon layui-icon-website layui-anim layui-anim-fadein layui-anim-loop"></span>&nbsp;&nbsp;&nbsp;广元协和医院预约回访管理系统 ©</a>
 </div>
@@ -154,6 +154,7 @@
     layui.use(['element', 'layer', 'form'], () => {
         const iframe = document.getElementById('iframe');
         var element = layui.element;
+        var layer = layui.layer;
         var $ = layui.jquery;
         var userAcc = JSON.parse(localStorage.getItem('userAcc'));
         // 医院列表下拉框渲染
@@ -249,6 +250,61 @@
                 $('#loading').hide(200);
             });
         }
+        // 侧边栏伸缩
+        var isShow = true;
+        $('.kit-side-fold').click(function () {
+            console.log($('.layui-nav-tree').children().children().children('span.layui-nav-more'));
+            if (isShow) {
+                $('#layui-side').animate({width: '60px'}, 100);
+                $('#layuibody').animate({left: '60px'}, 100).children().css('width', '100%');
+                $('#bottom-title').animate({left: '60px'}, 100);
+                $('.layui-nav-tree').animate({width: '75px'}, function () {
+                    $(this).children().children().children('span.layui-nav-more').hide();
+                });
+                $(this).children().children()
+                    .removeClass('layui-icon-shrink-right')
+                    .addClass('layui-icon-spread-left');
+                $('.slide-font').each(function () {
+                    $(this).hide(100).prev().css('font-size', '20px');
+                })
+                // 鼠标悬停提示效果
+                $('.slide-font').parent().on({mouseover: function () {
+                    $(this).each(function () {
+                        layer.tips($(this).text(), $(this), {
+                            tips: 2,
+                            time: 1000,
+                        });
+                    });
+                }}, {mouseout: function () {
+                    layer.close('tips');
+                }});
+                isShow = false;
+            } else {
+                $('#layui-side').animate({width: '200px'}, 150);
+                $('#layuibody').animate({left: '200px'}, 150).children().css('width', '91.2%');
+                $('#bottom-title').animate({left: '200px'}, 100);
+                $(this).children().children()
+                    .removeClass('layui-icon-spread-left')
+                    .addClass('layui-icon-shrink-right');
+                $('.layui-nav-tree').animate({width: '200px'}, function () {
+                    $(this).children().children().children('span.layui-nav-more').show();
+                });
+                isShow = true;
+                $('.slide-font').each(function () {
+                    $(this).show(100).prev().css('font-size', '14px');
+                })
+            }
+        })
+        $('.title-icon-size').on({mouseover: function () {
+                $(this).each(function () {
+                    layer.tips($(this).attr('tips'), $(this), {
+                        tips: 3,
+                        time: 1000,
+                    });
+                });
+            }}, {mouseout: function () {
+                layer.close('tips');
+            }});
     });
 </script>
 </html>
