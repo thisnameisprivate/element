@@ -68,7 +68,7 @@ class IndexController extends Controller {
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) {if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
-        if (! $redis->exists($tableName . '_arrivalTotal')) {
+        if ($redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
             $statusSuffixConf = $this->statusSuffixConf(); // get cache time 300s.
             for ($i = 0; $i < count($keyNames); $i ++) {
@@ -139,7 +139,6 @@ class IndexController extends Controller {
      *
      * */
     public function specifiedCheck () {
-<<<<<<< HEAD
         $hospitalVisit = D('Collection')->specifiedFunc($_GET, $this->statusSuffixConf());
         // trim array \t
         for ($i = 0; $i < count($hospitalVisit[0]); $i ++) {
@@ -153,99 +152,6 @@ class IndexController extends Controller {
         $this->arrayRecursive($hospitalVisit[0], 'urlencode', true);
         $jsonVisit = urldecode(json_encode($hospitalVisit[0]));
         $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisit[1], \"data\": $jsonVisit}";
-=======
-        $collectionConf = array(
-            0 => 'arrivalTotal',
-            1 => 'arrival',
-            2 => 'arrivalOut',
-            3 => 'yesterTotal',
-            4 => 'yesterArrival',
-            5 => 'yesterArrivalOut',
-            6 => 'thisTotal',
-            7 => 'thisArrival',
-            8 => 'thisArrivalOut',
-            9 => 'lastTotal',
-            10 => 'lastArrival',
-            11 => 'lastArrivalOut',
-            12 => 'appTodayTotal',
-            13 => 'appYesterTotal',
-            14 => 'appThisTotal',
-            15 => 'appLastTotal'
-        );
-        $conditions = array(
-            0 => "TO_DAYS(oldDate) = TO_DAYS(NOW())",
-            1 => "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1",
-            2 => "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')",
-            3 => "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
-        );
-        $status = $this->statusSuffixConf();
-        $iden = $_GET['iden'];
-        $appCom = '预约未定';
-        $cookietable = $_COOKIE['tableName'];
-        $hospital = M($cookietable);
-        if ($iden == $collectionConf[0]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0]))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0]))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[1]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[2]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0], "status != '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0], "status != '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[3]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1]))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1]))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[4]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[5]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1], "status != '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1], "status != '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[6]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2]))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2]))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[7]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[8]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2], "status != '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2], "status != '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[9]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3]))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3]))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[10]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[11]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3], "status != '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3], "status != '{$status['arrival']}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[12]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[13]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$appCom}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[14]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$appCom}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[15]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->limit(($page = $_GET['page'] - 1) * $_GET['limit'], $_GET['limit'])->order('id desc')->select();
-        }
-        // trim array \t
-        for ($i = 0; $i < count($hospitalVisit); $i ++) {
-            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
-            $desc1 = trim($hospitalVisit[$i]['dsec1']);
-            unset($hospitalVisit[$i]['diseases']);
-            unset($hospitalVisit[$i]['desc1']);
-            $hospitalVisit[$i]['desc1'] = $desc1;
-            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
-        }
-        $this->arrayRecursive($hospitalVisit, 'urlencode', true);
-        $jsonVisit = urldecode(json_encode($hospitalVisit));
-        $interval = ceil($hospitalVisitCount / $totalPage);
-        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
->>>>>>> a1bee8a66491c492be295f4f13ae4375e7e760a1
         /* ******************************************************************************
          * ******************************************************************************
          *                                                                             **
@@ -874,7 +780,6 @@ class IndexController extends Controller {
     private function custservice () {;
         $tableName = $_COOKIE['tableName'];
         $collection = array();
-<<<<<<< HEAD
         $collection['arrival']            = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '已到'");
         $collection['arrivalOut']         = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status != '已到'");
         $collection['yesterArrival']      = $this->detail("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status = '已到'");
@@ -887,20 +792,6 @@ class IndexController extends Controller {
         $collection['yesterTotal']        = $collection['yesterArrival'] + $collection['yesterArrivalOut'];
         $collection['thisTotal']          = $collection['thisArrival'] + $collection['thisArrivalOut'];
         $collection['lastTotal']          = $collection['lastArrival'] + $collection['lastArrivalOut'];
-=======
-        $collection['arrival'] = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '已到'");
-        $collection['arrivalOut'] = $this->detail("TO_DAYS(oldDate) = TO_DAYS(NOW())", "status != '已到'");
-        $collection['yesterArrival'] = $this->detail("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status = '已到'");
-        $collection['yesterArrivalOut'] = $this->detail("TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1", "status != '已到'");
-        $collection['thisArrival'] = $this->detail("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status = '已到'");
-        $collection['thisArrivalOut'] = $this->detail("DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')", "status != '已到'");
-        $collection['lastArrival'] = $this->detail("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status = '已到'");
-        $collection['lastArrivalOut'] = $this->detail("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1", "status != '已到'");
-        $collection['arrivalTotal'] = $collection['arrival'] + $collection['arrivalOut'];
-        $collection['yesterTotal'] = $collection['yesterArrival'] + $collection['yesterArrivalOut'];
-        $collection['thisTotal'] = $collection['thisArrival'] + $collection['thisArrivalOut'];
-        $collection['lastTotal'] = $collection['lastArrival'] + $collection['lastArrivalOut'];
->>>>>>> a1bee8a66491c492be295f4f13ae4375e7e760a1
         return $collection;
     }
     /*
