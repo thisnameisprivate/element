@@ -140,18 +140,20 @@ class IndexController extends Controller {
      * */
     public function specifiedCheck () {
         $hospitalVisit = D('Collection')->specifiedFunc($_GET, $this->statusSuffixConf());
+        $hospitalVisitCount = $hospitalVisit[1]; // 这里不要写反了.先取1后取0
+        $hospitalVisit = $hospitalVisit[0];
         // trim array \t
-        for ($i = 0; $i < count($hospitalVisit[0]); $i ++) {
-            $diseasesTrim = trim($hospitalVisit[0][$i]['diseases']);
-            $desc1 = trim($hospitalVisit[0][$i]['dsec1']);
-            unset($hospitalVisit[0][$i]['diseases']);
-            unset($hospitalVisit[0][$i]['desc1']);
-            $hospitalVisit[0][$i]['desc1'] = $desc1;
-            $hospitalVisit[0][$i]['diseases'] = $diseasesTrim;
+        for ($i = 0; $i < count($hospitalVisit); $i ++) {
+            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
+            $desc1 = trim($hospitalVisit[$i]['desc1']);
+            unset($hospitalVisit[$i]['diseases']);
+            unset($hospitalVisit[$i]['desc1']);
+            $hospitalVisit[$i]['desc1'] = $desc1;
+            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
         }
-        $this->arrayRecursive($hospitalVisit[0], 'urlencode', true);
-        $jsonVisit = urldecode(json_encode($hospitalVisit[0]));
-        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisit[1], \"data\": $jsonVisit}";
+        $this->arrayRecursive($hospitalVisit, 'urlencode', true);
+        $jsonVisit = urldecode(json_encode($hospitalVisit));
+        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
         /* ******************************************************************************
          * ******************************************************************************
          *                                                                             **

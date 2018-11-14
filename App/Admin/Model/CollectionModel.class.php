@@ -41,6 +41,14 @@ class CollectionModel extends Model {
         return $selectCollection;
     }
     /*
+     *   @@ 导出数据
+     *   @param null
+     *   @return array
+     * */
+    public function derive () {
+
+    }
+    /*
      *  @@ 按时间/状态查询
      *  @param $request Type: GET array
      *  @param $status Type: Controller $this->statusSuffixConf();
