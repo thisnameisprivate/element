@@ -66,7 +66,7 @@ class IndexController extends Controller {
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) {if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
-        if (!$redis->exists($tableName . '_arrivalTotal')) {
+        if ($redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
             $statusSuffixConf = $this->statusSuffixConf(); // get cache time 300s.
             for ($i = 0; $i < count($keyNames); $i ++) {
@@ -969,15 +969,12 @@ class IndexController extends Controller {
      *  @return $redis. Type: instance
      * */
     private function setCache () {
-        try {
-            $redis = new \Redis();
-            $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxx');
-            $redis->select(1);
-        } catch (Exception $e) {
-            die ("Connect Redis Fail: " . $e->getMessage());
-        }
-        return $redis;
+        $redis = new \Redis();
+        $redis->connect('211.149.x.x', 6379);
+        $redis->auth('xxxxxx');
+        $redis->select(1);
+        if ($redis->ping() == "+PONG") return $redis;
+        throw new Exception("Connection  Redis Failed...");
     }
     /*
      *  @@ create new table
