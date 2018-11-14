@@ -42,9 +42,7 @@ class IndexController extends Controller {
     private function userManagement ($userCookie) {
         $userAcc = M('management')->where("pid = '{$userCookie}'")->select();
         if ($userAcc)  {
-            foreach ($userAcc as $k => $v) {
-                return $v;
-            }
+            foreach ($userAcc as $k => $v) return $v;
         } else {
             return false;
         }
@@ -68,7 +66,7 @@ class IndexController extends Controller {
         $isTable = M()->query("show tables like '{$tableName}'");
         if (! $isTable) {if (! $this->createTable($tableName)) return false; }
         $redis = $this->setCache();
-        if ($redis->exists($tableName . '_arrivalTotal')) {
+        if (!$redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
             $statusSuffixConf = $this->statusSuffixConf(); // get cache time 300s.
             for ($i = 0; $i < count($keyNames); $i ++) {
@@ -185,11 +183,7 @@ class IndexController extends Controller {
      * */
     private function thisArrivalList () {
         $customer = M('custservice')->field('custservice')->select();
-        foreach ($customer  as $k => $v) {
-            foreach ($v as $c => $d) {
-                $customers[] = $d;
-            }
-        }
+        foreach ($customer  as $k => $v) foreach ($v as $c => $d) $customers[] = $d;
         $instance = M($_COOKIE['tableName']);
         for ($i = 0; $i < count($customers); $i ++) {
             $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
@@ -208,11 +202,7 @@ class IndexController extends Controller {
      * */
     private function lastArrivalList () {
         $customer = M('custservice')->field('custservice')->select();
-        foreach ($customer as $k => $v) {
-            foreach ($v as $c => $d) {
-                $customers[] = $d;
-            }
-        }
+        foreach ($customer as $k => $v) foreach ($v as $c => $d) $customers[] = $d;
         $instance = M($_COOKIE['tableName']);
         for ($i = 0; $i < count($customers); $i ++) {
             $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1")->count();
@@ -735,11 +725,7 @@ class IndexController extends Controller {
      * */
     private function persionCollection () {
         $persion = M('custservice')->field('custservice')->select();
-        foreach ($persion as $k => $v) {
-            foreach ($v as $key => $value) {
-                $keyNames[$k] = $value;
-            }
-        }
+        foreach ($persion as $k => $v) foreach ($v as $key => $value) $keyNames[$k] = $value;
         $persionCollection = array();
         while (list ($k, $v) = each ($keyNames)) {
             $persionCollection[$v]['arrival']           = $this->detail("custservice = '{$v}'","TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '已到'");
