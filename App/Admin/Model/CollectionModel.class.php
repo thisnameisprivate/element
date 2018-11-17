@@ -112,4 +112,10 @@ class CollectionModel extends Model {
         }
         return array($hospitalVisit, $hospitalVisitCount);
     }
+    public function resources ($request) {
+        $tableName = $_COOKIE['tableName'];
+        $hospitalVisitCount = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->count();
+        $hospitalVisit = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->select();
+        return array($hospitalVisit, $hospitalVisitCount);
+    }
 }

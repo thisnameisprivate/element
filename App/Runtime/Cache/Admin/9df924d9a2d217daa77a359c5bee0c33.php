@@ -119,6 +119,7 @@
                     <a href="javascript:;"><span class="layui-icon layui-icon-auz">&nbsp;&nbsp;</span><span class="slide-font">系统管理</span></a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" onclick="access();"><span class="layui-icon layui-icon-user">&nbsp;&nbsp;</span><span class="slide-font">用户管理</span></a></dd>
+                        <dd><a href="javascript:;" onclick="resources();"><span class="layui-icon layui-icon-user">&nbsp;&nbsp;</span><span class="slide-font">数据导出</span></a></dd>
                         <!--
                          <dd><a href="javascript:;">医院列表</a></dd>
                         <dd><a href="javascript:;">通知列表</a></dd>
@@ -198,6 +199,10 @@
         access = () => {
             if (! Boolean(userAcc.manageready)) { layer.msg("权限不足", {icon: 5}); return false; }
             iframeSetAttr("<?php echo U('Admin/Index/access');?>")
+        }
+        resources = () => {
+            if (! Boolean(userAcc.manageready)) { layer.msg("权限不足", {icon: 5}); return false; }
+            iframeSetAttr("<?php echo U('Admin/Index/resources');?>")
         }
         personal = () => {
             if (! Boolean(userAcc.myready)) { layer.msg("权限不足", {icon: 5}); return false };

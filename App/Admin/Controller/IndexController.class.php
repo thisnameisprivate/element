@@ -136,17 +136,9 @@ class IndexController extends Controller {
      * */
     public function specifiedCheck () {
         $hospitalVisit = D('Collection')->specifiedFunc($_GET, $this->statusSuffixConf());
-        $hospitalVisitCount = $hospitalVisit[1]; // 这里不要写反了.先取1后取0
-        $hospitalVisit = $hospitalVisit[0];
+        $hospitalVisitCount = $hospitalVisit[1];
         // trim array \t
-        for ($i = 0; $i < count($hospitalVisit); $i ++) {
-            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
-            $desc1 = trim($hospitalVisit[$i]['desc1']);
-            unset($hospitalVisit[$i]['diseases']);
-            unset($hospitalVisit[$i]['desc1']);
-            $hospitalVisit[$i]['desc1'] = $desc1;
-            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
-        }
+        $hospitalVisit = $this->arraySplice($hospitalVisit[0]); // array splice get.
         $this->arrayRecursive($hospitalVisit, 'urlencode', true);
         $jsonVisit = urldecode(json_encode($hospitalVisit));
         $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
@@ -278,14 +270,7 @@ class IndexController extends Controller {
             }
         }
         // trim array \t
-        for ($i = 0; $i < count($hospitalVisit); $i ++) {
-            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
-            $desc1 = trim($hospitalVisit[$i]['desc1']);
-            unset($hospitalVisit[$i]['diseases']);
-            unset($hospitalVisit[$i]['desc1']);
-            $hospitalVisit[$i]['desc1'] = $desc1;
-            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
-        }
+        $hospitalVisit = $this->arraySplice($hospitalVisit);
         $this->arrayRecursive($hospitalVisit, 'urlencode', true);
         $jsonVisit = urldecode(json_encode($hospitalVisit));
         $interval = ceil($hospitalVisitCount / $totalPage);
@@ -950,6 +935,31 @@ class IndexController extends Controller {
         }
     }
     /*
+     * @@ resources Export page
+     * */
+    public function resources () {
+        $this->display();
+    }
+    /*
+     * @@ resources Export
+     * @param null
+     * @return Boolean Type: json
+     * */
+    public function resourcesCheck () {
+        if (array_key_exists('null', $_GET)) return false;
+        if (array_key_exists('date_min', $_GET) && array_key_exists('date_max', $_GET)) {
+            $result = D('Collection')->resources($_GET);
+            if (is_array($result) && isset($result)) {
+                $hospitalVisitCount = $result[1];
+                $hospitalVisit = $this->arraySplice($result[0]);
+            }
+        }
+        $this->arrayRecursive($hospitalVisit, 'urlencode', true);
+        $jsonVisit = urldecode(json_encode($hospitalVisit));
+        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
+        $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
+    }
+    /*
      *  @@The personal data page
      *  @param null
      * */
@@ -971,6 +981,24 @@ class IndexController extends Controller {
         $redis->select(1);
         if ($redis->ping() == "+PONG") return $redis;
         throw new Exception("Connection  Redis Failed...");
+    }
+    /*
+     *  @@select data keys splice
+     *  @param array
+     *  @return array
+     * */
+    private function arraySplice ($hospitalVisit) {
+        if (! is_array($hospitalVisit)) return false;
+        // trim array \t
+        for ($i = 0; $i < count($hospitalVisit); $i ++) {
+            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
+            $desc1 = trim($hospitalVisit[$i]['desc1']);
+            unset($hospitalVisit[$i]['diseases']);
+            unset($hospitalVisit[$i]['desc1']);
+            $hospitalVisit[$i]['desc1'] = $desc1;
+            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
+        }
+        return $hospitalVisit;
     }
     /*
      *  @@ create new table
