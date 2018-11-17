@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/element.iml" filepath="$PROJECT_DIR$/.idea/element.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../深入PHP面向对象模式与实践/.idea/深入PHP面向对象模式与实践.iml" filepath="$PROJECT_DIR$/../深入PHP面向对象模式与实践/.idea/深入PHP面向对象模式与实践.iml" />
     </modules>
   </component>
 </project>
