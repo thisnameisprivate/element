@@ -94,9 +94,7 @@ class IndexController extends Controller {
             $this->assign('lastTotal', $collection['lastTotal']);
             $this->assign('lastArrival', $collection['lastArrival']);
             $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
-            while (list ($k, $v) = each ($collection)) {
-                $this->arrivalSetRedis($tableName . "_" . $k, $v);
-            }
+            while (list ($k, $v) = each ($collection)) $this->arrivalSetRedis($tableName . "_" . $k, $v);
         }
             /* ******************************************************************************
              * ******************************************************************************
@@ -918,9 +916,7 @@ class IndexController extends Controller {
         $managementKey = array_keys($management);
         $fields = M('management')->getDbFields();
         $redundantKeys = array_diff($fields, $managementKey);
-        while (list($k, $v) = each($redundantKeys)) { // value conversion key
-            $redundant[trim($v)] = '';
-        }
+        while (list($k, $v) = each($redundantKeys)) $redundant[trim($v)] = '';
         $management = array_merge($redundant, $management);
         $addtime = date('Y-m-d H:i:s', time());
         unset($management['id']);
