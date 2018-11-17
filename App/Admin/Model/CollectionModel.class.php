@@ -41,6 +41,16 @@ class CollectionModel extends Model {
         return $selectCollection;
     }
     /*
+     * @@数据导出
+     * @@return array Type: 二维数组
+     * */
+    public function resources ($request) {
+        $tableName = $_COOKIE['tableName'];
+        $hospitalVisitCount = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->count();
+        $hospitalVisit = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->select();
+        return array($hospitalVisit, $hospitalVisitCount);
+    }
+    /*
      *  @@ 按时间/状态查询
      *  @param $request Type: GET array
      *  @param $status Type: Controller $this->statusSuffixConf();

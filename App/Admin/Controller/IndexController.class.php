@@ -42,9 +42,7 @@ class IndexController extends Controller {
     private function userManagement ($userCookie) {
         $userAcc = M('management')->where("pid = '{$userCookie}'")->select();
         if ($userAcc)  {
-            foreach ($userAcc as $k => $v) {
-                return $v;
-            }
+            foreach ($userAcc as $k => $v) return $v;
         } else {
             return false;
         }
@@ -96,9 +94,7 @@ class IndexController extends Controller {
             $this->assign('lastTotal', $collection['lastTotal']);
             $this->assign('lastArrival', $collection['lastArrival']);
             $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
-            while (list ($k, $v) = each ($collection)) {
-                $this->arrivalSetRedis($tableName . "_" . $k, $v);
-            }
+            while (list ($k, $v) = each ($collection)) $this->arrivalSetRedis($tableName . "_" . $k, $v);
         }
             /* ******************************************************************************
              * ******************************************************************************
@@ -140,18 +136,12 @@ class IndexController extends Controller {
      * */
     public function specifiedCheck () {
         $hospitalVisit = D('Collection')->specifiedFunc($_GET, $this->statusSuffixConf());
+        $hospitalVisitCount = $hospitalVisit[1];
         // trim array \t
-        for ($i = 0; $i < count($hospitalVisit[0]); $i ++) {
-            $diseasesTrim = trim($hospitalVisit[0][$i]['diseases']);
-            $desc1 = trim($hospitalVisit[0][$i]['dsec1']);
-            unset($hospitalVisit[0][$i]['diseases']);
-            unset($hospitalVisit[0][$i]['desc1']);
-            $hospitalVisit[0][$i]['desc1'] = $desc1;
-            $hospitalVisit[0][$i]['diseases'] = $diseasesTrim;
-        }
-        $this->arrayRecursive($hospitalVisit[0], 'urlencode', true);
-        $jsonVisit = urldecode(json_encode($hospitalVisit[0]));
-        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisit[1], \"data\": $jsonVisit}";
+        $hospitalVisit = $this->arraySplice($hospitalVisit[0]); // array splice get.
+        $this->arrayRecursive($hospitalVisit, 'urlencode', true);
+        $jsonVisit = urldecode(json_encode($hospitalVisit));
+        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
         /* ******************************************************************************
          * ******************************************************************************
          *                                                                             **
@@ -183,11 +173,7 @@ class IndexController extends Controller {
      * */
     private function thisArrivalList () {
         $customer = M('custservice')->field('custservice')->select();
-        foreach ($customer  as $k => $v) {
-            foreach ($v as $c => $d) {
-                $customers[] = $d;
-            }
-        }
+        foreach ($customer  as $k => $v) foreach ($v as $c => $d) $customers[] = $d;
         $instance = M($_COOKIE['tableName']);
         for ($i = 0; $i < count($customers); $i ++) {
             $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
@@ -206,11 +192,7 @@ class IndexController extends Controller {
      * */
     private function lastArrivalList () {
         $customer = M('custservice')->field('custservice')->select();
-        foreach ($customer as $k => $v) {
-            foreach ($v as $c => $d) {
-                $customers[] = $d;
-            }
-        }
+        foreach ($customer as $k => $v) foreach ($v as $c => $d) $customers[] = $d;
         $instance = M($_COOKIE['tableName']);
         for ($i = 0; $i < count($customers); $i ++) {
             $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1")->count();
@@ -288,14 +270,7 @@ class IndexController extends Controller {
             }
         }
         // trim array \t
-        for ($i = 0; $i < count($hospitalVisit); $i ++) {
-            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
-            $desc1 = trim($hospitalVisit[$i]['desc1']);
-            unset($hospitalVisit[$i]['diseases']);
-            unset($hospitalVisit[$i]['desc1']);
-            $hospitalVisit[$i]['desc1'] = $desc1;
-            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
-        }
+        $hospitalVisit = $this->arraySplice($hospitalVisit);
         $this->arrayRecursive($hospitalVisit, 'urlencode', true);
         $jsonVisit = urldecode(json_encode($hospitalVisit));
         $interval = ceil($hospitalVisitCount / $totalPage);
@@ -733,11 +708,7 @@ class IndexController extends Controller {
      * */
     private function persionCollection () {
         $persion = M('custservice')->field('custservice')->select();
-        foreach ($persion as $k => $v) {
-            foreach ($v as $key => $value) {
-                $keyNames[$k] = $value;
-            }
-        }
+        foreach ($persion as $k => $v) foreach ($v as $key => $value) $keyNames[$k] = $value;
         $persionCollection = array();
         while (list ($k, $v) = each ($keyNames)) {
             $persionCollection[$v]['arrival']           = $this->detail("custservice = '{$v}'","TO_DAYS(oldDate) = TO_DAYS(NOW())", "status = '已到'");
@@ -930,9 +901,7 @@ class IndexController extends Controller {
         $managementKey = array_keys($management);
         $fields = M('management')->getDbFields();
         $redundantKeys = array_diff($fields, $managementKey);
-        while (list($k, $v) = each($redundantKeys)) { // value conversion key
-            $redundant[trim($v)] = '';
-        }
+        while (list($k, $v) = each($redundantKeys)) $redundant[trim($v)] = '';
         $management = array_merge($redundant, $management);
         $addtime = date('Y-m-d H:i:s', time());
         unset($management['id']);
@@ -966,6 +935,31 @@ class IndexController extends Controller {
         }
     }
     /*
+     * @@ resources Export page
+     * */
+    public function resources () {
+        $this->display();
+    }
+    /*
+     * @@ resources Export
+     * @param null
+     * @return Boolean Type: json
+     * */
+    public function resourcesCheck () {
+        if (array_key_exists('null', $_GET)) return false;
+        if (array_key_exists('date_min', $_GET) && array_key_exists('date_max', $_GET)) {
+            $result = D('Collection')->resources($_GET);
+            if (is_array($result) && isset($result)) {
+                $hospitalVisitCount = $result[1];
+                $hospitalVisit = $this->arraySplice($result[0]);
+            }
+        }
+        $this->arrayRecursive($hospitalVisit, 'urlencode', true);
+        $jsonVisit = urldecode(json_encode($hospitalVisit));
+        $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
+        $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
+    }
+    /*
      *  @@The personal data page
      *  @param null
      * */
@@ -981,15 +975,30 @@ class IndexController extends Controller {
      *  @return $redis. Type: instance
      * */
     private function setCache () {
-        try {
-            $redis = new \Redis();
-            $redis->connect('211.149.x.x', 6379);
-            $redis->auth('xxxxxx');
-            $redis->select(1);
-        } catch (Exception $e) {
-            die ("Connect Redis Fail: " . $e->getMessage());
+        $redis = new \Redis();
+        $redis->connect('211.149.x.x', 6379);
+        $redis->auth('xxxxxx');
+        $redis->select(1);
+        if ($redis->ping() == "+PONG") return $redis;
+        throw new Exception("Connection  Redis Failed...");
+    }
+    /*
+     *  @@select data keys splice
+     *  @param array
+     *  @return array
+     * */
+    private function arraySplice ($hospitalVisit) {
+        if (! is_array($hospitalVisit)) return false;
+        // trim array \t
+        for ($i = 0; $i < count($hospitalVisit); $i ++) {
+            $diseasesTrim = trim($hospitalVisit[$i]['diseases']);
+            $desc1 = trim($hospitalVisit[$i]['desc1']);
+            unset($hospitalVisit[$i]['diseases']);
+            unset($hospitalVisit[$i]['desc1']);
+            $hospitalVisit[$i]['desc1'] = $desc1;
+            $hospitalVisit[$i]['diseases'] = $diseasesTrim;
         }
-        return $redis;
+        return $hospitalVisit;
     }
     /*
      *  @@ create new table
