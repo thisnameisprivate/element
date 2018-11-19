@@ -30,10 +30,10 @@ class IndexController extends Controller {
         $ips = get_client_ip();
         $ip = new \Org\Net\IpLocation('UTFWry.dat');
         $ares = $ip->getlocation($ips);
-        $login_log['username']        = $requestVerify['username'];
-        $login_log['password']        = md5($requestVerify['password']);
-        $login_log['fromaddress']     = empty($ares['country']) ? '生产环境IP:localhost' : $ares['country']; // 归属地
-        $login_log['ip'] = $ips;                          // ip地址
+        $login_log['username']          = $requestVerify['username'];
+        $login_log['password']          = md5($requestVerify['password']);
+        $login_log['fromaddress']       = empty($ares['country']) ? '生产环境IP:localhost' : $ares['country']; // 归属地
+        $login_log['ip']                = $ips;                          // ip地址
         $boolean ? $login_log['status'] = '登录成功' : $login_log['status'] = '登录失败';
         M('login_log')->add($login_log);
     }
