@@ -20,10 +20,6 @@
         var $ = layui.jquery;
         var tableIns = table.render({
             text: { none: '暂无相关数据' },
-            initSort: {
-                field: 'id',
-                type: 'desc'
-            },
             elem: '#container',
             url: "<?php echo U('Admin/Index/loginCheck');?>",
             height: 'full-200',
@@ -39,7 +35,8 @@
                 {field: 'password', title: '登录密码', templet: (data) => { return "<span style='color:red;'>" + data.password + "</span>"}},
                 {field: 'status', title: '登录状态'},
                 {field: 'ip', title: '主机IP'},
-                {field: 'fromaddress', title: '归属地'}
+                {field: 'fromaddress', title: '归属地'},
+                {field: 'addtime', title: '登录时间'}
             ]],
             id: 'edittable',
             done: function (res, curr, count) {
