@@ -1,4 +1,6 @@
 <?php if (!defined('THINK_PATH')) exit();?><!doctype html>
+<?php
+ $color_config = array( 1 => 'color:red', 2 => 'color:green', 3 => 'color:blue', 4 => 'color:gray' ); ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,6 +32,7 @@
                         <th>总共</th>
                         <th>已到</th>
                         <th>未到</th>
+                        <th>转化率</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,24 +41,28 @@
                         <td><a href="javascript:;" onclick="specified(this);" iden="arrivalTotal"><?php echo ($arrivalTotal); ?></a></td>
                         <td><a href="javascript:;" onclick="specified(this);" iden="arrival"><?php echo ($arrival); ?></a></td>
                         <td><a href="javascript:;" onclick="specified(this);" iden="arrivalOut"><?php echo ($arrivalOut); ?></a></td>
+                        <td><a href="javascript:;" onclick="monthdata();"><?php echo sprintf('%.2f', $arrival / $arrivalTotal * 100) . "%"; ?></a></td>
                     </tr>
                     <tr>
                         <th>昨日</th>
                         <td><a href="javascript:;" onclick="specified(this);" iden="yesterTotal"><?php echo ($yesterTotal); ?></a></td>
                         <td><a href="javascript:;" onclick="specified(this);" iden="yesterArrival"><?php echo ($yesterArrival); ?></a></td>
                         <td><a href="javascript:;" onclick="specified(this);" iden="yesterArrivalOut"><?php echo ($yesterArrivalOut); ?></a></td>
+                        <td><a href="javascript:;" onclick="monthdata();"><?php echo sprintf('%.2f', $yesterArrival / $yesterTotal * 100) . "%"; ?></a></td>
                     </tr>
                     <tr>
                         <th>本月</th>
                         <td><a href="javascript:;" onclick="specified(this);" iden="thisTotal"><?php echo ($thisTotal); ?></a></td>
                         <td><a href="javascript:;" onclick="specified(this);" iden="thisArrival"><?php echo ($thisArrival); ?></a></td>
                         <td><a href="javascript:;" onclick="specified(this);" iden="thisArrivalOut"><?php echo ($thisArrivalOut); ?></a></td>
+                        <td><a href="javascript:;" onclick="monthdata();"><?php echo sprintf('%.2f', $thisArrival / $thisTotal * 100) . "%"; ?></a></td>
                     </tr>
                     <tr>
                         <th>上月</th>
                         <td><a href="javascript:;" onclick="specified(this);" iden="lastTotal"><?php echo ($lastTotal); ?></a></td>
                         <td><a href="javascript:;" onclick="specified(this);" iden="lastArrival"><?php echo ($lastArrival); ?></a></td>
                         <td><a href="javascript:;" onclick="specified(this);" iden="lastArrivalOut"><?php echo ($lastArrivalOut); ?></a></td>
+                        <td><a href="javascript:;" onclick="monthdata();"><?php echo sprintf('%.2f', $lastArrival / $lastTotal * 100) . "%"; ?></a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -125,7 +132,7 @@
                         </thead>
                         <tbody>
                         <?php if(is_array($thisArrivalSort)): foreach($thisArrivalSort as $k=>$vo): ?><tr>
-                                <td><?php static $i = 0; echo "No ." . $i += 1; ?></td>
+                                <td><?php static $i = 0; $a = $i + 1; echo "<b style='$color_config[$a]'><i>No . " . $i += 1 . " </i></b>"; ?></td>
                                 <td><a href="javascript:;"><?php echo ($k); ?></a></td>
                                 <td><a href="javascript:;"><?php echo ($vo); ?></a></td>
                             </tr><?php endforeach; endif; ?>
@@ -152,7 +159,7 @@
                         </thead>
                         <tbody>
                         <?php if(is_array($lastArrivalSort)): foreach($lastArrivalSort as $k=>$vo): ?><tr>
-                                <td><?php static $c = 0; echo "No ." . $c += 1; ?></td>
+                                <td><?php static $c = 0; $a = $c + 1; echo "<b style='$color_config[$a]'><i>No . " . $c += 1 . " </i></b>"; ?></td>
                                 <td><a href="javascript:;"><?php echo ($k); ?></a></td>
                                 <td><a href="javascript:;"><?php echo ($vo); ?></a></td>
                             </tr><?php endforeach; endif; ?>
@@ -181,7 +188,7 @@
                         </thead>
                         <tbody>
                         <?php if(is_array($thisAppointmentSort)): foreach($thisAppointmentSort as $k=>$vo): ?><tr>
-                                <td><?php static $j = 0; echo "No ." . $j += 1; ?></td>
+                                <td><?php static $j = 0; $a = $j + 1; echo "<b style='$color_config[$a]'><i>No . " . $j += 1 . " </i></b>"; ?></td>
                                 <td><a href="javascript:;"><?php echo ($k); ?></a></td>
                                 <td><a href="javascript:;"><?php echo ($vo); ?></a></td>
                             </tr><?php endforeach; endif; ?>
@@ -208,7 +215,7 @@
                         </thead>
                         <tbody>
                         <?php if(is_array($lastAppointmentSort)): foreach($lastAppointmentSort as $k=>$vo): ?><tr>
-                                <td><?php static $d = 0; echo "No ." . $d += 1; ?></td>
+                                <td><?php static $d = 0; $a = $d + 1; echo "<b style='$color_config[$a]'><i>No . " . $d += 1 . " </i></b>"; ?></td>
                                 <td><a href="javascript:;"><?php echo ($k); ?></a></td>
                                 <td><a href="javascript:;"><?php echo ($vo); ?></a></td>
                             </tr><?php endforeach; endif; ?>
@@ -232,6 +239,10 @@ layui.use(['layer', 'element', 'laydate', 'form'], () => {
     specified = (data) => {
         var iden = data.getAttribute('iden');
         window.parent.iframeSetAttr("<?php echo U('Admin/Index/specified/iden/"+ iden +"');?>");
+    }
+    // 转化率
+    monthdata = () => {
+        window.parent.iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>");
     }
 });
 </script>

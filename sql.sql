@@ -94,4 +94,13 @@ addtime timestamp default current_timestamp not null
 # Management 默认账号权限添加
 insert into management (pid, resready, reswrite, resupdate, resdelete, sysready, syswrite, sysupdate, sysdelete, listready, listwrite, listupdate, listdelete, setready, setwrite, setupdate, setdelete, myready, mywrite, myupdate, mydelete, manageready, managewrite, manageupdate, managedelete, logready) values
 ('admin', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on','on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on');
-
+#创建登录日志表
+create table login_log (
+id int key auto_increment,
+username varchar(32) not null,
+password varchar(32) not null,
+status varchar(15) not null,
+ip varchar(32) not null,
+fromaddress varchar(32) not null,
+addtime timestamp default current_timestamp
+);

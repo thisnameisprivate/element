@@ -968,6 +968,30 @@ class IndexController extends Controller {
     }
     public function personalCheck () {
         $this->assign();
+        // update my personal
+    }
+    /*
+     * @@The login log page
+     * @param null
+     * */
+    public function loginLog () {
+        $this->display();
+    }
+    /*
+     * @@The login log
+     * @param null
+     * @return  Type:json
+     * */
+    public function loginCheck () {
+        $login_log = M('login_log')->select();
+        if ($login_log) {
+            $this->arrayRecursive($login_log, 'urlencode', true);
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+        $login_log = urldecode(json_encode($login_log));
+        $loginList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $login_log}";
+        $this->ajaxReturn($loginList, 'eval');
     }
     /*
      *  @@expansion connect redis.

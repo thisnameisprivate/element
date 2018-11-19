@@ -131,8 +131,8 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><span class="layui-icon layui-icon-log">&nbsp;&nbsp;</span><span class="slide-font">日志记录</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">操作日志</span></a></dd>
-                        <dd><a href="javascript:;"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">登录错误日志</span></a></dd>
+                        <!--<dd><a href="javascript:;"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">操作日志</span></a></dd>-->
+                        <dd><a href="javascript:;" onclick="loginLog();"><span class="layui-icon layui-icon-survey">&nbsp;&nbsp;</span><span class="slide-font">登录错误日志</span></a></dd>
                     </dl>
                 </li>
             </ul>
@@ -209,6 +209,10 @@
         personal = () => {
             if (! Boolean(userAcc.myready)) { layer.msg("权限不足", {icon: 5}); return false };
             iframeSetAttr("{:U('Admin/Index/personal')}");
+        }
+        loginLog = () => {
+            if (! Boolean(userAcc.logready)) { layer.msg("权限不足", {icon: 5}); return false; }
+            iframeSetAttr("{:U('Admin/Index/loginLog')}")
         }
         iframeSetAttr = (url) => {
             loadingStart();
