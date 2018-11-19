@@ -46,14 +46,8 @@ class CollectionModel extends Model {
      * */
     public function resources ($request) {
         $tableName = $_COOKIE['tableName'];
-        if (empty($request)) {
-            $hospitalVisitCount = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->count();
-            $hospitalVisit = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->select();
-        } else {
-            $resolve = $request['status'] == '已到' ? "status = '{$request['status']}'" : "status != '已到'";
-            $hospitalVisitCount = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'", $resolve))->count();
-            $hospitalVisit = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'", $resolve))->select();
-        }
+        $hospitalVisitCount = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->count();
+        $hospitalVisit = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->select();
         return array($hospitalVisit, $hospitalVisitCount);
     }
     /*
