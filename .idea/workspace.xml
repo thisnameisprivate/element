@@ -14,26 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="643">
-              <caret line="126" column="65" selection-start-line="126" selection-start-column="65" selection-end-line="126" selection-end-column="65" />
-              <folding>
-                <element signature="e#7584#7590#0" expanded="true" />
-                <element signature="e#7811#7817#0" expanded="true" />
-                <element signature="e#7985#7991#0" expanded="true" />
-                <element signature="e#7991#7997#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="745">
-              <caret line="1003" column="28" selection-start-line="1003" selection-start-column="28" selection-end-line="1003" selection-end-column="28" />
+            <state relative-caret-position="333">
+              <caret line="1003" column="31" lean-forward="true" selection-start-line="1003" selection-start-column="31" selection-end-line="1003" selection-end-column="31" />
               <folding>
                 <element signature="e#8#1289#0#PHP" expanded="true" />
                 <element signature="e#1318#1339#0#PHP" expanded="true" />
@@ -42,23 +27,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CollectionModel.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/Admin/Model/CollectionModel.class.php">
+      <file leaf-file-name="convention.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="11" column="28" lean-forward="true" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+            <state relative-caret-position="367">
+              <caret line="58" column="56" lean-forward="true" selection-start-line="58" selection-start-column="56" selection-end-line="58" selection-end-column="56" />
+              <folding>
+                <element signature="e#6#80#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/App/Home/Controller/IndexController.class.php">
+      <file leaf-file-name="workerman.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../workerman/workerman.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="29" column="31" lean-forward="true" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+            <state relative-caret-position="748">
+              <caret line="44" column="20" lean-forward="true" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
               <folding>
-                <element signature="e#34#53#0#PHP" expanded="true" />
+                <element signature="e#6#27#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="clientWork.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../workerman/clientWork.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="58" lean-forward="true" selection-start-line="18" selection-start-column="58" selection-end-line="18" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -76,7 +73,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>visitCheck</find>
       <find>iframe</find>
       <find>searchbtn</find>
       <find>search</find>
@@ -105,6 +101,7 @@
       <find>workermanInstance</find>
       <find>workerInstance</find>
       <find>workerman</find>
+      <find>getRemoteIp</find>
       <find>211</find>
     </findStrings>
     <replaceStrings>
@@ -117,8 +114,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../visitvue/src/router/index.js" />
-        <option value="$PROJECT_DIR$/../visitvue/src/components/app.vue" />
         <option value="$PROJECT_DIR$/App/Admin/View/Index/echarts.html" />
         <option value="$PROJECT_DIR$/../PHPandMYSQLdevelOpment/require.php" />
         <option value="$PROJECT_DIR$/../ThinkPHP/App/Home/View/Index/showTab.html" />
@@ -164,10 +159,12 @@
         <option value="$PROJECT_DIR$/App/Admin/View/Index/worker.html" />
         <option value="$PROJECT_DIR$/App/Admin/Model/WorkermanModel.class.php" />
         <option value="$PROJECT_DIR$/../workerman.php" />
+        <option value="$PROJECT_DIR$/App/Admin/View/Index/index.html" />
+        <option value="$PROJECT_DIR$/../workerman/workerman.class.php" />
+        <option value="$PROJECT_DIR$/../workerman/clientWork.html" />
         <option value="$PROJECT_DIR$/../workerman/workerman.php" />
         <option value="$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php" />
         <option value="$PROJECT_DIR$/ThinkPHP/Conf/convention.php" />
-        <option value="$PROJECT_DIR$/App/Admin/View/Index/index.html" />
       </list>
     </option>
   </component>
@@ -191,8 +188,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1668" />
-    <option name="y" value="2" />
+    <option name="x" value="199" />
+    <option name="y" value="168" />
     <option name="width" value="1598" />
     <option name="height" value="858" />
   </component>
@@ -231,41 +228,6 @@
             <path>
               <item name="element" type="b2602c69:ProjectViewProjectNode" />
               <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="App" type="462c0819:PsiDirectoryNode" />
-              <item name="Admin" type="462c0819:PsiDirectoryNode" />
-              <item name="Model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="element" type="b2602c69:ProjectViewProjectNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="App" type="462c0819:PsiDirectoryNode" />
-              <item name="Admin" type="462c0819:PsiDirectoryNode" />
-              <item name="View" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="element" type="b2602c69:ProjectViewProjectNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="App" type="462c0819:PsiDirectoryNode" />
-              <item name="Admin" type="462c0819:PsiDirectoryNode" />
-              <item name="View" type="462c0819:PsiDirectoryNode" />
-              <item name="Index" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="element" type="b2602c69:ProjectViewProjectNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="App" type="462c0819:PsiDirectoryNode" />
-              <item name="Home" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="element" type="b2602c69:ProjectViewProjectNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="App" type="462c0819:PsiDirectoryNode" />
-              <item name="Home" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="element" type="b2602c69:ProjectViewProjectNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
               <item name="ThinkPHP" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -273,6 +235,10 @@
               <item name="element" type="462c0819:PsiDirectoryNode" />
               <item name="ThinkPHP" type="462c0819:PsiDirectoryNode" />
               <item name="Conf" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="element" type="b2602c69:ProjectViewProjectNode" />
+              <item name="workerman" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -284,7 +250,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/wampserver/wamp/www/element/App/Admin/View/Index/visit.html&#10;main.js&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../深入PHP面向对象模式与实践" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../workerman" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.stylelint" value="true" />
@@ -385,18 +351,18 @@
       <workItem from="1542327974419" duration="2318000" />
       <workItem from="1542414800599" duration="20609000" />
       <workItem from="1542586888833" duration="18513000" />
-      <workItem from="1542672757855" duration="6047000" />
+      <workItem from="1542672757855" duration="16556000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="606729000" />
+    <option name="totallyTimeSpent" value="617238000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1088" y="-93" width="1096" height="1896" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24814814" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13958333" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" weight="0.32972974" />
@@ -452,13 +418,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../深入PHP面向对象模式与实践/pdo_mysql.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../ThinkPHP/App/Home/View/Index/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="685">
@@ -706,13 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sql.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="69" column="33" lean-forward="true" selection-start-line="69" selection-start-column="33" selection-end-line="69" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/resources.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1680">
@@ -772,13 +724,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../workerman/workerman.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/worker.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -786,20 +731,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
+    <entry file="file://$PROJECT_DIR$/sql.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="928">
-          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
-          <folding>
-            <element signature="e#6#80#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="720">
+          <caret line="45" column="26" lean-forward="true" selection-start-line="45" selection-start-column="26" selection-end-line="45" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Home/Controller/IndexController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="29" column="31" lean-forward="true" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+        <state relative-caret-position="238">
+          <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
           <folding>
             <element signature="e#34#53#0#PHP" expanded="true" />
           </folding>
@@ -808,15 +750,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/Model/CollectionModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="11" column="28" lean-forward="true" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+        <state>
+          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="126" column="65" selection-start-line="126" selection-start-column="65" selection-end-line="126" selection-end-column="65" />
+          <folding>
+            <element signature="e#7584#7590#0" expanded="true" />
+            <element signature="e#7811#7817#0" expanded="true" />
+            <element signature="e#7985#7991#0" expanded="true" />
+            <element signature="e#7991#7997#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../workerman/clientWork.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="58" lean-forward="true" selection-start-line="18" selection-start-column="58" selection-end-line="18" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../workerman/workerman.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="44" column="20" lean-forward="true" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
+          <folding>
+            <element signature="e#6#27#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="745">
-          <caret line="1003" column="28" selection-start-line="1003" selection-start-column="28" selection-end-line="1003" selection-end-column="28" />
+        <state relative-caret-position="333">
+          <caret line="1003" column="31" lean-forward="true" selection-start-line="1003" selection-start-column="31" selection-end-line="1003" selection-end-column="31" />
           <folding>
             <element signature="e#8#1289#0#PHP" expanded="true" />
             <element signature="e#1318#1339#0#PHP" expanded="true" />
@@ -824,15 +796,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
+    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="126" column="65" selection-start-line="126" selection-start-column="65" selection-end-line="126" selection-end-column="65" />
+        <state relative-caret-position="367">
+          <caret line="58" column="56" lean-forward="true" selection-start-line="58" selection-start-column="56" selection-end-line="58" selection-end-column="56" />
           <folding>
-            <element signature="e#7584#7590#0" expanded="true" />
-            <element signature="e#7811#7817#0" expanded="true" />
-            <element signature="e#7985#7991#0" expanded="true" />
-            <element signature="e#7991#7997#0" expanded="true" />
+            <element signature="e#6#80#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
