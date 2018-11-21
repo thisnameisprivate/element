@@ -1,6 +1,4 @@
 <?php
-
-
 /* ****************************************************************************************************************
  *                                                                                                               **
  *  This system is used to monitor the status of hospital return visit information registration.                 **
@@ -16,7 +14,6 @@
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
-
 class IndexController extends Controller {
     /*
     *  @@ hospitals select
@@ -96,16 +93,16 @@ class IndexController extends Controller {
             $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
             while (list ($k, $v) = each ($collection)) $this->arrivalSetRedis($tableName . "_" . $k, $v);
         }
-            /* ******************************************************************************
-             * ******************************************************************************
-             *                                                                             **
-             *  The data will be written to Redis middleware later                         **
-             *  But I don't have much time to code at the moment.                          **
-             *  Author: kexin                                                              **
-             *  Date: 2018-11-3.                                                           **
-             *                                                                             **
-             * ******************************************************************************
-             * */
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *  The data will be written to Redis middleware later                         **
+         *  But I don't have much time to code at the moment.                          **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-3.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
         $thisArrivalList = $this->thisArrivalList();
         $lastArrivalList = $this->lastArrivalList();
         $this->assign('appointment', $this->appointment()); // return sort array.
@@ -968,6 +965,30 @@ class IndexController extends Controller {
     }
     public function personalCheck () {
         $this->assign();
+        // update my personal
+    }
+    /*
+     * @@The login log page
+     * @param null
+     * */
+    public function loginLog () {
+        $this->display();
+    }
+    /*
+     * @@The login log
+     * @param null
+     * @return  Type:json
+     * */
+    public function loginCheck () {
+        $login_log = M('login_log')->select();
+        if ($login_log) {
+            $this->arrayRecursive($login_log, 'urlencode', true);
+        } else {
+            $this->ajaxReturn(false, 'eval');
+        }
+        $login_log = urldecode(json_encode($login_log));
+        $loginList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $login_log}";
+        $this->ajaxReturn($loginList, 'eval');
     }
     /*
      *  @@expansion connect redis.

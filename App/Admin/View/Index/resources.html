@@ -14,19 +14,29 @@
     </style>
 </head>
 <body>
-<div class="layui-form-item">
-    <div class="layui-inline">
-        <label class="layui-form-label">日期范围</label>
-        <div class="layui-input-inline" style="width: 100px;">
-            <input type="text" id="date_min" placeholder="年-月-日" autocomplete="off" class="layui-input date time-item">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label"><span class="layui-badge">日期范围</span></label>
+            <div class="layui-input-inline">
+                <input type="text" id="date_min" placeholder="年-月-日" autocomplete="off" class="layui-input date time-item">
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline">
+                <input type="text" id="date_max" placeholder="年-月-日" autocomplete="off" class="layui-input date time-item">
+            </div>
+            <label class="layui-form-label"><span class="layui-badge">赴约状态</span></label>
+            <div class="layui-input-inline layui-form">
+                <div class="layui-input-inline">
+                    <select name="status" id="status" lay-verify="required">
+                        <option value="">请选择</option>
+                        <option value="已到">已到</option>
+                        <option value="未到">未到</option>
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="layui-form-mid">-</div>
-        <div class="layui-input-inline" style="width: 100px;">
-            <input type="text" id="date_max" placeholder="年-月-日" autocomplete="off" class="layui-input date time-item">
-        </div>
+        <button id="searchbtn" class="layui-btn layui-icon layui-icon-search" data-type="reload">搜索</button>
     </div>
-    <button id="searchbtn" class="layui-btn layui-icon layui-icon-search" data-type="reload">搜索</button>
-</div>
 <table id="container" lay-filter="edittable"></table>
 </body>
 <script src="__PUBLIC__/statics/layui/layui.js"></script>
@@ -92,8 +102,7 @@
         document.getElementById('searchbtn').onclick = () => {
             var date_min = document.getElementById('date_min').value;
             var date_max = document.getElementById('date_max').value;
-            console.log(date_min);
-            console.log(date_max);
+            var status = document.getElementById('status').value;
             if (date_min == '' || date_max == '') {
                 layer.msg("请选择时间范围", {icon: 16});
                 tableIns.reload({
@@ -107,12 +116,11 @@
                     page: {curr: 1},
                     where: {
                         date_min: date_min,
-                        date_max: date_max
+                        date_max: date_max,
+                        status: status
                     },
                 })
                 layer.close(layer.index);
-                document.getElementById('date_min').value = null;
-                document.getElementById('date_max').value = null;
             }
         }
     });

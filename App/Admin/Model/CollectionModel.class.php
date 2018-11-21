@@ -4,8 +4,8 @@ namespace Admin\Model;
 use Think\Model;
 
 class CollectionModel extends Model {
-    private $collectionConf =
-        array(  // status
+    private $collectionConf = // Status Config
+        array(
         0  => 'arrivalTotal',
         1  => 'arrival',
         2  => 'arrivalOut',
@@ -23,8 +23,8 @@ class CollectionModel extends Model {
         14 => 'appThisTotal',
         15 => 'appLastTotal'
     );
-    private $conditions =
-        array( // MYSQL DATE SELCET
+    private $conditions = // SQL Syntax
+        array(
         0 => "TO_DAYS(oldDate) = TO_DAYS(NOW())",
         1 => "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1",
         2 => "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')",
@@ -41,17 +41,23 @@ class CollectionModel extends Model {
         return $selectCollection;
     }
     /*
-     * @@数据导出
+     * @@数据导出 按时间范围/状态查询
      * @@return array Type: 二维数组
      * */
     public function resources ($request) {
         $tableName = $_COOKIE['tableName'];
-        $hospitalVisitCount = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->count();
-        $hospitalVisit = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->select();
+        if (empty($request)) {
+            $hospitalVisitCount = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->count();
+            $hospitalVisit = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'"))->select();
+        } else {
+            $resolve = $request['status'] == '已到' ? "status = '{$request['status']}'" : "status != '已到'";
+            $hospitalVisitCount = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'", $resolve))->count();
+            $hospitalVisit = M($tableName)->where(array("oldDate > '{$_GET['date_min']}'", "oldDate < '{$_GET['date_max']}'", $resolve))->select();
+        }
         return array($hospitalVisit, $hospitalVisitCount);
     }
     /*
-     *  @@ 按时间/状态查询
+     *  @@首页点击 按时间/状态查询
      *  @param $request Type: GET array
      *  @param $status Type: Controller $this->statusSuffixConf();
      *  @return array
