@@ -18,11 +18,23 @@
     </style>
 </head>
 <script type="text/javascript">
-    // fread current user username.
-    var username = document.cookie.split(';')[0].split('=')[1];
+    // get cookie.
+    // function getCookie (cookieName) {
+    //     var arrCookie = document.cookie.split('; ');
+    //     for (var i = 0; i < arrCookie.length; i ++) {
+    //         var arr = arrCookie[i].split('=');
+    //         if (cookieName == arr[0]) {
+    //             return arr[1];
+    //         }
+    //     }
+    //     return '';
+    // }
+
     // one loading time set default cookie.
     document.cookie = 'tableName=gyxhyynk';
     localStorage.setItem('userAcc', JSON.stringify(<?php echo ($userAcc); ?>));
+    // fread current cookie username
+    var username = <?php echo ($userAcc); ?>.pid;
 </script>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -38,12 +50,12 @@
                 </dl>
             </li>
             <!--<li class="layui-nav-item">-->
-                <!--<a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size" tips="其他系统"></span></a></a>-->
-                <!--<dl class="layui-nav-child">-->
-                    <!--<dd><a href="">邮件管理</a></dd>-->
-                    <!--<dd><a href="">消息管理</a></dd>-->
-                    <!--<dd><a href="">授权管理</a></dd>-->
-                <!--</dl>-->
+            <!--<a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size" tips="其他系统"></span></a></a>-->
+            <!--<dl class="layui-nav-child">-->
+            <!--<dd><a href="">邮件管理</a></dd>-->
+            <!--<dd><a href="">消息管理</a></dd>-->
+            <!--<dd><a href="">授权管理</a></dd>-->
+            <!--</dl>-->
             <!--</li>-->
         </ul>
         <ul class="layui-nav layui-layout-right">
@@ -293,15 +305,15 @@
                 })
                 // 鼠标悬停提示效果
                 $('.slide-font').parent().on({mouseover: function () {
-                    $(this).each(function () {
-                        layer.tips($(this).text(), $(this), {
-                            tips: 2,
-                            time: 1000,
+                        $(this).each(function () {
+                            layer.tips($(this).text(), $(this), {
+                                tips: 2,
+                                time: 1000,
+                            });
                         });
-                    });
-                }}, {mouseout: function () {
-                    layer.close('tips');
-                }});
+                    }}, {mouseout: function () {
+                        layer.close('tips');
+                    }});
                 isShow = false;
             } else {
                 $('#layui-side').animate({width: '200px'}, 150);
@@ -340,27 +352,24 @@
             layer.msg('开发中...', {icon: 6});
         });
         $('#userList').html("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">" + username + "</a></dd>");
-
-
         /**************************************************************************************************************
-        *      ##         ##  ##########   ########\  #########    ####      ##   ##  ##########  ##########         **
-        *     ##   ##    ##  ##           ##      ## ##         ##     ##   ##  ##   ##              ##              **
-        *    ##  ## ##  ##  ##########   #########  #########  ##      ##  ## ##    ##########      ##               **
-        *   ## ##   ## ##  ##           ##       ##       ##    ##    ##  ##  ##   ##              ##                **
-        *  ###       ###  ###########  #########/  ########      ####    ##    ## ###########     ##                 **
-        *                                                                                                            **
-        ***************************************************************************************************************
-        ***************************************************************************************************************
-        * */
+         *      ##         ##  ##########   ########\  #########    ####      ##   ##  ##########  ##########         **
+         *     ##   ##    ##  ##           ##      ## ##         ##     ##   ##  ##   ##              ##              **
+         *    ##  ## ##  ##  ##########   #########  #########  ##      ##  ## ##    ##########      ##               **
+         *   ## ##   ## ##  ##           ##       ##       ##    ##    ##  ##  ##   ##              ##                **
+         *  ###       ###  ###########  #########/  ########      ####    ##    ## ###########     ##                 **
+         *                                                                                                            **
+         ***************************************************************************************************************
+         ***************************************************************************************************************
+         * */
         var socket = new WebSocket('ws://211.149.233.203:2000');
         socket.onopen = () => {
-            var message = 'workerman framwork';
-            layer.msg('Connection Success~');
-            layer.msg('send Message : ' + message + '....');
-            socket.send(message);
+            console.log('Connection Success~');
+            console.log('send Message : ' + username + '....');
+            socket.send(username);
         };
         socket.onmessage = (event) => {
-            layer.msg('server Return Message : ' + event.data + '...');
+            console.log('server Return Message : ' + event.data + '...');
         }
     });
 </script>

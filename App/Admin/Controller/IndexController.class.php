@@ -1,6 +1,4 @@
 <?php
-
-
 /* ****************************************************************************************************************
  *                                                                                                               **
  *  This system is used to monitor the status of hospital return visit information registration.                 **
@@ -16,7 +14,6 @@
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
-
 class IndexController extends Controller {
     /*
     *  @@ hospitals select
@@ -96,16 +93,16 @@ class IndexController extends Controller {
             $this->assign('lastArrivalOut', $collection['lastArrivalOut']);
             while (list ($k, $v) = each ($collection)) $this->arrivalSetRedis($tableName . "_" . $k, $v);
         }
-            /* ******************************************************************************
-             * ******************************************************************************
-             *                                                                             **
-             *  The data will be written to Redis middleware later                         **
-             *  But I don't have much time to code at the moment.                          **
-             *  Author: kexin                                                              **
-             *  Date: 2018-11-3.                                                           **
-             *                                                                             **
-             * ******************************************************************************
-             * */
+        /* ******************************************************************************
+         * ******************************************************************************
+         *                                                                             **
+         *  The data will be written to Redis middleware later                         **
+         *  But I don't have much time to code at the moment.                          **
+         *  Author: kexin                                                              **
+         *  Date: 2018-11-3.                                                           **
+         *                                                                             **
+         * ******************************************************************************
+         * */
         $thisArrivalList = $this->thisArrivalList();
         $lastArrivalList = $this->lastArrivalList();
         $this->assign('appointment', $this->appointment()); // return sort array.
@@ -1002,7 +999,7 @@ class IndexController extends Controller {
         $redis = new \Redis();
         $redis->connect('211.149.x.x', 6379);
         $redis->auth('xxxxxx');
-        $redis->select(5);
+        $redis->select(1);
         if ($redis->ping() == "+PONG") return $redis;
         throw new Exception("Connection  Redis Failed...");
     }
