@@ -17,7 +17,7 @@
       <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
+            <state relative-caret-position="-186">
               <caret line="1003" column="31" lean-forward="true" selection-start-line="1003" selection-start-column="31" selection-end-line="1003" selection-end-column="31" />
               <folding>
                 <element signature="e#8#1289#0#PHP" expanded="true" />
@@ -27,11 +27,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="convention.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="562">
+              <caret line="356" column="59" selection-start-line="356" selection-start-column="59" selection-end-line="356" selection-end-column="59" />
+              <folding>
+                <element signature="e#7584#7590#0" expanded="true" />
+                <element signature="e#7811#7817#0" expanded="true" />
+                <element signature="e#7985#7991#0" expanded="true" />
+                <element signature="e#7991#7997#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="convention.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="58" column="56" lean-forward="true" selection-start-line="58" selection-start-column="56" selection-end-line="58" selection-end-column="56" />
+            <state relative-caret-position="362">
+              <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
               <folding>
                 <element signature="e#6#80#0#PHP" expanded="true" />
               </folding>
@@ -42,20 +57,11 @@
       <file leaf-file-name="workerman.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../workerman/workerman.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="44" column="20" lean-forward="true" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
+            <state relative-caret-position="323">
+              <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
               <folding>
                 <element signature="e#6#27#0#PHP" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="clientWork.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../workerman/clientWork.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="58" lean-forward="true" selection-start-line="18" selection-start-column="58" selection-end-line="18" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -73,14 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>iframe</find>
-      <find>searchbtn</find>
-      <find>search</find>
-      <find>layui-form-item</find>
-      <find>layui-inline</find>
-      <find>date_min</find>
-      <find>Collection</find>
-      <find>date</find>
       <find>speciffied</find>
       <find>$hospitalVisit[0]</find>
       <find>$hospitalVisit</find>
@@ -102,6 +100,14 @@
       <find>workerInstance</find>
       <find>workerman</find>
       <find>getRemoteIp</find>
+      <find>class=&quot;container&quot;</find>
+      <find>class='container'</find>
+      <find>container</find>
+      <find>comm</find>
+      <find>个人资料</find>
+      <find>其他系统</find>
+      <find>document.coo</find>
+      <find>console.log</find>
       <find>211</find>
     </findStrings>
     <replaceStrings>
@@ -114,9 +120,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/App/Admin/View/Index/echarts.html" />
-        <option value="$PROJECT_DIR$/../PHPandMYSQLdevelOpment/require.php" />
-        <option value="$PROJECT_DIR$/../ThinkPHP/App/Home/View/Index/showTab.html" />
         <option value="$PROJECT_DIR$/../ThinkPHP/App/Home/View/Index/ready.html" />
         <option value="$PROJECT_DIR$/../vuessrtech/src/app.vue" />
         <option value="$PROJECT_DIR$/../深入PHP面向对象模式与实践/instance.class.php" />
@@ -159,12 +162,15 @@
         <option value="$PROJECT_DIR$/App/Admin/View/Index/worker.html" />
         <option value="$PROJECT_DIR$/App/Admin/Model/WorkermanModel.class.php" />
         <option value="$PROJECT_DIR$/../workerman.php" />
-        <option value="$PROJECT_DIR$/App/Admin/View/Index/index.html" />
         <option value="$PROJECT_DIR$/../workerman/workerman.class.php" />
         <option value="$PROJECT_DIR$/../workerman/clientWork.html" />
+        <option value="$PROJECT_DIR$/../str_replace.php" />
+        <option value="$PROJECT_DIR$/../str_Replace/main.txt" />
+        <option value="$PROJECT_DIR$/../str_Replace/str_replace.php" />
         <option value="$PROJECT_DIR$/../workerman/workerman.php" />
-        <option value="$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php" />
         <option value="$PROJECT_DIR$/ThinkPHP/Conf/convention.php" />
+        <option value="$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php" />
+        <option value="$PROJECT_DIR$/App/Admin/View/Index/index.html" />
       </list>
     </option>
   </component>
@@ -188,10 +194,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="199" />
-    <option name="y" value="168" />
+    <option name="x" value="180" />
+    <option name="y" value="49" />
     <option name="width" value="1598" />
-    <option name="height" value="858" />
+    <option name="height" value="872" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -227,17 +233,6 @@
             </path>
             <path>
               <item name="element" type="b2602c69:ProjectViewProjectNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="ThinkPHP" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="element" type="b2602c69:ProjectViewProjectNode" />
-              <item name="element" type="462c0819:PsiDirectoryNode" />
-              <item name="ThinkPHP" type="462c0819:PsiDirectoryNode" />
-              <item name="Conf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="element" type="b2602c69:ProjectViewProjectNode" />
               <item name="workerman" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -250,7 +245,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/wampserver/wamp/www/element/App/Admin/View/Index/visit.html&#10;main.js&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../workerman" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../str_Replace" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.stylelint" value="true" />
@@ -277,26 +272,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHP Script.date.php">
+  <component name="RunManager" selected="PHP Script.str_replace.php">
     <configuration name="addData.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../深入PHP面向对象模式与实践/addData.php" />
     <configuration name="date.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../深入PHP面向对象模式与实践/date.php" />
-    <configuration name="instance2.class.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../深入PHP面向对象模式与实践/instance2.class.php" />
     <configuration name="pdo_mysql.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../深入PHP面向对象模式与实践/pdo_mysql.php" />
     <configuration name="require.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../PHPandMYSQLdevelOpment/require.php" />
+    <configuration name="str_replace.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/../str_Replace/str_replace.php" />
     <list>
-      <item itemvalue="PHP Script.instance2.class.php" />
       <item itemvalue="PHP Script.pdo_mysql.php" />
       <item itemvalue="PHP Script.addData.php" />
       <item itemvalue="PHP Script.require.php" />
       <item itemvalue="PHP Script.date.php" />
+      <item itemvalue="PHP Script.str_replace.php" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="PHP Script.str_replace.php" />
         <item itemvalue="PHP Script.date.php" />
         <item itemvalue="PHP Script.addData.php" />
         <item itemvalue="PHP Script.require.php" />
         <item itemvalue="PHP Script.pdo_mysql.php" />
-        <item itemvalue="PHP Script.instance2.class.php" />
       </list>
     </recent_temporary>
   </component>
@@ -351,12 +346,13 @@
       <workItem from="1542327974419" duration="2318000" />
       <workItem from="1542414800599" duration="20609000" />
       <workItem from="1542586888833" duration="18513000" />
-      <workItem from="1542672757855" duration="16556000" />
+      <workItem from="1542672757855" duration="17156000" />
+      <workItem from="1542760450787" duration="15136000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="617238000" />
+    <option name="totallyTimeSpent" value="632974000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -369,7 +365,7 @@
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33085108" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.40890688" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.4611231" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -387,12 +383,12 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16979167" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3318919" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="11" weight="0.32943678" />
@@ -400,7 +396,7 @@
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.4611231" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -418,25 +414,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../ThinkPHP/App/Home/View/Index/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
-          <caret line="645" column="60" lean-forward="true" selection-start-line="645" selection-start-column="60" selection-end-line="645" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../visit/App/Admin/View/Index/visit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5272" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../PHPandMYSQLdevelOpment/require.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="34" column="29" lean-forward="true" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../深入PHP面向对象模式与实践/addData.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
@@ -658,10 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
           <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -669,12 +642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1680">
           <caret line="105" column="51" selection-start-line="105" selection-start-column="51" selection-end-line="105" selection-end-column="51" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -689,48 +656,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="18" selection-start-line="18" selection-end-line="18" selection-end-column="57" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Admin/Model/WorkermanModel.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
-          <folding>
-            <element signature="e#29#45#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../workerman.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/worker.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="14" column="7" lean-forward="true" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Admin/Model/WorkermanModel.class.php" />
+    <entry file="file://$PROJECT_DIR$/../workerman.php" />
+    <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/worker.html" />
     <entry file="file://$PROJECT_DIR$/sql.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
@@ -742,9 +673,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding>
-            <element signature="e#34#53#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -755,39 +683,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
+    <entry file="file://$PROJECT_DIR$/../workerman/clientWork.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="126" column="65" selection-start-line="126" selection-start-column="65" selection-end-line="126" selection-end-column="65" />
-          <folding>
-            <element signature="e#7584#7590#0" expanded="true" />
-            <element signature="e#7811#7817#0" expanded="true" />
-            <element signature="e#7985#7991#0" expanded="true" />
-            <element signature="e#7991#7997#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="208">
+          <caret line="13" column="69" lean-forward="true" selection-start-line="13" selection-start-column="69" selection-end-line="13" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../workerman/clientWork.html">
+    <entry file="file://$PROJECT_DIR$/../str_replace.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="58" lean-forward="true" selection-start-line="18" selection-start-column="58" selection-end-line="18" selection-end-column="58" />
+        <state relative-caret-position="224">
+          <caret line="14" column="37" lean-forward="true" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../str_Replace/main.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="435" selection-start-column="435" selection-end-column="435" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../str_Replace/str_replace.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="9" column="25" lean-forward="true" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../workerman/workerman.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="20" lean-forward="true" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="20" />
+        <state relative-caret-position="323">
+          <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
           <folding>
             <element signature="e#6#27#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+          <folding>
+            <element signature="e#6#80#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
+        <state relative-caret-position="-186">
           <caret line="1003" column="31" lean-forward="true" selection-start-line="1003" selection-start-column="31" selection-end-line="1003" selection-end-column="31" />
           <folding>
             <element signature="e#8#1289#0#PHP" expanded="true" />
@@ -796,12 +742,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
+    <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="58" column="56" lean-forward="true" selection-start-line="58" selection-start-column="56" selection-end-line="58" selection-end-column="56" />
+        <state relative-caret-position="562">
+          <caret line="356" column="59" selection-start-line="356" selection-start-column="59" selection-end-line="356" selection-end-column="59" />
           <folding>
-            <element signature="e#6#80#0#PHP" expanded="true" />
+            <element signature="e#7584#7590#0" expanded="true" />
+            <element signature="e#7811#7817#0" expanded="true" />
+            <element signature="e#7985#7991#0" expanded="true" />
+            <element signature="e#7991#7997#0" expanded="true" />
           </folding>
         </state>
       </provider>

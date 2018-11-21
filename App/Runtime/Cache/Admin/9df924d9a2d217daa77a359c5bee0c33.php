@@ -11,9 +11,15 @@
         .layui-layout-admin .layui-header{background: #2F4056;}
         #loading{margin-left:200px;}
         .title-icon-size{font-size:1.2rem;}
+        /* 通讯图标样式 */
+        .container{height:50px; width:50px; position:fixed; bottom:50px; right:10px; background-color:#5FB878; text-align:center; border-radius:5px; cursor:pointer; z-index: 999;}
+        .container span{font-size:40px; color:#ffffff; line-height:50px;}
+        .container:hover{background-color:#9F9F9F;}
     </style>
 </head>
 <script type="text/javascript">
+    // fread current user username.
+    var username = document.cookie.split(';')[0].split('=')[1];
     // one loading time set default cookie.
     document.cookie = 'tableName=gyxhyynk';
     localStorage.setItem('userAcc', JSON.stringify(<?php echo ($userAcc); ?>));
@@ -25,15 +31,20 @@
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item kit-side-fold"><a href="javascript:;"><sapn class="layui-icon layui-icon-shrink-right title-icon-size" tips="侧边栏伸缩"></sapn></a></li>
             <li class="layui-nav-item" onclick='iframeSetAttr("<?php echo U('Admin/Index/overView');?>")'><a href="javascript:;"><span class="layui-icon layui-icon-home title-icon-size" tips="首页"></span></a></li>
-            <li class="layui-nav-item"><a href="javascript:;"><span class="layui-icon layui-icon-username title-icon-size" tips="个人资料"></span></a></li>
             <li class="layui-nav-item">
-                <a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size" tips="其他系统"></span></a></a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
+                <a href="javascript:;"><span class="layui-icon layui-icon-username title-icon-size" tips="在线用户"></span></a>
+                <dl class="layui-nav-child" id="userList">
+                    <!--<dd><span class="layui-badge-dot layui-bg-green"></span><a href="">admin</a></dd>-->
                 </dl>
             </li>
+            <!--<li class="layui-nav-item">-->
+                <!--<a href="javascript:;"><a href="javascript:;"><span class="layui-icon layui-icon-component title-icon-size" tips="其他系统"></span></a></a>-->
+                <!--<dl class="layui-nav-child">-->
+                    <!--<dd><a href="">邮件管理</a></dd>-->
+                    <!--<dd><a href="">消息管理</a></dd>-->
+                    <!--<dd><a href="">授权管理</a></dd>-->
+                <!--</dl>-->
+            <!--</li>-->
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -122,7 +133,7 @@
                         <dd><a href="javascript:;" onclick="resources();"><span class="layui-icon layui-icon-user">&nbsp;&nbsp;</span><span class="slide-font">数据导出</span></a></dd>
                         <!--
                          <dd><a href="javascript:;">医院列表</a></dd>
-
+                         <dd><a href="javascript:;">通知列表</a></dd>
                          -->
                     </dl>
                 </li>
@@ -143,11 +154,17 @@
         <iframe id="iframe" src="<?php echo U('Admin/Index/overView');?>" frameborder="0"></iframe>
     </div>
 </div>
+<div class="container">
+    <span id="communication" class="layui-icon layui-icon-chat"></span>
+</div>
 <div id="bottom-title" style="position:fixed; bottom:0px; left:200px; z-index:999; font-size:12px; font-weight:600;">
     <!-- 底部固定区域 -->
     <a href="javascript:;" title="发布日期: 2018/10/1日:)"><span class="layui-icon layui-icon-website layui-anim layui-anim-fadein layui-anim-loop"></span>&nbsp;&nbsp;&nbsp;广元协和医院预约回访管理系统 ©</a>
 </div>
 </body>
+<div id="worker-conatiner">
+    <div class=""></div>
+</div>
 <script src="/element/Public/statics/layui/layui.js"></script>
 <script type="text/javascript">
     layui.use(['element', 'layer', 'form'], () => {
@@ -260,7 +277,7 @@
         // 侧边栏伸缩
         var isShow = true;
         $('.kit-side-fold').click(function () {
-            console.log($('.layui-nav-tree').children().children().children('span.layui-nav-more'));
+            // console.log($('.layui-nav-tree').children().children().children('span.layui-nav-more'));
             if (isShow) {
                 $('#layui-side').animate({width: '60px'}, 100);
                 $('#layuibody').animate({left: '60px'}, 100).children().css('width', '100%');
@@ -312,6 +329,39 @@
             }}, {mouseout: function () {
                 layer.close('tips');
             }});
+        // 通讯图标动画
+        $('#communication').mouseover(function () {
+            $(this).addClass('layui-anim layui-anim-rotate');
+        }).mouseout(function () {
+            $(this).removeClass('layui-anim layui-anim-rotate');
+        });
+        // 通讯弹出层
+        $('#communication').click(function () {
+            layer.msg('开发中...', {icon: 6});
+        });
+        $('#userList').html("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">" + username + "</a></dd>");
+
+
+        /**************************************************************************************************************
+        *      ##         ##  ##########   ########\  #########    ####      ##   ##  ##########  ##########         **
+        *     ##   ##    ##  ##           ##      ## ##         ##     ##   ##  ##   ##              ##              **
+        *    ##  ## ##  ##  ##########   #########  #########  ##      ##  ## ##    ##########      ##               **
+        *   ## ##   ## ##  ##           ##       ##       ##    ##    ##  ##  ##   ##              ##                **
+        *  ###       ###  ###########  #########/  ########      ####    ##    ## ###########     ##                 **
+        *                                                                                                            **
+        ***************************************************************************************************************
+        ***************************************************************************************************************
+        * */
+        var socket = new WebSocket('ws://211.149.233.203:2000');
+        socket.onopen = () => {
+            var message = 'workerman framwork';
+            layer.msg('Connection Success~');
+            layer.msg('send Message : ' + message + '....');
+            socket.send(message);
+        };
+        socket.onmessage = (event) => {
+            layer.msg('server Return Message : ' + event.data + '...');
+        }
     });
 </script>
 </html>

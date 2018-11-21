@@ -1002,7 +1002,7 @@ class IndexController extends Controller {
         $redis = new \Redis();
         $redis->connect('211.149.x.x', 6379);
         $redis->auth('xxxxxx');
-        $redis->select(1);
+        $redis->select(5);
         if ($redis->ping() == "+PONG") return $redis;
         throw new Exception("Connection  Redis Failed...");
     }
