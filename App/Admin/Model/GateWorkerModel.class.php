@@ -1,11 +1,11 @@
 <?php
-
 namespace Admin\Model;
 use Think\Model;
-use GatewayWorker\Lib\Gateway;
+use Org\Gateway;
 
-class GateWorkerModel extends Model {
+class GateWorkerModel extends Model{
     public function getClientId ($client_id) {
-        Gateway::$registerAddress = '211.149.x.x:1238';
+        $Gateway = new \Org\Gateway\Gateway();
+        $Gateway::$registerAddress = '211.149.x.x:xxxx';
     }
 }
