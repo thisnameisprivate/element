@@ -29,6 +29,13 @@
         }
         return '';
     }
+    // delete cookie
+    function delCookie (cookieName) {
+        var time = new Date();
+        time.setTime(time.getTime() + 1);
+        var expires = "expires=" + time.toGMTString() + ";path=/";
+        document.cookie = cookieName + "=;" + expires;
+    }
 
     // one loading time set default cookie.
     document.cookie = 'tableName=gyxhyynk';
@@ -353,7 +360,7 @@
         $('#communication').click(function () {
             layer.msg('开发中...', {icon: 6});
         });
-        $('#userList').html("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">" + username + "</a></dd>");
+        // $('#userList').html("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">" + username + "</a></dd>");
         /**************************************************************************************************************
          *      ##         ##  ##########   ########\  #########    ####      ##   ##  ##########  ##########         **
          *     ##   ##    ##  ##           ##      ## ##         ##     ##   ##  ##   ##              ##              **
@@ -365,23 +372,39 @@
          ***************************************************************************************************************
          * */
         var socket = new WebSocket('ws://211.149.x.x:xxxxxx');
+        // 多客户端协议
+        function say_to_all (content) {
+            socket.addEventListener('open', function () {
+                var message = {"type": "say_to_all", "content": content};
+                socket.send(JSON.stringify(message));
+            })
+        }
+        // 单对单通讯协议
+        function say_to_one (content) {
+            var message = {"type": "say_to_one", "content": content};
+            socket.send(JSON.stringify(message));
+        }
         socket.onopen = () => {
-
+            var data = username;
+            var message = {"type": "say_to_all", "content": data, "init": "login"};
+            socket.send(JSON.stringify(message));
         };
+        // say_to_all("这是第一条测试群发消息，你好， workerman通讯框架!");
         socket.onmessage = (event) => {
-            if (JSON.parse(event.data).type == 'init') {
+            var str = event.data;
+            if (str.substr(0, 1) == '{' && JSON.parse(event.data).type == 'init') {
                 var client_id = JSON.parse(event.data).client_id;
-                var Request = new XMLHttpRequest();
-                Request.open("GET", "{:U('Admin/GateWorker/worker/client_id/"+ client_id +"')}");
-                Request.send();
-                Request.onreadystatechange = () => {
-                    if (Request.readyState === 200 && Request.status === 4) {
-                        console.log(getCookie(username));
-                    }
-                }
+                delCookie(username);
+                document.cookie =  username + "=" + client_id;
+                return;
             } else {
-                // 否则为客户端发送的消息并非连接时返回的唯一标识符
-                console.log(event.data);
+                // 根据 | 截取字符串转换为数组遍历到Html.
+                var userList = str.substr(0, str.indexOf('|'));
+                var userArr  = userList.split(',');
+                // 渲染 html
+                for (var i = 0; i < userArr.length; i ++) {
+                    $('#userList').html("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
+                }
             }
         }
     });
