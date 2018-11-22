@@ -17,8 +17,8 @@
       <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-186">
-              <caret line="1000" column="30" lean-forward="true" selection-start-line="1000" selection-start-column="30" selection-end-line="1000" selection-end-column="30" />
+            <state relative-caret-position="328">
+              <caret line="1000" column="28" selection-start-line="1000" selection-start-column="28" selection-end-line="1000" selection-end-column="28" />
               <folding>
                 <element signature="e#6#1287#0#PHP" expanded="true" />
                 <element signature="e#1316#1337#0#PHP" expanded="true" />
@@ -27,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="convention.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="convention.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
+            <state relative-caret-position="362">
+              <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
               <folding>
                 <element signature="e#6#80#0#PHP" expanded="true" />
               </folding>
@@ -42,8 +42,8 @@
       <file leaf-file-name="Events.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../workerman/Events.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+            <state relative-caret-position="797">
+              <caret line="53" column="1" lean-forward="true" selection-start-line="53" selection-start-column="1" selection-end-line="53" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -57,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="311">
-              <caret line="373" column="59" selection-start-line="373" selection-start-column="59" selection-end-line="373" selection-end-column="59" />
+            <state relative-caret-position="362">
+              <caret line="376" column="57" lean-forward="true" selection-start-line="376" selection-start-column="57" selection-end-line="376" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -79,8 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>id=&quot;status&quot;</find>
-      <find>form.render</find>
       <find>select</find>
       <find>form</find>
       <find>操作日志</find>
@@ -99,7 +97,6 @@
       <find>个人资料</find>
       <find>其他系统</find>
       <find>document.coo</find>
-      <find>console.log</find>
       <find>JSON.parse</find>
       <find>$_COOKIE['username']</find>
       <find>username</find>
@@ -108,6 +105,9 @@
       <find>echo</find>
       <find>userlist</find>
       <find>21</find>
+      <find>console.log</find>
+      <find>$redis-&gt;keys</find>
+      <find>set</find>
       <find>211</find>
     </findStrings>
     <replaceStrings>
@@ -167,10 +167,10 @@
         <option value="$PROJECT_DIR$/App/Home/Controller/IndexController.class.php" />
         <option value="$PROJECT_DIR$/../workerman/workerman.php" />
         <option value="$PROJECT_DIR$/App/Admin/Model/GateWorkerModel.class.php" />
-        <option value="$PROJECT_DIR$/../workerman/Events.php" />
-        <option value="$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php" />
-        <option value="$PROJECT_DIR$/ThinkPHP/Conf/convention.php" />
         <option value="$PROJECT_DIR$/App/Admin/View/Index/index.html" />
+        <option value="$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php" />
+        <option value="$PROJECT_DIR$/../workerman/Events.php" />
+        <option value="$PROJECT_DIR$/ThinkPHP/Conf/convention.php" />
       </list>
     </option>
   </component>
@@ -326,12 +326,12 @@
       <workItem from="1542586888833" duration="18513000" />
       <workItem from="1542672757855" duration="17156000" />
       <workItem from="1542760450787" duration="25364000" />
-      <workItem from="1542846534243" duration="17151000" />
+      <workItem from="1542846534243" duration="21424000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="660353000" />
+    <option name="totallyTimeSpent" value="664626000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -680,34 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../workerman/Events.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-186">
-          <caret line="1000" column="30" lean-forward="true" selection-start-line="1000" selection-start-column="30" selection-end-line="1000" selection-end-column="30" />
-          <folding>
-            <element signature="e#6#1287#0#PHP" expanded="true" />
-            <element signature="e#1316#1337#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="52" lean-forward="true" selection-start-line="52" selection-end-line="52" />
-          <folding>
-            <element signature="e#6#80#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Tp/Apps/Home/View/Index/adminuser.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -717,8 +689,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="373" column="59" selection-start-line="373" selection-start-column="59" selection-end-line="373" selection-end-column="59" />
+        <state relative-caret-position="362">
+          <caret line="376" column="57" lean-forward="true" selection-start-line="376" selection-start-column="57" selection-end-line="376" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="1000" column="28" selection-start-line="1000" selection-start-column="28" selection-end-line="1000" selection-end-column="28" />
+          <folding>
+            <element signature="e#6#1287#0#PHP" expanded="true" />
+            <element signature="e#1316#1337#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../workerman/Events.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="797">
+          <caret line="53" column="1" lean-forward="true" selection-start-line="53" selection-start-column="1" selection-end-line="53" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+          <folding>
+            <element signature="e#6#80#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

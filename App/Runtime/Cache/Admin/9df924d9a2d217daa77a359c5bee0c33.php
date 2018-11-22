@@ -400,8 +400,9 @@
                 var userList = str.substr(0, str.indexOf('|'));
                 var userArr  = userList.split(',');
                 // 渲染 html
+                $('#userList').children().remove();
                 for (var i = 0; i < userArr.length; i ++) {
-                    $('#userList').html("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
+                    $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
                 }
             }
         }
