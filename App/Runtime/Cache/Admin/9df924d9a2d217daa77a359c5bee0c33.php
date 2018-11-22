@@ -397,13 +397,19 @@
                 return;
             } else {
                 // 根据 | 截取字符串转换为数组遍历到Html.
-                var userList = str.substr(0, str.indexOf('|'));
-                var userArr  = userList.split(',');
-                // 渲染 html
-                $('#userList').children().remove();
-                for (var i = 0; i < userArr.length; i ++) {
-                    $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
+                if (str.indexOf('|') != -1) {
+                    var userList = str.substr(0, str.indexOf('|'));
+                    var userArr  = userList.split(',');
+                    layer.msg(str.substr(str.indexOf('|') + 1, str.length), {icon : 6});
+                    // 渲染 html
+                    $('#userList').children().remove();
+                    for (var i = 0; i < userArr.length; i ++) {
+                        $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
+                    }
+                } else {
+                    console.log('Send Message~');
                 }
+
             }
         }
     });
