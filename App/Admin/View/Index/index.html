@@ -15,6 +15,9 @@
         .container{height:50px; width:50px; position:fixed; bottom:50px; right:10px; background-color:#5FB878; text-align:center; border-radius:5px; cursor:pointer; z-index: 999;}
         .container span{font-size:40px; color:#ffffff; line-height:50px;}
         .container:hover{background-color:#9F9F9F;}
+        /* 新消息提示 */
+        .top-tips{position:fixed; top:100px; width:180px; height:100px; right:10px; text-aling:center; border-radius:5px; cursor:pointer; z-index:999; overflow:hidden;}
+        .top-tips li{border-radius:5px; line-height:30px; margin-top:5px; color:white; font-size:0.8rem; background-color:#FF5722;}
     </style>
 </head>
 <script type="text/javascript">
@@ -178,14 +181,15 @@
 <div class="container">
     <span id="communication" class="layui-icon layui-icon-chat"></span>
 </div>
+<div class="top-tips">
+    <ul id="top-tips-list">
+    </ul>
+</div>
 <div id="bottom-title" style="position:fixed; bottom:0px; left:200px; z-index:999; font-size:12px; font-weight:600;">
     <!-- 底部固定区域 -->
     <a href="javascript:;" title="发布日期: 2018/10/1日:)"><span class="layui-icon layui-icon-website layui-anim layui-anim-fadein layui-anim-loop"></span>&nbsp;&nbsp;&nbsp;广元协和医院预约回访管理系统 ©</a>
 </div>
 </body>
-<div id="worker-conatiner">
-    <div class=""></div>
-</div>
 <script src="__PUBLIC__/statics/layui/layui.js"></script>
 <script type="text/javascript">
     layui.use(['element', 'layer', 'form'], () => {
@@ -402,7 +406,8 @@
                 if (str.indexOf('|') != -1) {
                     var userList = str.substr(0, str.indexOf('|'));
                     var userArr  = userList.split(',');
-                    layer.msg(str.substr(str.indexOf('|') + 1, str.length), {icon : 6});
+                    // 调用 top-tips 方法
+                    top_tips(str.substr(str.indexOf('|') + 1, str.length));
                     // 渲染 html
                     $('#userList').children().remove();
                     for (var i = 0; i < userArr.length; i ++) {
@@ -413,6 +418,17 @@
                 }
 
             }
+        }
+        // top-tips
+        function top_tips (login_log) {
+            var top_tips = $('#top-tips-list');
+            if (top_tips.children().length > 2) top_tips.children().remove();
+            (function () {
+                top_tips.append("<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"layui-icon layui-icon-notice\"></span>&nbsp;&nbsp;&nbsp;&nbsp;"+ login_log +"</li>");
+                setTimeout(function () {
+                    top_tips.children().fadeOut(10000);
+                }, 2000)
+            })();
         }
     });
 </script>
