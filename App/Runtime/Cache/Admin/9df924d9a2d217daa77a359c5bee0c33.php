@@ -374,14 +374,14 @@
          ***************************************************************************************************************
          * */
         var socket = new WebSocket('ws://211.149.233.203:2000');
-        // 多客户端协议
+        // 多客户端格式
         function say_to_all (content) {
             socket.addEventListener('open', function () {
                 var message = {"type": "say_to_all", "content": content};
                 socket.send(JSON.stringify(message));
             })
         }
-        // 单对单通讯协议
+        // 单对单通讯格式
         function say_to_one (content) {
             var message = {"type": "say_to_one", "content": content};
             socket.send(JSON.stringify(message));
@@ -390,6 +390,7 @@
             var data = username;
             var message = {"type": "say_to_all", "content": data, "init": "login"};
             socket.send(JSON.stringify(message));
+            console.log(JSON.stringify(message));
         };
         // say_to_all("这是第一条测试群发消息，你好， workerman通讯框架!");
         socket.onmessage = (event) => {
@@ -412,15 +413,27 @@
                         $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
                     }
                 } else {
-                    console.log('Send Message~');
+                    if (str.indexOf('-') != -1) {
+                        var userList = str.substr(0, str.indexOf('-'));
+                        var userArr = userList.split(',');
+                        top_tips(str.substr(str.indexOf('-') + 1, str.length));
+                        console.log($('#userList').children());
+                        $('#userList').children().remove();
+                        for (var i = 0; i < userArr.length; i ++) {
+                            $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
+                        }
+                    }
                 }
 
             }
         }
+        socket.onclose = () => {
+            socket.send(username);
+        }
         // top-tips
         function top_tips (login_log) {
             var top_tips = $('#top-tips-list');
-            if (top_tips.children().length > 3) top_tips.children().remove();
+            if (top_tips.children().length > 2) top_tips.children().remove();
             (function () {
                 top_tips.append("<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"layui-icon layui-icon-notice\"></span>&nbsp;&nbsp;&nbsp;&nbsp;"+ login_log +"</li>");
                 setTimeout(function () {

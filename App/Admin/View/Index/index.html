@@ -376,14 +376,14 @@
          ***************************************************************************************************************
          * */
         var socket = new WebSocket('ws://211.149.x.x:xxxxxx');
-        // 多客户端协议
+        // 多客户端格式
         function say_to_all (content) {
             socket.addEventListener('open', function () {
                 var message = {"type": "say_to_all", "content": content};
                 socket.send(JSON.stringify(message));
             })
         }
-        // 单对单通讯协议
+        // 单对单通讯格式
         function say_to_one (content) {
             var message = {"type": "say_to_one", "content": content};
             socket.send(JSON.stringify(message));
@@ -392,6 +392,7 @@
             var data = username;
             var message = {"type": "say_to_all", "content": data, "init": "login"};
             socket.send(JSON.stringify(message));
+            console.log(JSON.stringify(message));
         };
         // say_to_all("这是第一条测试群发消息，你好， workerman通讯框架!");
         socket.onmessage = (event) => {
@@ -402,6 +403,7 @@
                 document.cookie =  username + "=" + client_id;
                 return;
             } else {
+                // 用户上线
                 // 根据 | 截取字符串转换为数组遍历到Html.
                 if (str.indexOf('|') != -1) {
                     var userList = str.substr(0, str.indexOf('|'));
@@ -414,10 +416,22 @@
                         $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
                     }
                 } else {
-                    console.log('Send Message~');
+                    // 用户下线
+                    if (str.indexOf('-') != -1) {
+                        var userList = str.substr(0, str.indexOf('-'));
+                        var userArr = userList.split(',');
+                        top_tips(str.substr(str.indexOf('-') + 1, str.length));
+                        $('#userList').children().remove();
+                        for (var i = 0; i < userArr.length; i ++) {
+                            $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
+                        }
+                    }
                 }
 
             }
+        }
+        socket.onclose = () => {
+            socket.send(username);
         }
         // top-tips
         function top_tips (login_log) {
