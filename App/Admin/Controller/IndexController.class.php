@@ -980,7 +980,7 @@ class IndexController extends Controller {
      * @return  Type:json
      * */
     public function loginCheck () {
-        $login_log = M('login_log')->select();
+        $login_log = M('login_log')->order('id DESC')->select();
         if ($login_log) {
             $this->arrayRecursive($login_log, 'urlencode', true);
         } else {
