@@ -991,6 +991,17 @@ class IndexController extends Controller {
         $this->ajaxReturn($loginList, 'eval');
     }
     /*
+     * @@login Out
+     * */
+    public function loginOut () {
+        cookie('username', null);
+        if ($_COOKIE['username']) {
+            $this->ajaxReturn(false);
+        } else {
+            $this->ajaxReturn(true);
+        }
+    }
+    /*
      *  @@expansion connect redis.
      *  @param null.
      *  @return $redis. Type: instance

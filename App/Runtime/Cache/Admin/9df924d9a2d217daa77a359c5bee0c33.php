@@ -75,7 +75,7 @@
                     <?php if(is_array($hospitals)): foreach($hospitals as $index=>$vo): ?><dd class="layui-anim layui-anim-scaleSpring"><a href="javascript:;" onclick="readyHospital(this);" tablename="<?php echo ($vo['tableName']); ?>"><?php echo ($vo['hospital']); ?></a></dd><?php endforeach; endif; ?>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">注销</a></li>
+            <li class="layui-nav-item" onclick="loginOut();"><a href="javascript:;">注销</a></li>
         </ul>
     </div>
 
@@ -297,6 +297,23 @@
                 $('#loading').hide(200);
             });
         }
+        // 注销用户
+        loginOut = () => {
+            var Request = new XMLHttpRequest();
+            Request.open("GET", "<?php echo U('Admin/Index/loginOut');?>");
+            Request.send();
+            Request.onreadystatechange = () => {
+                if (Request.readyState === 4 && Request.status === 200) {
+                    if (Request.responseText == 'false') {
+                        layer.msg("注销失败", {icon:5});
+                    } else {
+                        layer.msg("注销成功", {icon:6});
+                        socket.onclose();
+                        window.location.href = "http://ruo.gyxhyy.com";
+                    }
+                }
+            }
+        }
         // 侧边栏伸缩
         var isShow = true;
         $('.kit-side-fold').click(function () {
@@ -401,6 +418,7 @@
                 document.cookie =  username + "=" + client_id;
                 return;
             } else {
+                // 用户上线
                 // 根据 | 截取字符串转换为数组遍历到Html.
                 if (str.indexOf('|') != -1) {
                     var userList = str.substr(0, str.indexOf('|'));
@@ -413,11 +431,11 @@
                         $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
                     }
                 } else {
+                    // 用户下线
                     if (str.indexOf('-') != -1) {
                         var userList = str.substr(0, str.indexOf('-'));
                         var userArr = userList.split(',');
                         top_tips(str.substr(str.indexOf('-') + 1, str.length));
-                        console.log($('#userList').children());
                         $('#userList').children().remove();
                         for (var i = 0; i < userArr.length; i ++) {
                             $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");

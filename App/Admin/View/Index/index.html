@@ -77,7 +77,7 @@
                     </foreach>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">注销</a></li>
+            <li class="layui-nav-item" onclick="loginOut();"><a href="javascript:;">注销</a></li>
         </ul>
     </div>
 
@@ -298,6 +298,23 @@
                 projress.animate({width: '0%'});
                 $('#loading').hide(200);
             });
+        }
+        // 注销用户
+        loginOut = () => {
+            var Request = new XMLHttpRequest();
+            Request.open("GET", "{:U('Admin/Index/loginOut')}");
+            Request.send();
+            Request.onreadystatechange = () => {
+                if (Request.readyState === 4 && Request.status === 200) {
+                    if (Request.responseText == 'false') {
+                        layer.msg("注销失败", {icon:5});
+                    } else {
+                        layer.msg("注销成功", {icon:6});
+                        socket.onclose();
+                        window.location.href = "http://ruo.gyxhyy.com";
+                    }
+                }
+            }
         }
         // 侧边栏伸缩
         var isShow = true;
