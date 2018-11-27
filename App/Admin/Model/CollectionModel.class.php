@@ -4,7 +4,11 @@ namespace Admin\Model;
 use Think\Model;
 
 class CollectionModel extends Model {
-    private $collectionConf = // Status Config
+    /**
+     * @@ Status Config
+     *
+     */
+    private $collectionConf =
         array(
         0  => 'arrivalTotal',
         1  => 'arrival',
@@ -23,7 +27,10 @@ class CollectionModel extends Model {
         14 => 'appThisTotal',
         15 => 'appLastTotal'
     );
-    private $conditions = // SQL Syntax
+    /*
+     * @@ SQL Syntax
+     * */
+    private $conditions =
         array(
         0 => "TO_DAYS(oldDate) = TO_DAYS(NOW())",
         1 => "TO_DAYS(NOW()) - TO_DAYS(oldDate) = 1",
@@ -32,6 +39,7 @@ class CollectionModel extends Model {
     );
     /*
      * @@ 表单下拉列表框
+     * @return $selectCollection Type: array
      * */
     public function selectOption () {
         $selectCollection['arrivalStatus']  = M('arrivalstatus')->field('arrivalStatus')->select();
@@ -42,7 +50,7 @@ class CollectionModel extends Model {
     }
     /*
      * @@数据导出 按时间范围/状态查询
-     * @@return array Type: 二维数组
+     * @return array Type: 二维数组
      * */
     public function resources ($request) {
         $tableName = $_COOKIE['tableName'];

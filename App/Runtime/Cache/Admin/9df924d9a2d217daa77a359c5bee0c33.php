@@ -332,16 +332,26 @@
                     $(this).hide(100).prev().css('font-size', '20px');
                 })
                 // 鼠标悬停提示效果
-                $('.slide-font').parent().on({mouseover: function () {
-                        $(this).each(function () {
-                            layer.tips($(this).text(), $(this), {
-                                tips: 2,
-                                time: 1000,
-                            });
+                // $('.slide-font').parent().on({mouseover: function () {
+                //         $(this).each(function () {
+                //             layer.tips($(this).text(), $(this), {
+                //                 tips: 2,
+                //                 time: 1000,
+                //             });
+                //         });
+                //     }}, {mouseout: function () {
+                //         layer.close('tips');
+                //     }});
+                $('.slide-font').parent().mouseover(function () {
+                    $(this).each(function () {
+                        layer.tips($(this).text(), $(this), {
+                            tips: 2,
+                            time: 1000,
                         });
-                    }}, {mouseout: function () {
-                        layer.close('tips');
-                    }});
+                    })
+                }).mouseout(function () {
+                    layer.close('tips');
+                })
                 isShow = false;
             } else {
                 $('#layui-side').animate({width: '200px'}, 150);
@@ -359,16 +369,16 @@
                 })
             }
         })
-        $('.title-icon-size').on({mouseover: function () {
-                $(this).each(function () {
-                    layer.tips($(this).attr('tips'), $(this), {
-                        tips: 3,
-                        time: 1000,
-                    });
+        $('.title-icon-size').mouseover(function () {
+            $(this).each(function () {
+                layer.tips($(this).attr('tips'), $(this), {
+                    tips: 3,
+                    time: 1000,
                 });
-            }}, {mouseout: function () {
-                layer.close('tips');
-            }});
+            })
+        }).mouseout(function () {
+            layer.close('tips');
+        })
         // 通讯图标动画
         $('#communication').mouseover(function () {
             $(this).addClass('layui-anim layui-anim-rotate');
@@ -390,7 +400,7 @@
          ***************************************************************************************************************
          ***************************************************************************************************************
          * */
-        var socket = new WebSocket('ws://211.149.x.x:xxxxxx');
+        var socket = new WebSocket('ws://211.149.233.203:2000');
         // 多客户端格式
         function say_to_all (content) {
             socket.addEventListener('open', function () {

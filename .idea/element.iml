@@ -8,5 +8,6 @@
     <orderEntry type="module" module-name="workerman" />
     <orderEntry type="module" module-name="Tp" />
     <orderEntry type="module" module-name="深入PHP面向对象模式与实践" />
+    <orderEntry type="module" module-name="Vue-js" />
   </component>
 </module>
