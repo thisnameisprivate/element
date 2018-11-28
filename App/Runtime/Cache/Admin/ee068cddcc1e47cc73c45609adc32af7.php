@@ -31,7 +31,7 @@
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone"  placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone"  placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input phone">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -133,7 +133,7 @@
                 </div>
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" value=" " placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" value=" " placeholder="请输入病人联系方式~" autocomplete="off" class="layui-input phone">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -224,6 +224,9 @@
             </div>
         </form>
     </div>
+</div>
+<div id="thesame">
+    <p class="thesame-txt"></p>
 </div>
 </body>
 <script src="/element/Public/statics/layui/layui.js"></script>
@@ -371,6 +374,30 @@
                     }
                 });
                 form.render();
+                // 异步发送数据
+                $('.phone').blur(function () {
+                    var value = $(this).val();
+                    if (value.trim().length == 11) {
+                        var Request = new XMLHttpRequest();
+                        Request.open("GET", "<?php echo U('Admin/Index/addDataSelect/phone/"+ parseInt(value) +"');?>");
+                        Request.send();
+                        Request.onreadystatechange = () => {
+                            if (Request.status === 200 && Request.readyState === 4) {
+                                if (Request.responseText == 1) return;
+                                var pointerData = JSON.parse(Request.responseText)[0]; // 将JSON对象解析为字符串;
+                                layer.confirm("已经有相同电话的数据是否继续添加? <br>" +
+                                    "<span style='color:red;'>姓名:  " + pointerData.name + "</span><br>" +
+                                    "<span style='color:red;'>电话:  " + pointerData.phone + "</span><br>" +
+                                    "<span style='color:red;'>病种:  " + pointerData.diseases + "</span><br>" +
+                                    "<span style='color:red;'>赴约状态:  " + pointerData.status + "</span><br>" +
+                                    "<span style='color:red;'>预约时间:  " + pointerData.oldDate + "</span><br>" +
+                                    "<span style='color:red;'>回访时间:  " + pointerData.newDate + "</span><br>",
+                                    { icon: 3, title: "相同的信息?", btn: ['继续', '放弃'], btn2: () => { layer.closeAll(); } },
+                                );
+                            }
+                        }
+                    }
+                });
                 form.on('submit(fromadd)', data => {
                     data.field.desc1 = jsonStrReplace(data.field.desc1);
                     var client = new XMLHttpRequest();

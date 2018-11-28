@@ -332,16 +332,6 @@
                     $(this).hide(100).prev().css('font-size', '20px');
                 })
                 // 鼠标悬停提示效果
-                // $('.slide-font').parent().on({mouseover: function () {
-                //         $(this).each(function () {
-                //             layer.tips($(this).text(), $(this), {
-                //                 tips: 2,
-                //                 time: 1000,
-                //             });
-                //         });
-                //     }}, {mouseout: function () {
-                //         layer.close('tips');
-                //     }});
                 $('.slide-font').parent().mouseover(function () {
                     $(this).each(function () {
                         layer.tips($(this).text(), $(this), {
@@ -400,7 +390,7 @@
          ***************************************************************************************************************
          ***************************************************************************************************************
          * */
-        var socket = new WebSocket('ws://211.149.233.203:2000');
+        var socket = new WebSocket('ws://211.149.233.203:2001');
         // 多客户端格式
         function say_to_all (content) {
             socket.addEventListener('open', function () {

@@ -64,6 +64,17 @@ class CollectionModel extends Model {
         }
         return array($hospitalVisit, $hospitalVisitCount);
     }
+    /**
+     * @@根据电话查看数据是否存在
+     * @param $request string
+     * @return array
+     */
+    public function addDataSelect ($request) {
+        $tableName = $_COOKIE['tableName'];
+        $resolve = M($tableName)->where("phone = '{$request}'")->select();
+        if ($resolve) return $resolve;
+        return;
+    }
     /*
      *  @@首页点击 按时间/状态查询
      *  @param $request Type: GET array

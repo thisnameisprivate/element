@@ -316,6 +316,19 @@ class IndexController extends Controller {
             $this->ajaxReturn(false, 'eval');
         }
     }
+    /**
+     * @@add new data time. select is have this data?
+     * @return array
+     *
+     */
+    public function addDataSelect () {
+        $result = D('Collection')->addDataSelect(trim($_GET['phone']));
+        if (isset($result)) {
+            $this->ajaxReturn($result);
+        } else {
+            $this->ajaxReturn(true, 'eval');
+        }
+    }
     /*
      *  @@statusSuffixConf
      *  @return $statusSuffix Type: array
