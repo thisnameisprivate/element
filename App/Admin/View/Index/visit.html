@@ -400,7 +400,7 @@
                         Request.onreadystatechange = () => {
                             if (Request.status === 200 && Request.readyState === 4) {
                                 if (Request.responseText == 1) return;
-                                var pointerData = JSON.parse(Request.responseText)[0]; // 将JSON对象解析为字符串;
+                                var pointerData = JSON.parse(Request.responseText)[0];
                                 layer.confirm("已经有相同电话的数据是否继续添加? <br>" +
                                     "<span style='color:red;'>姓名:  " + pointerData.name + "</span><br>" +
                                     "<span style='color:red;'>电话:  " + pointerData.phone + "</span><br>" +
