@@ -13,25 +13,11 @@
 </body>
 <script src="__PUBLIC__/statics/layui/layui.js"></script>
 <script type="text/javascript">
-    layui.use(['table', 'form'], () => {
-        /*
-        var table = layer.table;
-        var form = layer.form;
-        var $ = layer.jquery;
-        var userAcc = JSON.parse(localStorage.getItem('userAcc'));
-        var tableIns = table.render({
-            text: { none: '暂无相关数据' },
-            initSort: {
-                field: 'id',
-                type: 'dsec',
-            },
-            elem: '#container',
-
-        })
-
-
-           */
-        layer.msg("开发中", {icon:5});
+    layui.use(['table', 'form', 'element'], () => {
+        var element = layui.element;
+        var layer   = layui.layer;
+        var table   = layui.table;
+        var $       = layui.jquery;
     })
 </script>
 </html>

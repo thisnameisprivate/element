@@ -409,7 +409,7 @@
             var data = username;
             var message = {"type": "say_to_all", "content": data, "init": "login"};
             socket.send(JSON.stringify(message));
-            console.log(JSON.stringify(message));
+            // console.log(JSON.stringify(message));
         };
         // say_to_all("这是第一条测试群发消息，你好， workerman通讯框架!");
         socket.onmessage = (event) => {

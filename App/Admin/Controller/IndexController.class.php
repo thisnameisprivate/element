@@ -21,7 +21,7 @@ class IndexController extends Controller {
     * */
     public function index () {
         $userCookie = $_COOKIE['username'];
-        if (is_null($userCookie)) {
+        if (! isset($userCookie)) {
             $this->error("please login", U("Home/Index/index"));
         }
         $userAcc = $this->userManagement($userCookie);

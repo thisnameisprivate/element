@@ -1,0 +1,126 @@
+<?php if (!defined('THINK_PATH')) exit();?><!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/element/Public/statics/layui/css/layui.css">
+    <style>
+        .container{position:relative; width:500px; height:200px; left:0; top:0; rigth:0; bottom:0; margin:auto; padding-top:20px;}
+        body{overflow:scroll; margin-top:20px;}
+    </style>
+    <title>doctor</title>
+</head>
+<body>
+<table id="container" lay-filter="edittable"></table>
+<div class="layui-container" id="layerAddTypesof" style="display:none;">
+    <div class="container">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">客服名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="custservice" required lay-verify="required" placeholder="请输入新的客服名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="formSubmit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script src="/element/Public/statics/layui/layui.js"></script>
+<script type="text/html" id="toolbaradd">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加新的信息</button>
+    </div>
+</script>
+<script type="text/html" id="bar">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/javascript">
+    layui.use(['table', 'layer', 'form'], () => {
+        var table = layui.table;
+        var layer = layui.layer;
+        var form = layui.form;
+        var userAcc = JSON.parse(localStorage.getItem('userAcc'));
+        var tableIns = table.render({
+            text: {
+                none: '暂无相关数据'
+            },
+            initSort: {
+                field: 'id',
+                type: 'desc'
+            },
+            elem: '#container',
+            toolbar: '#toolbaradd',
+            url: "<?php echo U('Admin/Index/doctorCheck');?>",
+            height: 'full-200',
+            size: 'sm',
+            cols: [[
+                {field: 'id', title: 'No .', width:80, sort: true},
+                {field: 'custservice', title: '客服名称', width: 120},
+                {field: 'addtime', title: '添加时间', width: 120},
+                {fixed: 'right', title: '操作',  width: 100, align:'center', toolbar: '#bar'}
+            ]],
+            id: 'edittable',
+        });
+        table.on('tool(edittable)', obj => {
+            var data = obj.data;
+            var layEvent = obj.event;
+            var tr = obj.tr;
+            if (layEvent === 'del') {
+                if (! Boolean(userAcc.setdelete)) { layer.msg('权限不足', {icon:5}); return false; }
+                layer.confirm('【'+ data.fromaddress +'】 are you soure delete ?', index => {
+                    var client = new XMLHttpRequest();
+                    client.open('GET', "<?php echo U('Admin/Index/doctorDel/id/"+ parseInt(data.id) +"');?>");
+                    client.send();
+                    client.onreadystatechange = () => {
+                        if (client.readyState === 4 && client.status === 200) {
+                            if (client.response == 1) {
+                                layer.msg('delete success', {icon: 6});
+                                obj.del();
+                                layer.close(index);
+                            } else {
+                                layer.msg('delete faield', {icon: 5});
+                            }
+                        }
+                    }
+                })
+            }
+        });
+        table.on('toolbar(edittable)', obj => {
+            if (obj.event === 'add') {
+                if (! Boolean(userAcc.setwrite)) { layer.msg('权限不足', {icon:5}); return false; }
+                layer.open({
+                    type: 1,
+                    title: '新增来源类型',
+                    area: ['600px', '300px'],
+                    content: document.getElementById('layerAddTypesof').innerHTML,
+                });
+            }
+            form.on('submit(formSubmit)', data => {
+                var client = new XMLHttpRequest();
+                client.open("GET", "<?php echo U('Admin/Index/doctorAdd/data/"+ JSON.stringify(data.field) +"');?>");
+                client.send();
+                client.onreadystatechange = () => {
+                    if (client.readyState === 4 && client.status === 200) {
+                        if (client.response == 1) {
+                            layer.msg('add success', {icon:6});
+                            layer.closeAll();
+                            tableIns.reload();
+                        } else {
+                            layer.msg('add failed', {icon:5});
+                        }
+                    }
+                }
+                return false;
+            });
+        })
+    })
+</script>
+</html>
