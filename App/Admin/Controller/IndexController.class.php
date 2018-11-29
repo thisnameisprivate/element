@@ -318,7 +318,9 @@ class IndexController extends Controller {
      */
     public function addDataSelect () {
         $result = D('Collection')->addDataSelect(trim($_GET['phone']));
-        ! empty($result) ? $this->ajaxReturn($result) : $this->ajaxReturn(true, 'eval');
+        ! empty($result)
+            ? $this->ajaxReturn($result)
+            : $this->ajaxReturn(true, 'eval');
     }
     /*
      *  @@statusSuffixConf
@@ -404,7 +406,9 @@ class IndexController extends Controller {
         $visitData = json_decode($_GET['data'], true);
         $tableName = $_COOKIE['tableName'];
         $resolve = M($tableName)->where("id = {$_GET['id']}")->save($visitData);
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @hospitals Data List
@@ -421,7 +425,9 @@ class IndexController extends Controller {
      * */
     public function hospitalsCheck () {
         $hospitals = M('hospital')->select();
-        ! empty($hospitals) ? $this->arrayRecursive($hospitals, 'urldecode', true) : $this->ajaxReturn(false, 'eval');
+        ! empty($hospitals)
+            ? $this->arrayRecursive($hospitals, 'urldecode', true)
+            : $this->ajaxReturn(false, 'eval');
         $hospitals = urldecode(json_encode($hospitals));
         $hospitalsList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $hospitals}";
         $this->ajaxReturn($hospitalsList, 'eval');
@@ -434,7 +440,9 @@ class IndexController extends Controller {
     public function hospitalsAdd () {
         $hospitalsData = json_decode($_GET['data'], true);
         $resolve = M('hospital')->add($hospitalsData);
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@ hospitals Data del
@@ -444,7 +452,9 @@ class IndexController extends Controller {
     public function hospitalsDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resolve = M('hospital')->where("id = {$_GET['id']}")->delete();
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@ disease data
@@ -462,7 +472,9 @@ class IndexController extends Controller {
     public function diseaseCheck () {
         $tableName = $_COOKIE['tableName'];
         $diseases = M('alldiseases')->where("tableName = '{$tableName}'")->field(array('id', 'diseases', 'addtime'))->select();
-        ! empty($diseases) ? $this->arrayRecursive($diseases, 'urldecode', true) : $this->ajaxReturn(false, 'eval');
+        ! empty($diseases)
+            ? $this->arrayRecursive($diseases, 'urldecode', true)
+            : $this->ajaxReturn(false, 'eval');
         $diseases = urldecode(json_encode($diseases));
         $diseasesList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $diseases}";
         $this->ajaxReturn($diseasesList, 'eval');
@@ -476,7 +488,9 @@ class IndexController extends Controller {
         $diseasesData = json_decode($_GET['data'], true);
         $diseasesData['tableName'] = $_COOKIE['tableName'];
         $resolve = M('alldiseases')->add($diseasesData);
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@ disease data delete
@@ -486,7 +500,9 @@ class IndexController extends Controller {
     public function diseaseDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resolve = M('alldiseases')->where("id = {$_GET['id']}")->delete();
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@ visitTypesof data list
@@ -502,7 +518,9 @@ class IndexController extends Controller {
      * */
     public function typesofCheck () {
         $typesof = M('fromaddress')->field(array('id', 'fromaddress', 'addtime'))->select();
-        ! empty($typesof) ? $this->arrayRecursive($typesof, 'urldecode', true) : $this->ajaxReturn(false, 'eval');
+        ! empty($typesof)
+            ? $this->arrayRecursive($typesof, 'urldecode', true)
+            : $this->ajaxReturn(false, 'eval');
         $typesof = urldecode(json_encode($typesof));
         $typesofList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $typesof}";
         $this->ajaxReturn($typesofList, 'eval');
@@ -515,7 +533,9 @@ class IndexController extends Controller {
     public function typesofDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resolve = M('fromaddress')->where("id = {$_GET['id']}")->delete();
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@ typesof data add
@@ -525,7 +545,9 @@ class IndexController extends Controller {
     public function typesofAdd () {
         $typesofData = json_decode($_GET['data'], true);
         $resolve = M('fromaddress')->add($typesofData);
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      * @@ doctor data page
@@ -541,7 +563,9 @@ class IndexController extends Controller {
      * */
     public function doctorCheck () {
         $custservice = M('custservice')->field(array('id', 'custservice', 'addtime'))->select();
-        ! empty($custservice) ? $this->arrayRecursive($custservice, 'urldecode', true) : $this->ajaxReturn(false, 'eval');
+        ! empty($custservice)
+            ? $this->arrayRecursive($custservice, 'urldecode', true)
+            : $this->ajaxReturn(false, 'eval');
         $custservice = urldecode(json_encode($custservice));
         $custserviceList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $custservice}";
         $this->ajaxReturn($custserviceList, 'eval');
@@ -554,7 +578,9 @@ class IndexController extends Controller {
     public function doctorAdd () {
         $doctorData = json_decode($_GET['data'], true);
         $resolve = M('custservice')->add($doctorData);
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@doctor data del
@@ -564,7 +590,9 @@ class IndexController extends Controller {
     public function doctorDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resolve = M('custservice')->where("id = {$_GET['id']}")->delete();
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@ arrivalStatus page
@@ -580,7 +608,9 @@ class IndexController extends Controller {
      * */
     public function arrivalStatusCheck () {
         $arrivalStatus = M('arrivalstatus')->field(array('id', 'arrivalStatus', 'addtime'))->select();
-        ! empty($arrivalStatus) ? $this->arrayRecursive($arrivalStatus, 'urldecode', true) : $this->ajaxReturn(false, 'eval');
+        ! empty($arrivalStatus)
+            ? $this->arrayRecursive($arrivalStatus, 'urldecode', true)
+            : $this->ajaxReturn(false, 'eval');
         $arrivalStatus = urldecode(json_encode($arrivalStatus));
         $arrivalStatusList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $arrivalStatus}";
         $this->ajaxReturn($arrivalStatusList, 'eval');
@@ -593,7 +623,9 @@ class IndexController extends Controller {
     public function arrivalStatusDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resovle = M('arrivalstatus')->where("id = {$_GET['id']}")->delete();
-        ! empty($resovle) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resovle)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@ arrivalStatus data add
@@ -603,7 +635,9 @@ class IndexController extends Controller {
     public function arrivalStatusAdd () {
         $arrivalData = json_decode($_GET['data'], true);
         $resolve = M('arrivalstatus')->add($arrivalData);
-        ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@ detail Report table
@@ -735,7 +769,9 @@ class IndexController extends Controller {
      * */
     private function detail ($time, $status, $persion = null) {
         $tableName = $_COOKIE['tableName'];
-        $allStatus = is_null($persion) ? M($tableName)->where(array($time, $status))->count() : M($tableName)->where(array($time, $status, $persion))->count();
+        $allStatus = is_null($persion)
+            ? M($tableName)->where(array($time, $status))->count()
+            : M($tableName)->where(array($time, $status, $persion))->count();
         return $allStatus;
     }
     /*
@@ -780,7 +816,9 @@ class IndexController extends Controller {
      * */
     public function accessCheck () {
         $user = M('management')->join('user')->where("user.username = management.pid")->select();
-        ! empty($user) ? $this->arrayRecursive($user, 'urldecode', true) : $this->ajaxrReturn(false, 'eval');
+        ! empty($user)
+            ? $this->arrayRecursive($user, 'urldecode', true)
+            : $this->ajaxrReturn(false, 'eval');
         $user = urldecode(json_encode($user));
         $userList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $user}";
         $this->ajaxReturn($userList, 'eval');
@@ -795,7 +833,9 @@ class IndexController extends Controller {
         $username = M('user')->where("id = {$_GET['id']}")->field('username')->select();
         $manageResolve = M('management')->where("pid = '{$username[0]['username']}'")->delete();
         $resovle = M('user')->where("id = {$_GET['id']}")->delete();
-        ! empty($resovle) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($resovle)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *   @@userAdd
@@ -810,7 +850,9 @@ class IndexController extends Controller {
         $management['pid'] = $userList['username'];
         $managementResolve = M('management')->add($management);
         $resolve = M('user')->add($userList);
-        ! empty($managementResolve) && ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        ! empty($managementResolve) && ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      *  @@userEdit
@@ -844,8 +886,12 @@ class IndexController extends Controller {
          *                                                                             **
          * ******************************************************************************
          * */
-        $managementResolve = empty($managementUser) ? M('management')->add($management) : M('management')->where("pid = '{$username[0]['username']}'")->save($management);
-        ! empty($managementResolve) && ! empty($resolve) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        $managementResolve = empty($managementUser)
+            ? M('management')->add($management)
+            : M('management')->where("pid = '{$username[0]['username']}'")->save($management);
+        ! empty($managementResolve) && ! empty($resolve)
+            ? $this->ajaxReturn(true, 'eval')
+            : $this->ajaxReturn(false, 'eval');
     }
     /*
      * @@ resources Export page
@@ -910,7 +956,11 @@ class IndexController extends Controller {
      * @@login Out
      * */
     public function loginOut () {
-        isset($_COOKIE['username']) ? $this->ajaxReturn(true, 'eval') : $this->ajaxReturn(false, 'eval');
+        cookie('username', null);
+        empty($_COOKIE['username'])
+            ? $this->ajaxReturn(true)
+            : $this->ajaxReturn(false);
+
     }
     /*
      *  @@expansion connect redis.
