@@ -84,59 +84,120 @@ class CollectionModel extends Model {
     public function specifiedFunc ($request, $status) {
         $collectionConf = $this->collectionConf;
         $conditions = $this->conditions;
-        $iden = $request['iden'];
-        $appCom = '预约未定';
         $cookietable = $_COOKIE['tableName'];
         $hospital = M($cookietable);
-        if ($iden == $collectionConf[0]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0]))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0]))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[1]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[2]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0], "status != '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0], "status != '{$status['arrival']}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[3]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1]))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1]))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[4]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[5]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1], "status != '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1], "status != '{$status['arrival']}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[6]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2]))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2]))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[7]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[8]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2], "status != '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2], "status != '{$status['arrival']}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[9]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3]))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3]))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[10]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[11]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3], "status != '{$status['arrival']}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3], "status != '{$status['arrival']}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[12]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[0], "status = '{$appCom}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[13]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[1], "status = '{$appCom}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[1], "status = '{$appCom}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[14]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[2], "status = '{$appCom}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[2], "status = '{$appCom}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
-        } else if ($iden == $collectionConf[15]) {
-            $hospitalVisitCount = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->count();
-            $hospitalVisit = $hospital->where(array($conditions[3], "status = '{$appCom}'"))->limit(($page = $request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+        switch ($request['iden']) {
+            case $collectionConf[0]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[0]))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[0]))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order("id desc")->select();
+                break;
+            case $collectionConf[1]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[0], "status = '{$status['arrival']}'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[2]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[0], "status != '{$status['arrival']}'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[0], "status != '{$status['arrival']}'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[3]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[1]))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[1]))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order("id desc")->select();
+                break;
+            case $collectionConf[4]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[1], "status = '{$status['arrival']}'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[5]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[1], "status != '{$status['arrival']}'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[1], "status != '{$status['arrival']}'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[6]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[2]))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[2]))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order("id desc")->select();
+                break;
+            case $collectionConf[7]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[2], "status = '{$status['arrival']}'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[8]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[2], "status != '{$status['arrival']}'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[2], "status != '{$status['arrival']}'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[9]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[3]))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[3]))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order("id desc")->select();
+                break;
+            case $collectionConf[10]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[3], "status = '{$status['arrival']}'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[11]:
+                $hospitalVisitCount  = $hospital->where(array($conditions[3], "status != '{$status['arrival']}'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[3], "status != '{$status['arrival']}'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[12]:
+                $hospitalVisitCount  = $hospital->where(array($condition[0], "status = '预约未定'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[0], "status = '预约未定'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[13]:
+                $hospitalVisitCount  = $hospital->where(array($condition[1], "status = '预约未定'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[1], "status = '预约未定'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[14]:
+                $hospitalVisitCount  = $hospital->where(array($condition[2], "status = '预约未定'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[2], "status = '预约未定'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
+            case $collectionConf[15]:
+                $hospitalVisitCount  = $hospital->where(array($condition[3], "status = '预约未定'"))->count();
+                $hospitalVisit       = $hospital->where(array($conditions[3], "status = '预约未定'"))->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+                break;
         }
         return array($hospitalVisit, $hospitalVisitCount);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
