@@ -1019,11 +1019,9 @@ class IndexController extends Controller {
      */
     public function loginCheck () {
         $login_log = M('login_log')->order('id DESC')->select();
-        if ($login_log) {
-            $this->arrayRecursive($login_log, 'urlencode', true);
-        } else {
-            $this->ajaxReturn(false, 'eval');
-        }
+        ! empty($login_log)
+            ? $this->arrayRecursive($login_log, 'urldecode', true)
+            : $this->ajaxReturn(false, 'eval');
         $login_log = urldecode(json_encode($login_log));
         $loginList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $login_log}";
         $this->ajaxReturn($loginList, 'eval');
