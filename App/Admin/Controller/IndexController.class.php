@@ -15,10 +15,11 @@ namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
 class IndexController extends Controller {
-    /*
-    *  @@ hospitals select
-    *  @param null
-    * */
+    /**
+     * @@登录验证
+     * @param null
+     * @assign $hospital
+     */
     public function index () {
         $userCookie = $_COOKIE['username'];
         if (! isset($userCookie)) $this->error("please login", U("Home/Index/index"));
@@ -28,20 +29,23 @@ class IndexController extends Controller {
         $this->assign('hospitals', $hospitals);
         $this->display();
     }
-    /*
-     *  @@ userManagement select
-     *  @@param null
-     *  @return $userAcc Type: array
-     *
-     * */
+
+    /**
+     * @@用户权限
+     * @param $userCookie
+     * @return bool
+     */
     private function userManagement ($userCookie) {
         $userAcc = M('management')->where("pid = '{$userCookie}'")->select();
         if (! empty($userAcc)) foreach ($userAcc as $k => $v) return $v;
         return false;
     }
-    /*
-     *  @@ overView Home page.
-     * */
+
+    /**
+     * @@首页/数据总览
+     * @param null
+     * @return bool
+     */
     public function overView () {
         $tableName = $_COOKIE['tableName'];
         if (! isset($tableName)) return false;
@@ -107,10 +111,15 @@ class IndexController extends Controller {
         $this->assign('lastAppointmentSort', $lastArrivalList[1]);
         $this->display();
     }
-    /*
-     * @@specifed search home
-     *
-     * */
+
+    /**
+     * @@点击页面数据
+     * @param null
+     * @assign $selectoption['arrivalStatus']
+     *         $selectoption['diseases']
+     *         $selectoption['custservice']
+     *         $selectoption['formaddress']
+     */
     public function specified () {
         $this->assign('iden', $_GET['iden']);
         // select option value.
@@ -121,11 +130,12 @@ class IndexController extends Controller {
         $this->assign('fromaddress', $selectOption['fromaddress']);
         $this->display();
     }
-    /*
-     *  @@specified search
-     *  @@param iden Type: String
-     *
-     * */
+
+    /**
+     * @@数据总览点击查询
+     * @param null
+     * @retrun string
+     */
     public function specifiedCheck () {
         $hospitalVisit = D('Collection')->specifiedFunc($_GET, $this->statusSuffixConf());
         $hospitalVisitCount = $hospitalVisit[1];
@@ -146,23 +156,25 @@ class IndexController extends Controller {
          * */
         $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
     }
-    /*
-     *   @@arrival Set Redis
-     *   @param key Type: string
-     *   @param value Type: variable int.
-     *   @return Boolean Type: Boolean.
-     * */
+
+    /**
+     * @@设置缓存
+     * @param $key
+     * @param $value
+     * @throws Exception
+     */
     private function arrivalSetRedis ($key, $value) {
         $redis = $this->setCache();
         $redis->set($key, $value);
         $statusSuffixConf = $this->statusSuffixConf();
         $redis->expire($key, $statusSuffixConf['endTime']);
     }
-    /*
-     *  @@ select to make an thisArrival
-     *  @param null
-     *  @return array() Type: array
-     * */
+
+    /**
+     * @@本月流量
+     * @param null
+     * @return array
+     */
     private function thisArrivalList () {
         $customer = M('custservice')->field('custservice')->select();
         foreach ($customer  as $k => $v) foreach ($v as $c => $d) $customers[] = $d;
@@ -177,11 +189,12 @@ class IndexController extends Controller {
         array_splice($appointment, 4);
         return array($arrival, $appointment);
     }
-    /*
-     *  @@ select to make an lastArrival
-     *  @param null
-     *  @return array() Type: array
-     * */
+
+    /**
+     * @@上月流量
+     * @param null
+     * @return array
+     */
     private function lastArrivalList () {
         $customer = M('custservice')->field('custservice')->select();
         foreach ($customer as $k => $v) foreach ($v as $c => $d) $customers[] = $d;
@@ -196,11 +209,12 @@ class IndexController extends Controller {
         array_splice($appointment, 4);
         return array($arrival, $appointment);
     }
-    /*
-     *  @@ select To make an appointment in
-     *  @param null
-     *  @return $appointment Type: array
-     * */
+
+    /**
+     * @@缓存预约未定数据
+     * @param null
+     * @return array|mixed
+     */
     private function appointment () {
         $tableName = $_COOKIE['tableName'];
         $redis = $this->setCache(); // Connect Redis
@@ -213,11 +227,12 @@ class IndexController extends Controller {
             return $appointment;
         }
     }
-    /*
-     *  @@ select to make an appointment in sql
-     *  @param null
-     *  @return $appointmentData Type: array
-     * */
+
+    /**
+     * @@查询预约未定数据
+     * @param null
+     * @return array
+     */
     private function appointmentSql () {
         $instance = M($_COOKIE['tableName']);
         $appointmentData = array();
@@ -227,9 +242,23 @@ class IndexController extends Controller {
         $appointmentData['lastTotal']    = $instance->where("PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1 AND status = '预约未定'")->count();
         return $appointmentData;
     }
+
+    /**
+     * @@页面跳转
+     * @param null
+     */
     public function echarts () {
         $this->display();
     }
+
+    /**
+     * @@列表页表单数据
+     * @param null
+     * @assign $selectOption['arrivalStatus']
+     *         $selectOption['diseases']
+     *         $selectOption['custservice']
+     *         $selectOption['fromaddress']
+     */
     public function visit () {
         $selectOption = D('Collection')->selectOption();
         $this->assign('arrivalStatus', $selectOption['arrivalStatus']);
@@ -238,11 +267,12 @@ class IndexController extends Controller {
         $this->assign('fromaddress', $selectOption['fromaddress']);
         $this->display();
     }
-    /*
-     *  @@ visit Data List.
-     *  @param null
-     *  @return $visitList Type: json.
-     * */
+
+    /**
+     * @@查询列表信息
+     * @param null
+     * @return string
+     */
     public function visitCheck () {
         $cookietable = $_COOKIE['tableName'];
         $hospital = M($cookietable);
@@ -279,11 +309,12 @@ class IndexController extends Controller {
          * */
         $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
     }
-    /*
-     *  @@ visit data delte
-     *  @param null
-     *  @return boolean Type: eval
-     * */
+
+    /**
+     * @@删除列表信息
+     * @param null
+     * @return string
+     */
     public function visitDel () {
         $visitData = json_decode($_GET['data'], true);
         $cookietable = $_COOKIE['tableName'];
@@ -295,11 +326,12 @@ class IndexController extends Controller {
             $this->ajaxReturn(false, 'eval');
         }
     }
-    /*
-     *  @@ visit data add
-     *  @param null
-     *  @return boolean. Type: eval
-     * */
+
+    /**
+     * @@添加列表信息
+     * @param null
+     * @return string
+     */
     public function addData () {
         $visitData = json_decode($_GET['data'], true);
         $tableName = $_COOKIE['tableName'];
@@ -311,10 +343,11 @@ class IndexController extends Controller {
             $this->ajaxReturn(false, 'eval');
         }
     }
+
     /**
-     * @@add new data time. select is have this data?
-     * @return array
-     *
+     * @@在删除信息是查询
+     * @param null
+     * @return string
      */
     public function addDataSelect () {
         $result = D('Collection')->addDataSelect(trim($_GET['phone']));
@@ -322,10 +355,11 @@ class IndexController extends Controller {
             ? $this->ajaxReturn($result)
             : $this->ajaxReturn(true, 'eval');
     }
-    /*
-     *  @@statusSuffixConf
-     *  @return $statusSuffix Type: array
-     * */
+
+    /**
+     * @@配置信息
+     * @return array
+     */
     private function statusSuffixConf () {
         return array(
             'arrival'       => '已到',
@@ -335,11 +369,13 @@ class IndexController extends Controller {
             'endTime'       => 300
         );
     }
-    /*
-     *  @@Redis List.
-     *  @@param $data Type: array.
-     *  @@Redis lPush new Data
-     * */
+
+    /**
+     * @@Redis自增自减更新首页状态
+     * @param $operation
+     * @param $data
+     * @throws Exception
+     */
     private function writeDataLpushRedis ($operation, $data) {
         $tableName = $_COOKIE['tableName'];
         $stateCollegeConf = array(
@@ -397,11 +433,12 @@ class IndexController extends Controller {
             }
         }
     }
-    /*
-     *  @@vist data edit
-     *  @param null
-     *  @return boolean. Type: eval
-     * */
+
+    /**
+     * @@修改列表信息
+     * @param null
+     * @return string
+     */
     public function editData () {
         $visitData = json_decode($_GET['data'], true);
         $tableName = $_COOKIE['tableName'];
@@ -410,19 +447,20 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @hospitals Data List
-     *  @param null
-     *  @display page.
-     * */
+
+    /**
+     * @@医院科室跳转
+     * @param null
+     */
     public function hospitalsList () {
         $this->display();
     }
-    /*
-     *  @hospitals Data Check
-     *  @param null
-     *  @return $hospitals Type: json.
-     * */
+
+    /**
+     * @@医院科室查询
+     * @param null
+     * @return string
+     */
     public function hospitalsCheck () {
         $hospitals = M('hospital')->select();
         ! empty($hospitals)
@@ -432,11 +470,12 @@ class IndexController extends Controller {
         $hospitalsList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $hospitals}";
         $this->ajaxReturn($hospitalsList, 'eval');
     }
-    /*
-     *  @@ hospitals Data add
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@医院科室添加
+     * @param null
+     * @return string
+     */
     public function hospitalsAdd () {
         $hospitalsData = json_decode($_GET['data'], true);
         $resolve = M('hospital')->add($hospitalsData);
@@ -444,11 +483,11 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@ hospitals Data del
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@医院科室删除
+     * @param null
+     */
     public function hospitalsDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resolve = M('hospital')->where("id = {$_GET['id']}")->delete();
@@ -456,19 +495,19 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@ disease data
-     *  @param null
-     *  @display disease
-     * */
+
+    /**
+     * @@病种跳转
+     */
     public function disease () {
         $this->display();
     }
-    /*
-     *  @@ disease data check
-     *  @param null
-     *  @return $diseasesList Type: json
-     * */
+
+    /**
+     * @@病种查询
+     * @param null
+     * @return string
+     */
     public function diseaseCheck () {
         $tableName = $_COOKIE['tableName'];
         $diseases = M('alldiseases')->where("tableName = '{$tableName}'")->field(array('id', 'diseases', 'addtime'))->select();
@@ -479,11 +518,12 @@ class IndexController extends Controller {
         $diseasesList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $diseases}";
         $this->ajaxReturn($diseasesList, 'eval');
     }
-    /*
-     *  @@ diseases data add
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@病种添加
+     * @param null
+     * @return string
+     */
     public function diseaseAdd () {
         $diseasesData = json_decode($_GET['data'], true);
         $diseasesData['tableName'] = $_COOKIE['tableName'];
@@ -492,11 +532,12 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@ disease data delete
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@病种删除
+     * @param null
+     * @return string
+     */
     public function diseaseDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resolve = M('alldiseases')->where("id = {$_GET['id']}")->delete();
@@ -504,18 +545,20 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@ visitTypesof data list
-     *  @param null
-     * */
+
+    /**
+     * @@来源渠道跳转
+     * @param null
+     */
     public function typesof () {
         $this->display();
     }
-    /*
-     *  @@ typesofCheck data
-     *  @@param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@来源渠道查询
+     * @param null
+     * @return string
+     */
     public function typesofCheck () {
         $typesof = M('fromaddress')->field(array('id', 'fromaddress', 'addtime'))->select();
         ! empty($typesof)
@@ -525,11 +568,12 @@ class IndexController extends Controller {
         $typesofList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $typesof}";
         $this->ajaxReturn($typesofList, 'eval');
     }
-    /*
-     *  @@ visitTypesof data delete
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@来源渠道删除
+     * @param null
+     * @return string
+     */
     public function typesofDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resolve = M('fromaddress')->where("id = {$_GET['id']}")->delete();
@@ -537,11 +581,12 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@ typesof data add
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@来源渠道添加
+     * @param null
+     * @return string
+     */
     public function typesofAdd () {
         $typesofData = json_decode($_GET['data'], true);
         $resolve = M('fromaddress')->add($typesofData);
@@ -549,18 +594,20 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     * @@ doctor data page
+
+    /**
+     * @@客服人员跳转
      * @param null
-     * */
+     */
     public function doctor () {
         $this->display();
     }
-    /*
-     *  @@doctor data list
-     *  @param null
-     *  @return $custserviceList Type: json
-     * */
+
+    /**
+     * @@客服人员查询
+     * @param null
+     * @return string
+     */
     public function doctorCheck () {
         $custservice = M('custservice')->field(array('id', 'custservice', 'addtime'))->select();
         ! empty($custservice)
@@ -570,11 +617,12 @@ class IndexController extends Controller {
         $custserviceList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $custservice}";
         $this->ajaxReturn($custserviceList, 'eval');
     }
-    /*
-     *  @@doctor data add
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@客服人员添加
+     * @param null
+     * @return string
+     */
     public function doctorAdd () {
         $doctorData = json_decode($_GET['data'], true);
         $resolve = M('custservice')->add($doctorData);
@@ -582,11 +630,12 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@doctor data del
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@客服人员删除
+     * @param null
+     * @return string
+     */
     public function doctorDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resolve = M('custservice')->where("id = {$_GET['id']}")->delete();
@@ -594,18 +643,20 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@ arrivalStatus page
-     *  @param null
-     * */
+
+    /**
+     * @@到诊状态跳转
+     * @param null
+     */
     public function arrivalStatus () {
         $this->display();
     }
-    /*
-     *  @@ arrivalStatus data list
-     *  @param null
-     *  @return $arrivalStatusList Type: json
-     * */
+
+    /**
+     * @@到诊状态查询
+     * @param null
+     * @return string
+     */
     public function arrivalStatusCheck () {
         $arrivalStatus = M('arrivalstatus')->field(array('id', 'arrivalStatus', 'addtime'))->select();
         ! empty($arrivalStatus)
@@ -615,11 +666,12 @@ class IndexController extends Controller {
         $arrivalStatusList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $arrivalStatus}";
         $this->ajaxReturn($arrivalStatusList, 'eval');
     }
-    /*
-     *  @@ arrivalStatus data del
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@到诊状态删除
+     * @param null
+     * @return string
+     */
     public function arrivalStatusDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $resovle = M('arrivalstatus')->where("id = {$_GET['id']}")->delete();
@@ -627,11 +679,12 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@ arrivalStatus data add
-     *  @param null
-     *  @return boolean
-     * */
+
+    /**
+     * @@到诊状态添加
+     * @param null
+     * @return string
+     */
     public function arrivalStatusAdd () {
         $arrivalData = json_decode($_GET['data'], true);
         $resolve = M('arrivalstatus')->add($arrivalData);
@@ -639,20 +692,23 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@ detail Report table
-     *  @param null
-     * */
+
+    /**
+     * @@客服明细跳转
+     * @param null
+     * @assign $redis TTL
+     */
     public function detailReport () {
         $redis = $this->setCache();
         $this->assign('ttl', $redis->ttl($_COOKIE['tableName']));
         $this->display();
     }
-    /*
-     *  @@ detail Report check
-     *  @param null
-     *  @return $custserviceList Tyep: json
-     * */
+
+    /**
+     * @@客服明细报表查询
+     * @param null
+     * @return string
+     */
     public function detailReportCheck () {
         $redis = $this->setCache();
         $tableName = $_COOKIE['tableName'];
@@ -672,11 +728,12 @@ class IndexController extends Controller {
         $pserionCollectionList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $pserionCollection}";
         $this->ajaxReturn($pserionCollectionList, 'eval');
     }
-    /*
-     *  @@detail Report check Persion
-     *  @@param null
-     *  @return $persionCollList persion Collection.
-     * */
+
+    /**
+     * @@每个客服的流量情况
+     * @param null
+     * @return array
+     */
     private function persionCollection () {
         $persion = M('custservice')->field('custservice')->select();
         foreach ($persion as $k => $v) foreach ($v as $key => $value) $keyNames[$k] = $value;
@@ -714,11 +771,15 @@ class IndexController extends Controller {
         }
         return $persionCollList;
     }
-    /*
-     *  @@ custservice arrival filter
-     *  @param null
-     *  @return $custservice Type: array
-     * */
+
+    /**
+     * @@今日已到/未到
+     *   本月已到/未到
+     *   上月已到/未到
+     *   昨天已到/未到
+     * @param null
+     * @return array
+     */
     private function custservice () {;
         $tableName = $_COOKIE['tableName'];
         $collection = array();
@@ -736,11 +797,12 @@ class IndexController extends Controller {
         $collection['lastTotal']          = $collection['lastArrival'] + $collection['lastArrivalOut'];
         return $collection;
     }
-    /*
-     *  @@monthdata
-     *  @param null
-     *  return   Type: json string
-     * */
+
+    /**
+     * @@走势图分布Echart
+     * @param null
+     * @assign array
+     */
     public function monthdata () {
         $instance = M($_COOKIE['tableName']);
         $redis = $this->setCache();
@@ -762,11 +824,14 @@ class IndexController extends Controller {
         $this->assign('echarts', $arrival);
         $this->display();
     }
-    /*
-     *  @@ detail function
-     *  @param $array Type: array[0] condition, array[1] field.
-     *  @return $allStatus Type: array
-     * */
+
+    /**
+     * @@根据时间状态查询
+     * @param $time
+     * @param $status
+     * @param null $persion
+     * @return mixed
+     */
     private function detail ($time, $status, $persion = null) {
         $tableName = $_COOKIE['tableName'];
         $allStatus = is_null($persion)
@@ -774,13 +839,13 @@ class IndexController extends Controller {
             : M($tableName)->where(array($time, $status, $persion))->count();
         return $allStatus;
     }
-    /*
-     *  @@ JsonString handle
-     *  @param $array Type: array
-     *  @param $function Type: string
-     *  @param $apply_to_keys_also Type: boolean
-     *  @return jsonString
-     * */
+
+    /**
+     * @@清数组中的中文乱码
+     * @param $array
+     * @param $function
+     * @param bool $apply_to_keys_also
+     */
     private function arrayRecursive(&$array, $function, $apply_to_keys_also = false) {
         static $recursive_counter = 0;
         if (++$recursive_counter > 1000) {
@@ -802,18 +867,20 @@ class IndexController extends Controller {
         }
         $recursive_counter--;
     }
-    /*
-     *  @@user access page
-     *  @param null
-     * */
+
+    /**
+     * @@跳转页面
+     * @param null
+     */
     public function access () {
         $this->display();
     }
-    /*
-     *  @@user access check
-     *  @param null
-     *  @return $userList Type: josn
-     * */
+
+    /**
+     * @@权限列表
+     * @param null
+     * @return string
+     */
     public function accessCheck () {
         $user = M('management')->join('user')->where("user.username = management.pid")->select();
         ! empty($user)
@@ -823,11 +890,12 @@ class IndexController extends Controller {
         $userList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $user}";
         $this->ajaxReturn($userList, 'eval');
     }
-    /*
-     *  @@userDel
-     *  @param null
-     *  @return boolean Type: eval
-     * */
+
+    /**
+     * @@用户删除
+     * @param null
+     * @return string
+     */
     public function userDel () {
         if (! is_numeric($_GET['id'])) $this->ajaxReturn(false, 'eval');
         $username = M('user')->where("id = {$_GET['id']}")->field('username')->select();
@@ -837,11 +905,12 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *   @@userAdd
-     *   @param null
-     *   @return boolean Type: eval
-     * */
+
+    /**
+     * @@用户添加
+     * @param null
+     * @return string
+     */
     public function userAdd () {
         $management = json_decode($_GET['data'], true);
         $userList['password'] = MD5($management['password']);
@@ -854,11 +923,12 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     *  @@userEdit
-     *  @param null
-     *  @return boolean Type: eval
-     * */
+
+    /**
+     * @@更改用户信息|权限
+     * @param null
+     * @return string
+     */
     public function userEdit () {
         $management = json_decode($_GET['data'], true);
         $managementKey = array_keys($management);
@@ -893,17 +963,20 @@ class IndexController extends Controller {
             ? $this->ajaxReturn(true, 'eval')
             : $this->ajaxReturn(false, 'eval');
     }
-    /*
-     * @@ resources Export page
-     * */
+
+    /**
+     * @@页面跳转
+     * @param null
+     */
     public function resources () {
         $this->display();
     }
-    /*
-     * @@ resources Export
+
+    /**
+     * @@数据导出
      * @param null
-     * @return Boolean Type: json
-     * */
+     * @return bool
+     */
     public function resourcesCheck () {
         if (array_key_exists('null', $_GET)) return false;
         if (array_key_exists('date_min', $_GET) && array_key_exists('date_max', $_GET)) {
@@ -918,10 +991,11 @@ class IndexController extends Controller {
         $visitList = "{\"code\":0, \"msg\":\"\", \"count\": $hospitalVisitCount, \"data\": $jsonVisit}";
         $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
     }
-    /*
-     *  @@The personal data page
-     *  @param null
-     * */
+
+    /**
+     * @@页面跳转
+     * @param null
+     */
     public function personal () {
         $this->display();
     }
@@ -929,18 +1003,20 @@ class IndexController extends Controller {
         $this->assign();
         // update my personal
     }
-    /*
-     * @@The login log page
+
+    /**
+     * @@页面跳转
      * @param null
-     * */
+     */
     public function loginLog () {
         $this->display();
     }
-    /*
-     * @@The login log
+
+    /**
+     * @@登录日志
      * @param null
-     * @return  Type:json
-     * */
+     * @return $loginList string
+     */
     public function loginCheck () {
         $login_log = M('login_log')->order('id DESC')->select();
         if ($login_log) {
@@ -952,9 +1028,12 @@ class IndexController extends Controller {
         $loginList = "{\"code\":0, \"msg\":\"\", \"count\": 0, \"data\": $login_log}";
         $this->ajaxReturn($loginList, 'eval');
     }
-    /*
-     * @@login Out
-     * */
+
+    /**
+     * @@注销登录
+     * @param null
+     * @return json
+     */
     public function loginOut () {
         cookie('username', null);
         empty($_COOKIE['username'])
@@ -962,24 +1041,26 @@ class IndexController extends Controller {
             : $this->ajaxReturn(false);
 
     }
-    /*
-     *  @@expansion connect redis.
-     *  @param null.
-     *  @return $redis. Type: instance
-     * */
+
+    /**
+     * @@Redis 连接
+     * @return \Redis
+     * @throws Exception
+     */
     private function setCache () {
         $redis = new \Redis();
         $redis->connect('211.149.x.x', 6379);
         $redis->auth('xxxxxx');
         $redis->select(1);
         if ($redis->ping() == "+PONG") return $redis;
-        throw new Exception("Connection  Redis Failed...");
+        throw new Exception("Connection Redis Failed...");
     }
-    /*
-     *  @@select data keys splice
-     *  @param array
-     *  @return array
-     * */
+
+    /**
+     * @@为旧数据做出的兼容替换
+     * @param $hospitalVisit
+     * @return array|bool
+     */
     private function arraySplice ($hospitalVisit) {
         if (! is_array($hospitalVisit)) return false;
         // trim array \t
@@ -993,11 +1074,12 @@ class IndexController extends Controller {
         }
         return $hospitalVisit;
     }
-    /*
-     *  @@ create new table
-     *  @param $tableName cookie
-     *  @retur boolean
-     * */
+
+    /**
+     * @@创建数据表
+     * @param $tableName
+     * @return bool
+     */
     private function createTable ($tableName) {
         $sql = <<<sql
               CREATE TABLE  `$tableName` (

@@ -5,8 +5,8 @@ use Think\Model;
 
 class CollectionModel extends Model {
     /**
-     * @@ Status Config
-     *
+     * @@状态配置
+     * @var array
      */
     private $collectionConf =
         array(
@@ -27,9 +27,10 @@ class CollectionModel extends Model {
         14 => 'appThisTotal',
         15 => 'appLastTotal'
     );
-    /*
-     * @@ SQL Syntax
-     * */
+    /**
+     * @@SQL 语法配置
+     * @var array
+     */
     private $conditions =
         array(
         0 => "TO_DAYS(oldDate) = TO_DAYS(NOW())",
@@ -37,10 +38,10 @@ class CollectionModel extends Model {
         2 => "DATE_FORMAT(oldDate, '%Y%m') = DATE_FORMAT(CURDATE(), '%Y%m')",
         3 => "PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'), DATE_FORMAT(oldDate,'%Y%m')) = 1"
     );
-    /*
-     * @@ 表单下拉列表框
-     * @return $selectCollection Type: array
-     * */
+    /**
+     * @@表单下拉列表框
+     * @return mixed
+     */
     public function selectOption () {
         $selectCollection['arrivalStatus']  = M('arrivalstatus')->field('arrivalStatus')->select();
         $selectCollection['diseases']       = M('alldiseases')->where("tableName = '{$_COOKIE['tableName']}'")->field('diseases')->select();
@@ -48,10 +49,11 @@ class CollectionModel extends Model {
         $selectCollection['fromaddress']    = M('fromaddress')->field('fromaddress')->select();
         return $selectCollection;
     }
-    /*
+    /**
      * @@数据导出 按时间范围/状态查询
-     * @return array Type: 二维数组
-     * */
+     * @param $request
+     * @return array
+     */
     public function resources ($request) {
         $tableName = $_COOKIE['tableName'];
         if (empty($request)) {
@@ -64,9 +66,10 @@ class CollectionModel extends Model {
         }
         return array($hospitalVisit, $hospitalVisitCount);
     }
+
     /**
      * @@根据电话查看数据是否存在
-     * @param $request string
+     * @param $request
      * @return array
      */
     public function addDataSelect ($request) {
@@ -75,12 +78,12 @@ class CollectionModel extends Model {
         if ($resolve) return $resolve;
         return;
     }
-    /*
-     *  @@首页点击 按时间/状态查询
-     *  @param $request Type: GET array
-     *  @param $status Type: Controller $this->statusSuffixConf();
-     *  @return array
-     * */
+    /**
+     * @@首页点击 按时间/状态查询
+     * @param $request
+     * @param $status
+     * @return array
+     */
     public function specifiedFunc ($request, $status) {
         $collectionConf = $this->collectionConf;
         $conditions = $this->conditions;
