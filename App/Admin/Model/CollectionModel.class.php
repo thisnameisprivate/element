@@ -157,6 +157,26 @@ class CollectionModel extends Model {
         }
         return array($hospitalVisit, $hospitalVisitCount);
     }
+    /**
+     * @@ 首页点击 按时间/状态查询
+     * @param string $condition
+     * @param string status
+     * @param array $request
+     * @return array
+     */
+    /*
+    private function specifiedCollection ($condition, $arrival, $request) {
+        $hospitalsVisitCount = $hospital->where(array($condition[0], "status = '预约未定'"))->count();
+        $hospitalVisit       = $hospital->where(array($condition[0]), "status = '预约未定'")->limit(($request['page'] - 1) * $request['limit'], $request['limit'])->order('id desc')->select();
+        if (! empty($hospitalsVisitCount) && ! empty($hospitalVisit)) {
+            return array($hospitalVisit, $hospitalsVisitCount);
+        } else {
+            die('not find data');
+        }
+    }
+
+
+      */
 }
 
 

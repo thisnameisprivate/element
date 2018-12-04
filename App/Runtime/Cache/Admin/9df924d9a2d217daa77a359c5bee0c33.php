@@ -204,57 +204,20 @@
             iframeSetAttr("<?php echo U('Admin/Index/overView');?>");
         }
         // function request.
-        visit = () => {
-            if (! Boolean(userAcc.resready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/visit');?>")
-        }
-        hospitalsList = () => {
-            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>")
-        }
-        disease = () => {
-            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/disease');?>")
-        }
-        typesof = () => {
-            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/typesof');?>")
-        }
-        doctor = () => {
-            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/doctor');?>")
-        }
-        arrivalStatus = () => {
-            if (! Boolean(userAcc.setready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>")
-        }
-        detailReport = () => {
-            if (! Boolean(userAcc.resready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>")
-        }
-        monthdata = () => {
-            if (! Boolean(userAcc.resready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>")
-        }
-        access = () => {
-            if (! Boolean(userAcc.manageready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/access');?>")
-        }
-        resources = () => {
-            if (! Boolean(userAcc.manageready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/resources');?>")
-        }
-        personal = () => {
-            if (! Boolean(userAcc.myready)) { layer.msg("权限不足", {icon: 5}); return false };
-            iframeSetAttr("<?php echo U('Admin/Index/personal');?>");
-        }
-        loginLog = () => {
-            if (! Boolean(userAcc.logready)) { layer.msg("权限不足", {icon: 5}); return false; }
-            iframeSetAttr("<?php echo U('Admin/Index/loginLog');?>")
-        }
-        iframeSetAttr = (url) => {
-            loadingStart();
-            iframe.setAttribute('src', url);
+        visit           = ()    => { if (! Boolean(userAcc.resready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/visit');?>") }
+        hospitalsList   = ()    => { if (! Boolean(userAcc.setready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/hospitalsList');?>") }
+        disease         = ()    => { if (! Boolean(userAcc.setready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/disease');?>") }
+        typesof         = ()    => { if (! Boolean(userAcc.setready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/typesof');?>") }
+        doctor          = ()    => { if (! Boolean(userAcc.setready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/doctor');?>") }
+        arrivalStatus   = ()    => { if (! Boolean(userAcc.setready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/arrivalStatus');?>") }
+        detailReport    = ()    => { if (! Boolean(userAcc.resready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/detailReport');?>") }
+        monthdata       = ()    => { if (! Boolean(userAcc.resready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/monthdata');?>") }
+        access          = ()    => { if (! Boolean(userAcc.manageready))   { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/access');?>") }
+        resources       = ()    => { if (! Boolean(userAcc.manageready))   { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/resources');?>") }
+        personal        = ()    => { if (! Boolean(userAcc.myready))       { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/personal');?>") }
+        loginLog        = ()    => { if (! Boolean(userAcc.logready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/loginLog');?>") }
+
+        iframeSetAttr   = (url) => { loadingStart(); iframe.setAttribute('src', url);
         }
         //  Request function
         Request = (url) => {
@@ -442,7 +405,6 @@
                         }
                     }
                 }
-
             }
         }
         socket.onclose = () => {
