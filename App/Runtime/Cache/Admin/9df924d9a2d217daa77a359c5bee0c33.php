@@ -75,6 +75,16 @@
                     <?php if(is_array($hospitals)): foreach($hospitals as $index=>$vo): ?><dd class="layui-anim layui-anim-scaleSpring"><a href="javascript:;" onclick="readyHospital(this);" tablename="<?php echo ($vo['tableName']); ?>"><?php echo ($vo['hospital']); ?></a></dd><?php endforeach; endif; ?>
                 </dl>
             </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;">基本资料</a></dd>
+                    <dd><a href="javascript:;">安全设置</a></dd>
+                </dl>
+            </li>
             <li class="layui-nav-item" onclick="loginOut();"><a href="javascript:;">注销</a></li>
         </ul>
     </div>
@@ -353,7 +363,7 @@
          ***************************************************************************************************************
          ***************************************************************************************************************
          * */
-        var socket = new WebSocket('ws://211.149.233.203:2001');
+        var socket = new WebSocket('ws://211.149.233.203:2000');
         // 多客户端格式
         function say_to_all (content) {
             socket.addEventListener('open', function () {

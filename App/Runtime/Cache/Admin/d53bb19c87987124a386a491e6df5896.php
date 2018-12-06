@@ -6,32 +6,42 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/element/Public/statics/layui/css/layui.css">
-    <title>personal</title>
+    <style>
+        .container{height:500px; width:500px; position:absolute; left:0; right:0; bottom:0; top:0; margin:auto;}
+        .img-container{width:300px; height:300px;}
+    </style>
+    <title>uploadfilemodule</title>
 </head>
 <body>
-<table id="container" lay-filter="edittable"></table>
+<div class="container">
+    <button type="button" class="layui-btn" id="uploadFile">
+        <i class="layui-icon">&#xe67c;</i>上传图片
+    </button>
+    <button type="button" class="layui-btn layui-btn-warm" id="uploadBtn">开始上传</button>
+    <div class="img-container">
+        <img src="" alt="" id="imageShow" style="max-width:300px;">
+    </div>
+</div>
 </body>
 <script src="/element/Public/statics/layui/layui.js"></script>
 <script type="text/javascript">
-    layui.use(['table', 'form'], () => {
-        /*
-        var table = layer.table;
-        var form = layer.form;
-        var $ = layer.jquery;
-        var userAcc = JSON.parse(localStorage.getItem('userAcc'));
-        var tableIns = table.render({
-            text: { none: '暂无相关数据' },
-            initSort: {
-                field: 'id',
-                type: 'dsec',
-            },
-            elem: '#container',
-
+    /*获取当前用户名*/
+    var username = JSON.parse(localStorage.getItem('userAcc')).pid;
+    layui.use(['upload', 'jquery'], () => {
+        var upload = layui.upload;
+        var $      = layui.jquery;
+        upload.render({
+            elem: '#uploadFile',
+            url: "<?php echo U('Admin/Index/personalUpload');?>",
+            accept: 'images',
+            auto: false,
+            bindAction: '#uploadBtn',
+            before: obj => {
+                obj.preview((index, file, result) => {
+                    $('#imageShow').attr("src", result);
+                })
+            }
         })
-
-
-           */
-        layer.msg("开发中", {icon:5});
     })
 </script>
 </html>

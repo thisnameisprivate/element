@@ -14,6 +14,7 @@
 namespace Admin\Controller;
 use Think\Controller;
 use Think\Exception;
+use Think\Upload;
 class IndexController extends Controller {
     /**
      * @@登录验证
@@ -999,9 +1000,24 @@ class IndexController extends Controller {
     public function personal () {
         $this->display();
     }
-    public function personalCheck () {
-        $this->assign();
-        // update my personal
+    /**
+     * @@个人资料文件上传
+     * @param null
+     */
+    public function personalUpload () {
+        $upload = new \Think\Upload();
+        $upload->maxSize   =     3145728 ;
+        $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');
+        $upload->rootPath  =      __ROOT__ . '/Public/statics/userimage/';
+        $upload->savePath  =      '';
+        $info   =   $upload->upload($_FILES['file']);
+        if(!$info) {
+            $this->error($upload->getError());
+        }else{
+            foreach($info as $file){
+                echo $file['savepath'].$file['savename'];
+            }
+        }
     }
 
     /**
@@ -1048,7 +1064,7 @@ class IndexController extends Controller {
     private function setCache () {
         $redis = new \Redis();
         $redis->connect('211.149.x.x', 6379);
-        $redis->auth('xxxxxxx');
+        $redis->auth('xxxxxx');
         $redis->select(1);
         if ($redis->ping() == "+PONG") return $redis;
         throw new Exception("Connection Redis Failed...");

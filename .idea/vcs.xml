@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../深入PHP面向对象模式与实践" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../深入浅出NodeJs" vcs="Git" />
   </component>
 </project>
