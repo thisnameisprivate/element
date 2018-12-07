@@ -16,7 +16,7 @@
         .container span{font-size:40px; color:#ffffff; line-height:50px;}
         .container:hover{background-color:#9F9F9F;}
         /* 新消息提示 */
-        .top-tips{position:fixed; top:200px; width:180px; height:100px; right:10px; text-aling:center; border-radius:5px; cursor:pointer; z-index:999; overflow:hidden;}
+        .top-tips{position:fixed; bottom:100px; width:180px; height:100px; right:10px; text-aling:center; border-radius:5px; cursor:pointer; z-index:999; overflow:hidden; border:1px solid #ccc;}
         .top-tips li{border-radius:5px; line-height:30px; margin-top:5px; color:white; font-size:0.8rem; background-color:#FF5722;}
     </style>
 </head>
