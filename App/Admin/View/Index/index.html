@@ -229,8 +229,7 @@
         personal        = ()    => { if (! Boolean(userAcc.myready))       { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("{:U('Admin/Index/personal')}") }
         loginLog        = ()    => { if (! Boolean(userAcc.logready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("{:U('Admin/Index/loginLog')}") }
 
-        iframeSetAttr   = (url) => { loadingStart(); iframe.setAttribute('src', url);
-        }
+        iframeSetAttr   = (url) => { loadingStart(); iframe.setAttribute('src', url); }
         //  Request function
         Request = (url) => {
             var Request = new XMLHttpRequest();
