@@ -23,10 +23,12 @@ class IndexController extends Controller {
      */
     public function index () {
         $userCookie = $_COOKIE['username'];
+        $userImageUrl = M('user')->where("username = '{$userCookie}'")->select();
         if (! isset($userCookie)) $this->error("please login", U("Home/Index/index"));
         $userAcc = $this->userManagement($userCookie);
         if ($userAcc) $this->assign('userAcc', json_encode($userAcc)); // 权限验证 传值到前端用于储存localStorage.
         $hospitals = M('hospital')->field(array('hospital', 'tableName'))->select();
+        $this->assign('userImageUrl', $userImageUrl[0]['imagePath']);
         $this->assign('hospitals', $hospitals);
         $this->display();
     }
@@ -1006,17 +1008,25 @@ class IndexController extends Controller {
      */
     public function personalUpload () {
         $upload = new \Think\Upload();
-        $upload->maxSize   =     3145728 ;
+        $fileName = date('His', time());
+        $upload->maxSize   =     2097152;
         $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');
-        $upload->rootPath  =      __ROOT__ . '/Public/statics/userimage/';
+        $upload->rootPath  =     "D:/wampserver/wamp/www" . __ROOT__ . '/Public/statics/userimage/';
         $upload->savePath  =      '';
-        $info   =   $upload->upload($_FILES['file']);
+        $upload->autoSub   =     false;
+        $upload->saveName  =     $fileName;
+        $upload->replace   =     true;
+        $upload->saveExt   =     'jpg';
+        $info   =   $upload->uploadOne($_FILES['file']);
         if(!$info) {
             $this->error($upload->getError());
         }else{
-            foreach($info as $file){
-                echo $file['savepath'].$file['savename'];
-            }
+            $username = $_COOKIE['username'];
+            $config = array(
+                'imagePath' => $fileName . ".jpg",
+            );
+            $resolve = M('user')->where("username = '{$username}'")->save($config);
+            $resolve?$this->ajaxReturn(true):$this->getError();
         }
     }
 

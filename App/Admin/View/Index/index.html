@@ -79,11 +79,11 @@
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    <img src="" class="layui-nav-img">
                     贤心
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">基本资料</a></dd>
+                    <dd><a href="javascript:;" onclick="personal();">基本资料</a></dd>
                     <dd><a href="javascript:;">安全设置</a></dd>
                 </dl>
             </li>
@@ -432,6 +432,9 @@
                 }, 2000)
             })();
         }
+        // 设置头像/用户名
+        var path = "__PUBLIC__/statics/userimage/{$userImageUrl}";
+        $('.layui-nav-img').parent().html("<a href='javascript:;'><img src='"+ path +"' class='layui-nav-img'>" + username + "<span class='layui-nav-more'></span></a>");
     });
 </script>
 </html>

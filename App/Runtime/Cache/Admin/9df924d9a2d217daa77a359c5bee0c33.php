@@ -16,7 +16,7 @@
         .container span{font-size:40px; color:#ffffff; line-height:50px;}
         .container:hover{background-color:#9F9F9F;}
         /* 新消息提示 */
-        .top-tips{position:fixed; bottom:100px; width:180px; height:100px; right:10px; text-aling:center; border-radius:5px; cursor:pointer; z-index:999; overflow:hidden; border:1px solid #ccc;}
+        .top-tips{position:fixed; bottom:100px; left:0px; width:180px; height:100px; right:10px; text-aling:center; border-radius:5px; cursor:pointer; z-index:999; overflow:hidden;}
         .top-tips li{border-radius:5px; line-height:30px; margin-top:5px; color:white; font-size:0.8rem; background-color:#FF5722;}
     </style>
 </head>
@@ -77,11 +77,11 @@
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    <img src="" class="layui-nav-img">
                     贤心
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">基本资料</a></dd>
+                    <dd><a href="javascript:;" onclick="personal();">基本资料</a></dd>
                     <dd><a href="javascript:;">安全设置</a></dd>
                 </dl>
             </li>
@@ -227,8 +227,7 @@
         personal        = ()    => { if (! Boolean(userAcc.myready))       { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/personal');?>") }
         loginLog        = ()    => { if (! Boolean(userAcc.logready))      { layer.msg("权限不足", {icon: 5}); return false; } iframeSetAttr("<?php echo U('Admin/Index/loginLog');?>") }
 
-        iframeSetAttr   = (url) => { loadingStart(); iframe.setAttribute('src', url);
-        }
+        iframeSetAttr   = (url) => { loadingStart(); iframe.setAttribute('src', url); }
         //  Request function
         Request = (url) => {
             var Request = new XMLHttpRequest();
@@ -431,6 +430,9 @@
                 }, 2000)
             })();
         }
+        // 设置头像/用户名
+        var path = "/element/Public/statics/userimage/<?php echo ($userImageUrl); ?>";
+        $('.layui-nav-img').parent().html("<a href='javascript:;'><img src='"+ path +"' class='layui-nav-img'>" + username + "<span class='layui-nav-more'></span></a>");
     });
 </script>
 </html>

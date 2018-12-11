@@ -7,19 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="__PUBLIC__/statics/layui/css/layui.css">
     <style>
-        .container{height:500px; width:500px; position:absolute; left:0; right:0; bottom:0; top:0; margin:auto;}
         .img-container{width:300px; height:300px;}
+        .img-container img{width:100%; position:relative;}
+        .loading-icon-container{width:30px; height:30px; position:absolute; top:0; left:0; right:0; bottom:0; margin:auto;}
+        .loading-icon-container span{font-size: 2rem;}
     </style>
     <title>uploadfilemodule</title>
 </head>
 <body>
 <div class="container">
     <button type="button" class="layui-btn" id="uploadFile">
-        <i class="layui-icon">&#xe67c;</i>上传图片
+        <i class="layui-icon">&#xe67c;</i>上传头像
     </button>
     <button type="button" class="layui-btn layui-btn-warm" id="uploadBtn">开始上传</button>
     <div class="img-container">
         <img src="" alt="" id="imageShow" style="max-width:300px;">
+    </div>
+    <div class="loading-icon-container">
+        <span class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading" style="display:none;"></span>
     </div>
 </div>
 </body>
@@ -27,9 +32,10 @@
 <script type="text/javascript">
     /*获取当前用户名*/
     var username = JSON.parse(localStorage.getItem('userAcc')).pid;
-    layui.use(['upload', 'jquery'], () => {
+    layui.use(['upload', 'jquery', 'layer'], () => {
         var upload = layui.upload;
         var $      = layui.jquery;
+        var layer  = layui.layer;
         upload.render({
             elem: '#uploadFile',
             url: "{:U('Admin/Index/personalUpload')}",
@@ -37,9 +43,17 @@
             auto: false,
             bindAction: '#uploadBtn',
             before: obj => {
+                $('span').show();
                 obj.preview((index, file, result) => {
                     $('#imageShow').attr("src", result);
                 })
+                $('span').hide();
+            },
+            done: res => {
+                res===true?layer.msg('上传成功', {icon:6}):layer.msg('上传失败', {icon:5});
+            },
+            error: () => {
+                console.log('上传出现错误~');
             }
         })
     })

@@ -17,8 +17,8 @@
       <file leaf-file-name="IndexController.class.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="1030" column="7" lean-forward="true" selection-start-line="1030" selection-start-column="7" selection-end-line="1030" selection-end-column="7" />
+            <state relative-caret-position="254">
+              <caret line="1004" column="7" lean-forward="true" selection-start-line="1004" selection-start-column="7" selection-end-line="1004" selection-end-column="7" />
               <folding>
                 <element signature="e#6#1287#0#PHP" expanded="true" />
                 <element signature="e#1316#1337#0#PHP" expanded="true" />
@@ -27,13 +27,41 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="convention.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="57" column="53" lean-forward="true" selection-start-line="57" selection-start-column="53" selection-end-line="57" selection-end-column="53" />
+              <folding>
+                <element signature="e#6#80#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="personal.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/personal.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="81">
+              <caret line="18" column="60" lean-forward="true" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
+              <folding>
+                <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="412" column="59" lean-forward="true" selection-start-line="412" selection-start-column="59" selection-end-line="412" selection-end-column="59" />
+            <state relative-caret-position="367">
+              <caret line="369" column="57" lean-forward="true" selection-start-line="369" selection-start-column="57" selection-end-line="369" selection-end-column="57" />
               <folding>
                 <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#11736#11742#0" expanded="true" />
+                <element signature="e#11742#11748#0" expanded="true" />
+                <element signature="e#11748#11754#0" expanded="true" />
                 <element signature="e#4#10#0" expanded="true" />
                 <element signature="e#10#16#0" expanded="true" />
                 <element signature="e#16#22#0" expanded="true" />
@@ -50,8 +78,17 @@
       <file leaf-file-name="CollectionModel.class.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/App/Admin/Model/CollectionModel.class.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="30" column="17" lean-forward="true" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+            <state relative-caret-position="350">
+              <caret line="79" column="5" lean-forward="true" selection-start-line="79" selection-start-column="5" selection-end-line="79" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sql.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sql.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -69,13 +106,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>thesame</find>
-      <find>del</find>
-      <find>acc</find>
-      <find>access</find>
-      <find>-&gt;count</find>
-      <find>thisArrivalOut</find>
-      <find>personal();</find>
       <find>if</find>
       <find>2111</find>
       <find>search</find>
@@ -91,14 +121,21 @@
       <find>redis-&gt;keys</find>
       <find>layui-layout-right</find>
       <find>我的</find>
-      <find>personal</find>
       <find>username</find>
-      <find>upload</find>
       <find>top-tips</find>
       <find>tips</find>
-      <find>21</find>
-      <find>211</find>
       <find>s</find>
+      <find>per</find>
+      <find>personal</find>
+      <find>layer.msg</find>
+      <find>贤新</find>
+      <find>layui-nav-img</find>
+      <find>基本资料</find>
+      <find>21</find>
+      <find>upload</find>
+      <find>2211</find>
+      <find>user</find>
+      <find>211</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -129,7 +166,6 @@
         <option value="$PROJECT_DIR$/App/Admin/Model/collection.class.php" />
         <option value="$PROJECT_DIR$/App/Admin/Model/Collection.class.php" />
         <option value="$PROJECT_DIR$/App/Admin/View/Index/resources.html" />
-        <option value="$PROJECT_DIR$/sql.sql" />
         <option value="$PROJECT_DIR$/App/Admin/View/Index/loginLog.html" />
         <option value="$PROJECT_DIR$/App/Admin/View/Index/worker.html" />
         <option value="$PROJECT_DIR$/App/Admin/Model/WorkermanModel.class.php" />
@@ -152,15 +188,16 @@
         <option value="$PROJECT_DIR$/App/Admin/View/Index/visit.html" />
         <option value="$PROJECT_DIR$/../深入PHP面向对象模式与实践/preventDefault.html" />
         <option value="$PROJECT_DIR$/../深入PHP面向对象模式与实践/chat.php" />
-        <option value="$PROJECT_DIR$/App/Admin/Model/CollectionModel.class.php" />
         <option value="$PROJECT_DIR$/../深入浅出NodeJs/Person.js" />
         <option value="$PROJECT_DIR$/../深入浅出NodeJs/Prompt.js" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/App/Admin/Conf/config.php" />
         <option value="$PROJECT_DIR$/App/Admin/View/Index/personal.html" />
+        <option value="$PROJECT_DIR$/sql.sql" />
         <option value="$PROJECT_DIR$/ThinkPHP/Conf/convention.php" />
         <option value="$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php" />
         <option value="$PROJECT_DIR$/App/Admin/View/Index/index.html" />
+        <option value="$PROJECT_DIR$/App/Admin/Model/CollectionModel.class.php" />
       </list>
     </option>
   </component>
@@ -195,7 +232,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -229,10 +265,22 @@
               <item name="View" type="462c0819:PsiDirectoryNode" />
               <item name="Index" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="element" type="b2602c69:ProjectViewProjectNode" />
+              <item name="element" type="462c0819:PsiDirectoryNode" />
+              <item name="ThinkPHP" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="element" type="b2602c69:ProjectViewProjectNode" />
+              <item name="element" type="462c0819:PsiDirectoryNode" />
+              <item name="ThinkPHP" type="462c0819:PsiDirectoryNode" />
+              <item name="Conf" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -363,11 +411,13 @@
       <workItem from="1544056743027" duration="16064000" />
       <workItem from="1544142519544" duration="1878000" />
       <workItem from="1544169685044" duration="3848000" />
+      <workItem from="1544401897162" duration="1235000" />
+      <workItem from="1544488867840" duration="11127000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="804328000" />
+    <option name="totallyTimeSpent" value="816690000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -429,7 +479,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ThinkPHP/Library/Org/Gateway/Gateway.class.php" />
     <entry file="file://$PROJECT_DIR$/App/Admin/Controller/GateWorkerController.class.php" />
     <entry file="file://$PROJECT_DIR$/App/Admin/Model/GateWorkerModel.class.php" />
     <entry file="file://$PROJECT_DIR$/../workerman/workerman.php">
@@ -701,29 +750,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/personal.html">
+    <entry file="file://$PROJECT_DIR$/sql.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="9" column="112" lean-forward="true" selection-start-line="9" selection-start-column="112" selection-end-line="9" selection-end-column="112" />
+        <state relative-caret-position="204">
+          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
+    <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/personal.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="45" column="51" lean-forward="true" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
+        <state relative-caret-position="81">
+          <caret line="18" column="60" lean-forward="true" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
           <folding>
-            <element signature="e#6#80#0#PHP" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/View/Index/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="412" column="59" lean-forward="true" selection-start-line="412" selection-start-column="59" selection-end-line="412" selection-end-column="59" />
+        <state relative-caret-position="367">
+          <caret line="369" column="57" lean-forward="true" selection-start-line="369" selection-start-column="57" selection-end-line="369" selection-end-column="57" />
           <folding>
             <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#11736#11742#0" expanded="true" />
+            <element signature="e#11742#11748#0" expanded="true" />
+            <element signature="e#11748#11754#0" expanded="true" />
             <element signature="e#4#10#0" expanded="true" />
             <element signature="e#10#16#0" expanded="true" />
             <element signature="e#16#22#0" expanded="true" />
@@ -738,8 +791,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/Controller/IndexController.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="1030" column="7" lean-forward="true" selection-start-line="1030" selection-start-column="7" selection-end-line="1030" selection-end-column="7" />
+        <state relative-caret-position="254">
+          <caret line="1004" column="7" lean-forward="true" selection-start-line="1004" selection-start-column="7" selection-end-line="1004" selection-end-column="7" />
           <folding>
             <element signature="e#6#1287#0#PHP" expanded="true" />
             <element signature="e#1316#1337#0#PHP" expanded="true" />
@@ -747,10 +800,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ThinkPHP/Conf/convention.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="57" column="53" lean-forward="true" selection-start-line="57" selection-start-column="53" selection-end-line="57" selection-end-column="53" />
+          <folding>
+            <element signature="e#6#80#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/App/Admin/Model/CollectionModel.class.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="30" column="17" lean-forward="true" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+        <state relative-caret-position="350">
+          <caret line="79" column="5" lean-forward="true" selection-start-line="79" selection-start-column="5" selection-end-line="79" selection-end-column="5" />
         </state>
       </provider>
     </entry>
