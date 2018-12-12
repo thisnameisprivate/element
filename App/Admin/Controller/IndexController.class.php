@@ -63,7 +63,7 @@ class IndexController extends Controller {
          * ******************************************************************************
          * */
         $isTable = M()->query("show tables like '{$tableName}'");
-        if ( empty($isTable) && empty($this->createTable($tableName)) ) return false;
+        if (! $isTable) { if (! $this->createTable($tableName)) return false;}
         $redis = $this->setCache();
         if ($redis->exists($tableName . '_arrivalTotal')) {
             $keyNames = $redis->keys($tableName . "*"); // get all key.
