@@ -364,7 +364,9 @@
          ***************************************************************************************************************
          ***************************************************************************************************************
          * */
-        var socket = new WebSocket('ws://211.149.x.x:xxxxx');
+        // 用户头像图片地址
+        var path = "__PUBLIC__/statics/userimage/{$userImageUrl}";
+        var socket = new WebSocket('ws://211.149.x.x:xxxxxx');
         // 多客户端格式
         function say_to_all (content) {
             socket.addEventListener('open', function () {
@@ -402,7 +404,7 @@
                     // 渲染 html
                     $('#userList').children().remove();
                     for (var i = 0; i < userArr.length; i ++) {
-                        $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
+                        $('#userList').append("<dd><a href=\"\"><img src='"+ path +"'>"+ userArr[i] +"</a></dd>");
                     }
                 } else {
                     // 用户下线
@@ -412,7 +414,7 @@
                         top_tips(str.substr(str.indexOf('-') + 1, str.length));
                         $('#userList').children().remove();
                         for (var i = 0; i < userArr.length; i ++) {
-                            $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"></span><a href=\"\">"+ userArr[i] +"</a></dd>");
+                            $('#userList').append("<dd><span class=\"layui-badge-dot layui-bg-green\"><img src='"+ path +"'></span><a href=\"\">"+ userArr[i] +"</a></dd>");
                         }
                     }
                 }
@@ -426,14 +428,13 @@
             var top_tips = $('#top-tips-list');
             if (top_tips.children().length > 2) top_tips.children().remove();
             (function () {
-                top_tips.append("<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"layui-icon layui-icon-notice\"></span>&nbsp;&nbsp;&nbsp;&nbsp;"+ login_log +"</li>");
+                top_tips.append("<li>&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"layui-icon layui-icon-notice\"><img src='"+ path +"'></span>&nbsp;&nbsp;&nbsp;&nbsp;"+ login_log +"</li>");
                 setTimeout(function () {
                     top_tips.children().fadeOut(10000);
                 }, 2000)
             })();
         }
         // 设置头像/用户名
-        var path = "__PUBLIC__/statics/userimage/{$userImageUrl}";
         $('.layui-nav-img').parent().html("<a href='javascript:;'><img src='"+ path +"' class='layui-nav-img'>" + username + "<span class='layui-nav-more'></span></a>");
     });
 </script>
