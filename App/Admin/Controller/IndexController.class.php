@@ -1073,7 +1073,7 @@ class IndexController extends Controller {
      */
     private function setCache () {
         $redis = new \Redis();
-        $redis->connect('211.149.x.x', 6379);
+        $redis->connect('211.xxx.x.x', 6379);
         $redis->auth('xxxxxx');
         $redis->select(1);
         if ($redis->ping() == "+PONG") return $redis;
