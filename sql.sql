@@ -1,4 +1,4 @@
-#创建数据表
+###创建数据表
 CREATE TABLE gyxhyynk (
 id int key not null auto_increment,
 name varchar(15) not null,
