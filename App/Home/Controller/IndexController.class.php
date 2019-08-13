@@ -26,7 +26,7 @@ class IndexController extends Controller {
      *  @@login is success? write login_log table.
      *  @param Boolean
      * */
-    private function loginLog ($requestVerify, $boolean) {
+    private function loginLog ($requestVerify, $boolean) { 
         $ips = get_client_ip();
         $ip = new \Org\Net\IpLocation('UTFWry.dat');
         $ares = $ip->getlocation($ips);
