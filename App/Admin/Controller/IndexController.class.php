@@ -159,6 +159,8 @@ class IndexController extends Controller {
          * */
         $this->ajaxReturn(str_replace(array("\n", "\r"), '\n', $visitList), 'eval');
     }
+    
+    
 
     /**
      * @@设置缓存
