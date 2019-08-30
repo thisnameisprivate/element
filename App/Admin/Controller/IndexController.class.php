@@ -53,7 +53,7 @@ class IndexController extends Controller {
      * @return bool
      */
     public function overView () {
-        $tableName = $_COOKIE['tableName'];
+        $tableName = $_COOKIE['tableName'];   
         if (! isset($tableName)) return false;
         /* ******************************************************************************
          * ******************************************************************************
