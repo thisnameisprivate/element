@@ -186,7 +186,7 @@ class IndexController extends Controller {
     private function thisArrivalList () {
         $customer = M('custservice')->field('custservice')->select();
         foreach ($customer  as $k => $v) foreach ($v as $c => $d) $customers[] = $d;
-        $instance = M($_COOKIE['tableName']);
+        $instance = M($_COOKIE['tableName']);   
         for ($i = 0; $i < count($customers); $i ++) {
             $arrival[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '已到' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
             $appointment[$customers[$i]] = $instance->where("custService = '{$customers[$i]}' AND status = '预约未定' AND DATE_FORMAT(oldDate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')")->count();
