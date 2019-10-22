@@ -108,3 +108,22 @@ ip varchar(32) not null,
 fromaddress varchar(32) not null,
 addtime timestamp default current_timestamp
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          
+                                                          
+                                                          
+                                                          
